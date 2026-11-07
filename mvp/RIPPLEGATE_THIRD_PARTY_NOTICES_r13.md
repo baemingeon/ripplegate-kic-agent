@@ -17,6 +17,7 @@
 ## 모델·개발 도구·런타임 경계
 
 - OpenAI Codex/ChatGPT 개발 보조 환경을 기획 문장·코드 초안·검토·테스트 보조에 사용했다. 최종 설계·수정·실행 검증은 참가자가 수행했으며, 내부 KIC 자료·개인정보·비공개 포트폴리오를 입력하지 않았다.
+- Anthropic Claude의 사용자 제공 검토 의견은 초기 기획·점수·리스크 보완을 위한 개발 검토 보조로만 참고했다. 현재 runtime dependency나 Claude API 호출은 없으며, 최종 설계·코드·수치는 참가자가 검토·수정·실행 검증했다.
 - 공개 MVP의 기본 실행은 외부 LLM 없이 결정론적 fallback으로 끝까지 재현된다. 공개 패키지에는 API key, 내부 문서, 개인정보, 특정 외부 모델 실행 로그가 없다.
 - 승인된 private/OpenAI-compatible gateway를 연결하는 경우에도 LLM은 계획·질의·설명만 제안한다. 숫자·근거 상태·HOLD 판정은 코드와 독립 Critic이 담당하며, 모델·호스트 allowlist와 보안 승인을 먼저 통과해야 한다.
 - Qwen/Ollama 등 과거 로컬 실험은 현재 제출물·성능 근거·공개 r13 runtime dependency에서 제외했다.
