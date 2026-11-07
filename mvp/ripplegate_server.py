@@ -884,7 +884,7 @@ class Handler(BaseHTTPRequestHandler):
                         "trace": [item["stage"] + ":" + item["state"] for item in ripplegate_result["trace"]],
                         "replan": ripplegate_result["replan"],
                     },
-                    "disclosure": "요약형 통제군과 RippleGate의 구조 차이 비교이며, live LLM 정확도·환각률 benchmark가 아니다.",
+                    "disclosure": "검색·요약 대조 경로와 RippleGate의 구조 차이 비교이며, live LLM 정확도·환각률 benchmark가 아니다.",
                 })
                 return
             self.json(200, run_ripplegate(payload))
