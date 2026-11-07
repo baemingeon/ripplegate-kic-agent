@@ -12,6 +12,14 @@
 - P01~P05가 모두 manual·agent 한 쌍을 갖기 전에는 시간 절감률을 발표자료에 넣지 않는다.
 - 자동 브라우저 harness 결과(`ripplegate_agent_runtime_p01_p05_20261108.json`)는 Agent 측 실행 증거일 뿐, 사람 수작업 시간·paired 효과 측정으로 집계하지 않는다.
 
+## 측정 편향 통제
+
+- 각 packet은 동일한 입력 문장·자료 범위·완료 정의로 수행하고, packet manifest 버전과 실행 순서를 review log에 남긴다.
+- 학습효과를 줄이기 위해 일부 packet은 수작업부터, 일부 packet은 Agent부터 시작한다. 순서를 섞지 못하면 그 사실을 결과와 함께 공개한다.
+- 수작업 수행 중 Agent 결과를 참고하지 않고, Agent 수행 중 수작업 결과를 복사하지 않는다.
+- 측정 시간은 입력 수령부터 검토 가능한 결과·다음 행동이 남는 시점까지의 end-to-end 시간이다. 서버 runtime·네트워크 latency만으로 업무시간 절감률을 계산하지 않는다.
+- 판단 결과·source gap·재작업·계산 불일치의 판정 기준을 측정 전에 고정하고, 한 packet만 유리하게 선택해 보고하지 않는다.
+
 ## 기록 명령
 
 브라우저에서 빠르게 입력하려면 `ripplegate_pilot_console.html`을 열어 P01~P05마다 수작업 stopwatch와 Agent end-to-end stopwatch를 각각 실행하고 review log·trace·Evidence Ledger를 기록한다. Agent 참고값은 자동 harness 결과로 표시될 뿐 입력값으로 복사되지 않으며, 품질 필드와 최종 paired 기록은 실제 확인 후 확정한다.

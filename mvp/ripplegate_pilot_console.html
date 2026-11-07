@@ -25,8 +25,8 @@
 </head>
 <body>
   <h1>RippleGate P01~P05 paired 측정 콘솔</h1>
-  <p>같은 packet을 수작업과 RippleGate로 각각 수행한 실제 관찰값을 기록합니다. 순서는 수작업 stopwatch → Agent end-to-end stopwatch → review log·trace·Evidence Ledger 입력 → JSON 내보내기입니다.</p>
-  <div class="note"><strong>현재 상태:</strong> Agent harness 실행값은 참고값일 뿐 입력값으로 자동 복사되지 않습니다. 사람은 두 조건을 실제로 수행하고 각각 stopwatch를 정지해야 합니다. 실제 review log·trace를 확인하기 전에는 시간 절감률을 계산하거나 발표하지 않습니다. 실명·이메일 대신 익명 operator ID를 사용하세요.</div>
+  <p>같은 packet을 수작업과 RippleGate로 각각 수행한 실제 관찰값을 기록합니다. 순서는 수작업 stopwatch 또는 Agent end-to-end stopwatch를 미리 정한 순서대로 실행 → review log·trace·Evidence Ledger 입력 → JSON 내보내기입니다.</p>
+  <div class="note"><strong>현재 상태:</strong> Agent harness 실행값은 참고값일 뿐 입력값으로 자동 복사되지 않습니다. 가능하면 packet별로 수작업-first와 Agent-first를 교차하고 순서를 review log에 남기세요. 사람은 두 조건을 실제로 수행하고 각각 stopwatch를 정지해야 합니다. 실제 review log·trace를 확인하기 전에는 시간 절감률을 계산하거나 발표하지 않습니다. 실명·이메일 대신 익명 operator ID를 사용하세요.</div>
   <div class="toolbar"><label style="min-width:180px">익명 operator ID<input id="operator" value="op-anon-01" pattern="[A-Za-z0-9_-]{2,64}"></label><button class="primary" id="export">검증 후 JSON 내보내기</button><span class="status" id="status">AWAITING_HUMAN_PAIRING</span></div>
   <div id="packets"></div>
   <script>
