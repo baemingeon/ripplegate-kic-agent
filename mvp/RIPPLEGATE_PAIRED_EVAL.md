@@ -14,7 +14,7 @@
 
 ## 기록 명령
 
-브라우저에서 빠르게 입력하려면 `ripplegate_pilot_console.html`을 열어 P01~P05의 수작업 stopwatch와 review log를 기록한다. Agent 참고값은 자동 harness 결과를 보여주지만, 품질 필드와 최종 paired 기록은 실제 확인 후 확정한다.
+브라우저에서 빠르게 입력하려면 `ripplegate_pilot_console.html`을 열어 P01~P05마다 수작업 stopwatch와 Agent end-to-end stopwatch를 각각 실행하고 review log·trace·Evidence Ledger를 기록한다. Agent 참고값은 자동 harness 결과로 표시될 뿐 입력값으로 복사되지 않으며, 품질 필드와 최종 paired 기록은 실제 확인 후 확정한다.
 
 콘솔 export를 확인한 뒤에는 `python .\record_paired_console_export.py --input <export.json> --observed-by-human`으로 guarded paired log에 넣는다.
 

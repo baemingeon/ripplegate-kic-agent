@@ -334,6 +334,13 @@ class RippleGateFlowTests(unittest.TestCase):
         self.assertIn("retrieved_at", html)
         self.assertIn("자료 품질", html)
 
+    def test_paired_console_requires_separate_human_timings(self) -> None:
+        html = (Path(__file__).resolve().parent / "ripplegate_pilot_console.html").read_text(encoding="utf-8")
+        self.assertIn("Agent end-to-end stopwatch", html)
+        self.assertIn("자동 runtime 값은 paired 입력으로 사용하지 않습니다.", html)
+        self.assertNotIn('value=${(ms/60000).toFixed(4)}', html)
+        self.assertIn("operator ID는 영문·숫자·밑줄·하이픈", html)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
