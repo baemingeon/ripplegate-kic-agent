@@ -1,0 +1,33 @@
+name: RippleGate reproducibility
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run deterministic regression tests
+        working-directory: mvp
+        run: python -m unittest discover -s . -p 'test_ripplegate.py' -q
+
+      - name: Reproduce public snapshot
+        working-directory: mvp
+        run: python ripplegate_judge_repro.py --dataset public_snapshot
+
+      - name: Reproduce controlled holdout
+        working-directory: mvp
+        run: python ripplegate_judge_repro.py --holdout
+
+      - name: Build container
+        run: docker build --tag ripplegate-mvp:ci ./mvp
