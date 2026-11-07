@@ -287,6 +287,7 @@ class RippleGateFlowTests(unittest.TestCase):
             "KIC_LLM_POLICY": "approved",
             "KIC_LLM_PROVIDER": "openai_compatible",
             "KIC_LLM_URL": "http://127.0.0.1:8765",
+            "KIC_LLM_ALLOWED_HOSTS": "127.0.0.1",
             "KIC_LLM_MODEL": "approved-model",
             "KIC_LLM_ALLOWED_MODELS": "approved-model",
             "KIC_LLM_API_KEY": "test-only",
@@ -296,6 +297,23 @@ class RippleGateFlowTests(unittest.TestCase):
         self.assertTrue(result["accepted"])
         self.assertFalse(result["fallback"])
         self.assertIn("portfolio_context_lookup", result["proposal"]["tool_calls"])
+
+    def test_approved_gateway_requires_explicit_endpoint_host_allowlist(self) -> None:
+        env = {
+            "RIPPLEGATE_LLM_MODE": "approved",
+            "KIC_LLM_POLICY": "approved",
+            "KIC_LLM_PROVIDER": "openai_compatible",
+            "KIC_LLM_URL": "https://unapproved.example",
+            "KIC_LLM_ALLOWED_HOSTS": "approved.example",
+            "KIC_LLM_MODEL": "approved-model",
+            "KIC_LLM_ALLOWED_MODELS": "approved-model",
+            "KIC_LLM_API_KEY": "test-only",
+        }
+        with patch.dict(os.environ, env, clear=False), patch("ripplegate_llm.urllib.request.urlopen") as urlopen:
+            result = optional_llm_planner("impact review", self.graph, 3)
+        self.assertTrue(result["fallback"])
+        self.assertEqual(result["reason"], "endpoint_host_not_allowlisted")
+        urlopen.assert_not_called()
 
     def test_public_source_allowlist_rejects_userinfo_and_non_https(self) -> None:
         self.assertTrue(_host_allowed("https://unctad.org/source"))

@@ -17,6 +17,7 @@
 
 - 기본값은 LLM disabled이며 공개 snapshot과 결정론적 fallback만으로 재현한다.
 - 승인된 private/OpenAI-compatible gateway를 연결할 때도 모델은 Tool 후보·위험 flag·질문만 반환한다.
+- endpoint는 HTTPS(로컬 테스트는 loopback)만 허용하고, `KIC_LLM_ALLOWED_HOSTS`에 명시된 host가 아니면 네트워크 호출 전에 거부한다.
 - 모델 출력은 허용된 최상위 필드, 허용 Tool, 배열 길이, 금지 필드를 검사한 뒤 정규화한다.
 - 숫자·가정·계산식·출처 ID·상태·의사결정·승인·거래·주문은 모델 출력에서 받지 않는다.
 - API key는 환경변수로만 주입하며 응답·trace·검토팩에 기록하지 않는다.

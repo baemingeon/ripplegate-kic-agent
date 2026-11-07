@@ -48,8 +48,13 @@ class ApprovedGatewayClient:
         self.base_url = os.getenv("KIC_LLM_URL", "").strip()
         self.model = os.getenv("KIC_LLM_MODEL", "").strip()
         self.allowed_models = tuple(item.strip() for item in os.getenv("KIC_LLM_ALLOWED_MODELS", "").split(",") if item.strip())
+        self.allowed_hosts = tuple(item.strip().lower().rstrip(".") for item in os.getenv("KIC_LLM_ALLOWED_HOSTS", "").split(",") if item.strip())
         self.policy = os.getenv("KIC_LLM_POLICY", "disabled").strip().lower()
-        self.timeout = min(max(int(os.getenv("KIC_LLM_TIMEOUT", "20")), 1), 60)
+        try:
+            configured_timeout = int(os.getenv("KIC_LLM_TIMEOUT", "20"))
+        except ValueError:
+            configured_timeout = 20
+        self.timeout = min(max(configured_timeout, 1), 60)
 
     def generate_json(self, prompt: str) -> dict[str, Any]:
         started = time.perf_counter()
@@ -70,6 +75,9 @@ class ApprovedGatewayClient:
                 loopback = parsed.hostname.lower() == "localhost"
         if parsed.username or parsed.password or not (parsed.scheme == "https" or (parsed.scheme == "http" and loopback)):
             return self._failure("endpoint_must_use_https_or_loopback_test", started)
+        hostname = (parsed.hostname or "").lower().rstrip(".")
+        if not hostname or hostname not in self.allowed_hosts:
+            return self._failure("endpoint_host_not_allowlisted", started)
         endpoint = self.base_url.rstrip("/")
         if not endpoint.endswith("/v1"):
             endpoint += "/v1"
