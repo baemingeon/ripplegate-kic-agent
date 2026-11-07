@@ -1,0 +1,166 @@
+{
+  "schema_version": "impact-graph.v1",
+  "dataset": "public_snapshot",
+  "scenario_id": "red-sea-routing-public-snapshot-3m",
+  "title": "홍해 항로 우회 공개자료 snapshot의 3개월 파급경로",
+  "subtitle": "공식 공개자료 연결 시연 · 운영 전 승인된 source adapter 필요",
+  "as_of_date": "2026-11-07",
+  "analysis_horizon": "3개월",
+  "origin": {
+    "id": "event_red_sea",
+    "label": "홍해·바브엘만데브 항로 우회",
+    "type": "event",
+    "x": 61,
+    "y": 52
+  },
+  "nodes": [
+    {
+      "id": "event_red_sea",
+      "label": "홍해·바브엘만데브 항로 우회",
+      "short_label": "홍해 항로",
+      "type": "event",
+      "x": 61,
+      "y": 52
+    },
+    {
+      "id": "europe_importers",
+      "label": "유럽 수입·제조업",
+      "short_label": "유럽 수입·제조",
+      "type": "industry",
+      "x": 46,
+      "y": 35
+    },
+    {
+      "id": "asia_exporters",
+      "label": "아시아 수출기업",
+      "short_label": "아시아 수출",
+      "type": "industry",
+      "x": 84,
+      "y": 38
+    },
+    {
+      "id": "energy_market_public",
+      "label": "에너지·운송비 시장",
+      "short_label": "에너지·운송비",
+      "type": "asset",
+      "x": 70,
+      "y": 38
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_transit_europe",
+      "from": "event_red_sea",
+      "to": "europe_importers",
+      "channel": "항해기간·납기",
+      "direction": "negative",
+      "lag": "즉시 관찰",
+      "confidence": 1.0,
+      "status": "VERIFIED",
+      "impact_summary": "UNCTAD 공개자료에 항로 우회 시 특정 항로의 항해기간이 24일에서 54일로 증가한 사례가 기록됨",
+      "evidence_ids": ["PUB-UNCTAD-001"],
+      "assumptions": ["UNCTAD가 제시한 Yanbu–South Korea 사례를 대표 관찰값으로 표시"],
+      "observed_only": true,
+      "observed": {
+        "before": 24,
+        "after": 54,
+        "delta": 30,
+        "unit": "항해일"
+      },
+      "next_action": "대상 투자·산업의 실제 노선, 재고일수, 납기 계약을 추가 확인"
+    },
+    {
+      "id": "edge_energy_asia_public",
+      "from": "event_red_sea",
+      "to": "asia_exporters",
+      "channel": "에너지·운송비",
+      "direction": "negative",
+      "lag": "2–8주",
+      "confidence": 0.58,
+      "status": "INFERRED",
+      "impact_summary": "공개 유가 snapshot을 비용 충격의 관찰 맥락으로 사용하고, 기업별 전가율·노출도는 시나리오로 둠",
+      "evidence_ids": ["PUB-EIA-001", "PUB-UNCTAD-001"],
+      "assumptions": ["유가·운송비 변화가 기업 원가로 일부 전이된다는 가정", "기업별 에너지 원가 비중은 추가 확인 필요"],
+      "next_action": "기업별 에너지 원가 비중·운임 계약·환율 민감도 연결",
+      "public_observation": {
+        "latest_available_brent_usd_per_barrel": 107.03,
+        "period_label": "2026-11-02~2026-11-06 일부 관측값",
+        "unit": "USD/bbl",
+        "trade_query_reference": {
+          "reporter": "Rep. of Korea",
+          "partner": "Saudi Arabia",
+          "hs_code": "2709",
+          "period": "2025",
+          "status": "reference_only",
+          "note": "UN Comtrade query URL·메타데이터만 참조하며 원시 응답 금액·수량은 공개 snapshot에 재배포하지 않음. 승인·라이선스된 adapter 연결 전 노출도는 계산하지 않음"
+        }
+      }
+    },
+    {
+      "id": "edge_trade_exposure_hold",
+      "from": "event_red_sea",
+      "to": "energy_market_public",
+      "channel": "무역노출·공급망",
+      "direction": "uncertain",
+      "lag": "미정",
+      "confidence": null,
+      "status": "HOLD",
+      "impact_summary": "국가·품목별 무역노출을 산출할 UN Comtrade query가 packet에 아직 로드되지 않음",
+      "evidence_ids": ["PUB-COMTRADE-001"],
+      "assumptions": [],
+      "unresolved": ["trade_exposure_query_not_loaded", "country_hs_mapping_unresolved"],
+      "next_action": "동일 기준연도·HS 코드·파트너 기준의 UN Comtrade snapshot을 추가한 뒤 재실행"
+    }
+  ],
+  "sources": [
+    {
+      "id": "PUB-UNCTAD-001",
+      "title": "UNCTAD statement · Bab el-Mandeb 우회 시 항해기간 사례",
+      "issuer": "UN Trade and Development (UNCTAD)",
+      "published_at": null,
+      "retrieved_at": "2026-11-07",
+      "period": "공개 statement 내 사례",
+      "source_type": "official_public",
+      "url": "https://unctad.org/osgstatement/arria-formula-meeting-security-council-safe-seas-shared-security-protecting-freedom",
+      "verification_status": "linked",
+      "note": "UNCTAD 공개 문구의 Yanbu–South Korea 항해기간 24일→54일 사례를 관찰값으로 표시. 전체 시장·기업의 효과로 일반화하지 않음."
+    },
+    {
+      "id": "PUB-EIA-001",
+      "title": "Weekly Europe Brent Spot Price FOB",
+      "issuer": "U.S. Energy Information Administration (EIA)",
+      "published_at": "2026-11-07",
+      "retrieved_at": "2026-11-07",
+      "period": "2026-11-02~2026-11-06 일부 관측값",
+      "source_type": "official_public",
+      "url": "https://www.eia.gov/dnav/pet/hist/RBRTEw.htm",
+      "verification_status": "linked",
+      "note": "유가 관찰 맥락. 항로 우회와의 인과 또는 기업 손익 효과를 직접 의미하지 않음."
+    },
+    {
+      "id": "PUB-COMTRADE-001",
+      "title": "UN Comtrade 공식 무역 데이터베이스",
+      "issuer": "United Nations Statistics Division",
+      "published_at": null,
+      "retrieved_at": "2026-11-07",
+      "period": "2025 query 예정",
+      "source_type": "official_public",
+      "url": "https://comtradeplus.un.org/",
+      "verification_status": "not_loaded",
+      "note": "실제 국가·HS 코드·파트너 query가 packet에 연결되기 전까지 무역노출 수치 계산을 차단하는 placeholder가 아님."
+    },
+    {
+      "id": "PUB-COMTRADE-002",
+      "title": "UN Comtrade API preview · Rep. of Korea imports from Saudi Arabia · HS 2709",
+      "issuer": "United Nations Statistics Division",
+      "published_at": "2025",
+      "retrieved_at": "2026-11-07",
+      "period": "2025",
+      "source_type": "official_public",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=410&period=2025&cmdCode=2709&flowCode=M&partnerCode=682&partner2Code=0&motCode=0&customsCode=C00&breakdownMode=classic&includeDesc=true",
+      "verification_status": "reference_only",
+      "note": "쿼리 URL·reporter·partner·HS code·기간 메타데이터만 기록. API 응답의 원시 금액·수량은 공개 패키지에 재배포하지 않으며, 승인·라이선스된 adapter 연결 전 노출도 계산을 차단함."
+    }
+  ],
+  "disclosure": "공식 공개자료 snapshot을 연결한 시연이다. 관찰값·시나리오·미로드 무역자료를 분리하며 투자 권고나 실시간 운용자료가 아니다."
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "ripplegate-pilot-packet-manifest.v1",
+  "generated_at": "2026-11-08",
+  "status": "awaiting_human_pairing",
+  "timing_scope": "end_to_end_workflow",
+  "packets": [
+    {
+      "packet_id": "P01",
+      "dataset": "public_snapshot",
+      "user_goal": "홍해 항로 우회 이슈가 산업·자산으로 전이되는 경로와 검토 가능한 영향 범위를 확인해줘.",
+      "expected_decision": "HOLD",
+      "purpose": "정상 공개 snapshot에서 관찰값·시나리오·미로드 경로를 한 번에 분리하는 기준 packet"
+    },
+    {
+      "packet_id": "P02",
+      "dataset": "public_snapshot",
+      "user_goal": "포트폴리오 편입 비중과 한도를 고려해 이 이슈의 영향을 검토해줘.",
+      "expected_decision": "HOLD",
+      "purpose": "Portfolio Gate에서 context 확인과 한도 검토를 사람에게 남기는 packet"
+    },
+    {
+      "packet_id": "P03",
+      "dataset": "public_snapshot",
+      "user_goal": "이슈·기준일·근거 링크만 확인하고 숫자 계산은 하지 말아줘.",
+      "expected_decision": "REVIEW",
+      "purpose": "목적에 따라 계산 Tool을 선택하지 않는 최소 경로 packet"
+    },
+    {
+      "packet_id": "P04",
+      "dataset": "synthetic",
+      "user_goal": "합성 오류 packet의 기간 충돌 경로는 보류하고 검토 가능한 영향 범위만 보여줘.",
+      "expected_decision": "HOLD",
+      "purpose": "기간·근거 충돌을 FactGate가 HOLD하고 REPLAN으로 넘기는 통제 packet"
+    },
+    {
+      "packet_id": "P05",
+      "dataset": "public_snapshot",
+      "user_goal": "시장·유가·무역 자료를 확인하고 숫자로 계산해줘.",
+      "expected_decision": "HOLD",
+      "purpose": "not_loaded 무역자료는 단일 숫자 계산에서 제외하는 자료 품질 경계 packet"
+    }
+  ],
+  "human_entry_fields": [
+    "elapsed_minutes",
+    "rework_count",
+    "source_gaps",
+    "calculation_inconsistencies",
+    "decision"
+  ],
+  "rules": [
+    "사람의 시간·품질 수치는 실제 stopwatch와 review log가 있을 때만 입력",
+    "Agent runtime-only와 end_to_end_workflow의 사람 시간은 직접 비교하지 않음",
+    "P01~P05가 모두 manual·agent 쌍을 갖추기 전 시간절감률을 발표하지 않음"
+  ]
+}

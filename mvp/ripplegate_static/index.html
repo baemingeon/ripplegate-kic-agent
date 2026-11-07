@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>RippleGate · Global Impact Review</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #0d1d31;
+      --panel-2: #102640;
+      --panel-3: #132e4a;
+      --line: rgba(170, 205, 237, .16);
+      --line-strong: rgba(170, 205, 237, .28);
+      --text: #eef6ff;
+      --muted: #8ea6bf;
+      --cyan: #5fe8ff;
+      --cyan-2: #10b8d5;
+      --amber: #ffbe5c;
+      --orange: #ff8c55;
+      --green: #68dfac;
+      --red: #ff8192;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .26);
+      font-family: Inter, Pretendard, "Noto Sans KR", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 78% -10%, rgba(35, 123, 170, .22), transparent 34rem),
+        radial-gradient(circle at 10% 28%, rgba(24, 74, 129, .15), transparent 28rem),
+        var(--bg);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .5; }
+    .shell { width: min(1480px, calc(100% - 48px)); margin: 0 auto; }
+    .topbar {
+      height: 76px;
+      border-bottom: 1px solid rgba(170, 205, 237, .12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      width: 34px; height: 34px; border: 1px solid rgba(95, 232, 255, .75);
+      border-radius: 50%; position: relative; box-shadow: 0 0 22px rgba(95, 232, 255, .28);
+    }
+    .brand-mark::before, .brand-mark::after { content: ""; position: absolute; background: var(--cyan); border-radius: 999px; }
+    .brand-mark::before { width: 7px; height: 7px; top: 12px; left: 12px; box-shadow: 12px -8px 0 -1px var(--amber), -11px 8px 0 -2px var(--cyan); }
+    .brand-mark::after { width: 24px; height: 1px; top: 16px; left: 5px; transform: rotate(-28deg); opacity: .7; }
+    .brand-name { font-size: 17px; font-weight: 780; letter-spacing: .03em; }
+    .brand-sub { color: var(--muted); font-size: 11px; margin-top: 1px; }
+    .top-meta { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 11px; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px rgba(104, 223, 172, .8); }
+    .pill { border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; color: #b9d1e7; background: rgba(255,255,255,.025); }
+
+    .hero { padding: 34px 0 20px; display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+    .eyebrow { color: var(--cyan); text-transform: uppercase; letter-spacing: .16em; font-size: 10px; font-weight: 760; }
+    h1 { margin: 7px 0 8px; font-size: clamp(27px, 3.2vw, 42px); line-height: 1.08; letter-spacing: -.045em; }
+    .hero-copy { color: #b7c8d9; max-width: 720px; font-size: 15px; margin: 0; }
+    .hero-note { max-width: 310px; color: var(--muted); font-size: 12px; text-align: right; }
+    .hero-note strong { display: block; color: var(--text); font-size: 12px; margin-bottom: 3px; }
+
+    .workspace { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(390px, .75fr); gap: 18px; align-items: start; }
+    .card { border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(145deg, rgba(16, 38, 64, .88), rgba(9, 24, 41, .94)); box-shadow: var(--shadow); }
+    .map-card { height: 610px; min-height: 610px; overflow: hidden; position: relative; }
+    .map-head { position: absolute; top: 20px; left: 22px; right: 22px; display: flex; justify-content: space-between; z-index: 3; gap: 12px; }
+    .map-title { font-size: 13px; font-weight: 720; }
+    .map-sub { color: var(--muted); font-size: 11px; margin-top: 4px; }
+    .map-legend { display: flex; gap: 10px; align-items: center; color: var(--muted); font-size: 10px; padding-top: 1px; }
+    .legend-item { display: flex; gap: 5px; align-items: center; }
+    .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .legend-dot.event { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
+    .legend-dot.path { background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+    .map-stage { position: absolute; inset: 0; display: grid; place-items: center; background: #071525; }
+    .map-stage img { width: 100%; height: 100%; object-fit: cover; opacity: .84; }
+    .map-stage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 17, 31, .24) 0%, transparent 30%, rgba(7, 17, 31, .42) 100%); pointer-events: none; }
+    .map-overlay { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+    .map-overlay svg { width: 100%; height: 100%; }
+    .path-line { fill: none; stroke: var(--cyan); stroke-width: .28; stroke-linecap: round; stroke-dasharray: 1.3 1.3; opacity: .78; filter: drop-shadow(0 0 4px rgba(95, 232, 255, .72)); }
+    .path-line.warn { stroke: var(--amber); filter: drop-shadow(0 0 4px rgba(255, 190, 92, .72)); }
+    .path-line.hold { stroke: var(--red); stroke-dasharray: .6 1.2; opacity: .72; }
+    .point { fill: var(--cyan); stroke: #d9fbff; stroke-width: .22; filter: drop-shadow(0 0 4px rgba(95, 232, 255, .9)); }
+    .point.origin { fill: var(--amber); filter: drop-shadow(0 0 7px rgba(255, 190, 92, .95)); }
+    .map-label { position: absolute; transform: translate(-50%, -50%); padding: 4px 7px; border-radius: 6px; font-size: 10px; color: #d8e7f5; background: rgba(5, 17, 30, .8); border: 1px solid rgba(170, 205, 237, .18); white-space: nowrap; backdrop-filter: blur(4px); }
+    .map-label.origin { color: #ffe4a9; border-color: rgba(255, 190, 92, .42); }
+    .map-footer { position: absolute; bottom: 18px; left: 22px; right: 22px; display: flex; justify-content: space-between; align-items: end; gap: 18px; z-index: 3; }
+    .event-chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,190,92,.42); background: rgba(13, 27, 44, .84); padding: 9px 11px; border-radius: 9px; color: #ffe1a1; font-size: 12px; }
+    .event-chip span { width: 7px; height: 7px; background: var(--amber); border-radius: 50%; box-shadow: 0 0 10px var(--amber); }
+    .map-asof { color: #9fb7cb; font-size: 10px; text-align: right; }
+
+    .agent-card { padding: 23px; min-height: 610px; display: flex; flex-direction: column; }
+    .section-kicker { color: var(--muted); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; font-weight: 720; }
+    .agent-head { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+    .agent-head h2 { margin: 5px 0 0; font-size: 19px; letter-spacing: -.025em; }
+    .agent-badge { padding: 5px 8px; font-size: 10px; color: var(--cyan); border: 1px solid rgba(95,232,255,.28); background: rgba(95,232,255,.06); border-radius: 6px; white-space: nowrap; }
+    .goal-box { margin-top: 20px; padding: 13px; border-radius: 11px; border: 1px solid var(--line); background: rgba(255,255,255,.025); }
+    .goal-box .label { color: var(--muted); font-size: 10px; margin-bottom: 5px; }
+    .goal-box textarea { width: 100%; min-height: 52px; resize: vertical; box-sizing: border-box; border: 1px solid var(--line-strong); background: #081a2d; color: #d9e7f3; border-radius: 8px; padding: 9px 10px; outline: none; font: inherit; font-size: 12px; line-height: 1.45; }
+    .goal-box textarea:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(95,232,255,.1); }
+    .goal-hint { margin-top: 6px; color: var(--muted); font-size: 9px; line-height: 1.35; }
+    .control-row { display: flex; align-items: end; gap: 9px; margin-top: 14px; }
+    .control { flex: 1; }
+    label { display: block; color: var(--muted); font-size: 10px; margin-bottom: 5px; }
+    select, input { width: 100%; border: 1px solid var(--line-strong); background: #081a2d; color: var(--text); border-radius: 8px; padding: 9px 10px; outline: none; }
+    select:focus, input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(95,232,255,.1); }
+    .primary { border: 0; border-radius: 8px; padding: 10px 14px; color: #04151d; background: linear-gradient(135deg, #73efff, #20b8d6); font-weight: 800; white-space: nowrap; box-shadow: 0 8px 24px rgba(32,184,214,.2); }
+    .secondary { border: 1px solid var(--line-strong); border-radius: 8px; padding: 9px 12px; color: #c9deef; background: rgba(255,255,255,.035); font-weight: 700; }
+    .phase-rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 22px 0 18px; }
+    .phase { padding: 9px 8px; border-top: 2px solid var(--line-strong); color: var(--muted); font-size: 10px; }
+    .phase strong { display: block; color: #bcd3e8; font-size: 10px; margin-bottom: 3px; }
+    .phase.active { border-color: var(--cyan); color: var(--cyan); }
+    .phase.done { border-color: var(--green); }
+    .phase.done strong { color: var(--green); }
+    .panel-placeholder { display: grid; place-items: center; text-align: center; flex: 1; min-height: 235px; border: 1px dashed rgba(170,205,237,.2); border-radius: 11px; color: var(--muted); padding: 24px; }
+    .panel-placeholder strong { display: block; color: #dceaf5; margin-bottom: 6px; }
+    .plan-panel { flex: 1; min-height: 0; }
+    .plan-summary { border-left: 2px solid var(--cyan); padding-left: 11px; color: #c9dbea; font-size: 12px; margin-bottom: 13px; }
+    .tool-strip { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+    .tool { color: #a8c4d9; font-size: 10px; border: 1px solid var(--line); padding: 4px 6px; border-radius: 5px; background: rgba(255,255,255,.025); }
+    .tool.ready { color: var(--cyan); border-color: rgba(95,232,255,.25); }
+    .assumption-title { display: flex; justify-content: space-between; align-items: center; margin: 12px 0 7px; }
+    .assumption-title strong { font-size: 12px; }
+    .assumption-title span { color: var(--muted); font-size: 10px; }
+    .assumption-card { border: 1px solid var(--line); background: rgba(255,255,255,.024); border-radius: 9px; padding: 10px; margin-bottom: 7px; }
+    .assumption-card.hold { border-color: rgba(255,129,146,.28); background: rgba(255,129,146,.035); }
+    .assumption-card-head { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+    .assumption-card-head strong { font-size: 11px; }
+    .mini-status { font-size: 9px; padding: 3px 6px; border-radius: 999px; color: #bfe4f2; background: rgba(95,232,255,.09); }
+    .mini-status.hold { color: #ffc1ca; background: rgba(255,129,146,.1); }
+    .assumption-card p { margin: 5px 0 8px; color: var(--muted); font-size: 10px; }
+    .assumption-fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .assumption-fields label { margin: 0; font-size: 9px; }
+    .assumption-fields input { padding: 6px 6px; margin-top: 3px; font-size: 11px; }
+    .gate-note { margin: 11px 0; padding: 9px 10px; border-radius: 8px; background: rgba(255,190,92,.06); border: 1px solid rgba(255,190,92,.2); color: #d8c6a8; font-size: 10px; }
+    .action-row { display: flex; gap: 8px; justify-content: flex-end; }
+    .error { margin-top: 10px; padding: 9px; border: 1px solid rgba(255,129,146,.3); border-radius: 8px; color: #ffc1ca; background: rgba(255,129,146,.06); font-size: 11px; }
+
+    .results { margin: 18px 0 38px; display: none; }
+    .results.visible { display: block; }
+    .results-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; margin-bottom: 13px; }
+    .results-head h2 { font-size: 20px; letter-spacing: -.03em; margin: 5px 0 3px; }
+    .results-head p { color: var(--muted); margin: 0; font-size: 12px; }
+    .result-actions { display: flex; gap: 7px; }
+    .count-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .count { padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(145deg, rgba(18,47,75,.8), rgba(9,24,41,.9)); }
+    .count .number { font-size: 28px; font-weight: 780; line-height: 1; }
+    .count .name { margin-top: 7px; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .12em; }
+    .count.verified .number { color: var(--green); }
+    .count.scenario .number { color: var(--amber); }
+    .count.hold .number { color: var(--red); }
+    .comparison { margin-top: 12px; border: 1px solid rgba(170,205,237,.16); border-radius: 12px; background: rgba(9,24,41,.76); padding: 14px; }
+    .comparison-head { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 9px; }
+    .comparison-head strong { font-size: 12px; }
+    .comparison-head span { color: var(--muted); font-size: 10px; }
+    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .comparison-box { border: 1px solid var(--line); border-radius: 9px; padding: 11px; min-height: 92px; }
+    .comparison-box.baseline { background: rgba(255,255,255,.02); }
+    .comparison-box.ripple { border-color: rgba(95,232,255,.26); background: rgba(95,232,255,.045); }
+    .comparison-box h3 { margin: 0 0 7px; color: #dceafa; font-size: 11px; }
+    .comparison-box p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
+    .comparison-foot { color: #71899f; font-size: 9px; margin-top: 8px; }
+    .result-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr); gap: 12px; margin-top: 12px; }
+    .result-card { border: 1px solid var(--line); border-radius: 12px; background: rgba(11, 28, 47, .82); overflow: hidden; }
+    .result-card-head { padding: 14px 15px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .result-card-head strong { font-size: 12px; }
+    .result-card-head span { color: var(--muted); font-size: 10px; }
+    .path-list { padding: 4px 15px 10px; }
+    .path-row { display: grid; grid-template-columns: 1.35fr .8fr .85fr; gap: 12px; padding: 13px 0; border-bottom: 1px solid rgba(170,205,237,.1); align-items: center; }
+    .path-row:last-child { border-bottom: 0; }
+    .path-name { color: #dbeafa; font-size: 11px; font-weight: 720; }
+    .path-meta { color: var(--muted); font-size: 10px; margin-top: 3px; overflow-wrap: anywhere; }
+    .path-value { font-size: 15px; font-weight: 760; }
+    .path-value.negative { color: #ffaf9d; }
+    .path-range { color: var(--muted); font-size: 10px; }
+    .status { display: inline-flex; width: max-content; padding: 4px 7px; border-radius: 999px; font-size: 9px; letter-spacing: .06em; font-weight: 800; }
+    .status.verified { color: #aaf4cf; background: rgba(104,223,172,.1); border: 1px solid rgba(104,223,172,.22); }
+    .status.scenario { color: #ffe1a5; background: rgba(255,190,92,.1); border: 1px solid rgba(255,190,92,.24); }
+    .status.hold { color: #ffc0c9; background: rgba(255,129,146,.1); border: 1px solid rgba(255,129,146,.22); }
+    .path-next { color: var(--muted); font-size: 10px; text-align: right; overflow-wrap: anywhere; }
+    .ledger-list, .trace-list { padding: 5px 15px 12px; }
+    .ledger-item { padding: 11px 0; border-bottom: 1px solid rgba(170,205,237,.1); }
+    .ledger-item:last-child { border-bottom: 0; }
+    .ledger-id { color: var(--cyan); font-size: 10px; font-weight: 760; }
+    .ledger-title { color: #dceafa; font-size: 11px; margin: 3px 0; }
+    .ledger-meta { color: var(--muted); font-size: 10px; }
+    .ledger-actions { margin-top: 7px; display: flex; align-items: center; gap: 8px; }
+    .source-link { display: inline-flex; align-items: center; gap: 4px; color: var(--cyan); font-size: 10px; font-weight: 760; text-decoration: none; border-bottom: 1px solid rgba(95,232,255,.35); padding-bottom: 1px; }
+    .source-link:hover, .source-link:focus { color: #d9fbff; border-color: var(--cyan); }
+    .source-state { color: #71899f; font-size: 10px; }
+    .trace-item { display: grid; grid-template-columns: 86px 60px 1fr; gap: 8px; align-items: start; padding: 8px 0; border-bottom: 1px solid rgba(170,205,237,.1); font-size: 10px; }
+    .trace-item:last-child { border-bottom: 0; }
+    .trace-stage { color: #bcd5e8; font-weight: 760; }
+    .trace-state { color: var(--green); font-weight: 760; }
+    .trace-state.hold { color: var(--red); }
+    .trace-state.wait { color: var(--amber); }
+    .trace-message { color: var(--muted); }
+    .replan { margin: 12px 15px 15px; padding: 11px; border-radius: 8px; color: #d7c6aa; background: rgba(255,190,92,.06); border: 1px solid rgba(255,190,92,.18); font-size: 10px; }
+    .disclosure { margin: 15px 0 0; color: #7691a9; font-size: 10px; line-height: 1.65; }
+    footer { border-top: 1px solid rgba(170,205,237,.1); padding: 18px 0 30px; color: #6f879b; font-size: 10px; display: flex; justify-content: space-between; gap: 20px; }
+
+    @media (max-width: 1040px) {
+      .workspace, .result-grid { grid-template-columns: 1fr; }
+      .map-card { height: 540px; min-height: 540px; }
+      .agent-card { min-height: 540px; }
+      .hero-note { display: none; }
+    }
+    @media (max-width: 640px) {
+      .shell { width: min(100% - 24px, 1480px); }
+      .topbar { height: 65px; }
+      .top-meta .pill { display: none; }
+      .hero { padding-top: 24px; }
+      h1 { font-size: 30px; }
+      .hero-copy { font-size: 13px; }
+      .map-card { height: 410px; min-height: 410px; }
+      .map-head { left: 15px; right: 15px; top: 14px; }
+      .map-legend { display: none; }
+      .map-footer { left: 15px; right: 15px; bottom: 13px; }
+      .map-label { font-size: 8px; padding: 3px 5px; }
+      .agent-card { padding: 17px; min-height: 560px; }
+      .control-row { align-items: stretch; flex-direction: column; }
+      .primary { width: 100%; }
+      .path-row { grid-template-columns: 1fr auto; gap: 6px 10px; }
+      .path-row > :nth-child(2) { grid-column: 2; grid-row: 1 / span 2; text-align: right; }
+      .path-row > :nth-child(3) { grid-column: 1 / span 2; text-align: left; }
+      .count-grid { gap: 6px; }
+      .count { padding: 11px; }
+      .count .number { font-size: 23px; }
+      .count .name { font-size: 8px; letter-spacing: .05em; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .results-head { align-items: start; flex-direction: column; }
+      .result-actions { width: 100%; }
+      .result-actions button { flex: 1; }
+      footer { display: block; }
+      footer span { display: block; margin-top: 5px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar shell">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true"></div>
+      <div><div class="brand-name">RippleGate</div><div class="brand-sub">Global Impact Review · Agent MVP</div></div>
+    </div>
+    <div class="top-meta"><span class="status-dot"></span><span id="dataset-status">PUBLIC SNAPSHOT ONLINE</span><span class="pill">Human decision required</span></div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">From issue to evidence</div>
+        <h1>세계의 충격을<br>투자 검토의 언어로 바꿉니다.</h1>
+        <p class="hero-copy">RippleGate는 글로벌 이슈의 파급경로와 영향 가정을 제안하고, 사람이 확인한 시나리오만 계산한 뒤, 근거가 충돌하면 자동으로 보류합니다.</p>
+      </div>
+      <div class="hero-note"><strong>이 화면에서 보이는 것</strong>지도는 시작점입니다. 핵심 결과는 경로별 영향 범위·근거 상태·다음 행동으로 끝까지 연결됩니다.</div>
+    </section>
+
+    <section class="workspace">
+      <article class="card map-card">
+        <div class="map-head">
+          <div><div class="map-title">Global issue radar</div><div class="map-sub">선택된 사건의 국가·산업 파급경로</div></div>
+          <div class="map-legend"><span class="legend-item"><i class="legend-dot event"></i>origin</span><span class="legend-item"><i class="legend-dot path"></i>impact path</span></div>
+        </div>
+        <div class="map-stage">
+          <img src="/assets/ripplegate-world-map-v1.png" alt="글로벌 파급경로 지도">
+          <div class="map-overlay" aria-hidden="true">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path class="path-line" d="M61,52 Q53,42 46,35"></path>
+              <path class="path-line warn" d="M61,52 Q71,42 84,38"></path>
+              <path class="path-line hold" d="M61,52 Q65,44 70,38"></path>
+              <circle class="point origin" cx="61" cy="52" r="1.05"></circle>
+              <circle class="point" cx="46" cy="35" r=".72"></circle>
+              <circle class="point" cx="84" cy="38" r=".72"></circle>
+              <circle class="point" cx="70" cy="38" r=".72"></circle>
+            </svg>
+            <div id="map-label-event" class="map-label origin" style="left:61%;top:57%">홍해 항로</div>
+            <div id="map-label-europe" class="map-label" style="left:46%;top:30%">유럽 산업</div>
+            <div id="map-label-asia" class="map-label" style="left:84%;top:33%">아시아 수출</div>
+            <div id="map-label-energy" class="map-label" style="left:70%;top:33%">에너지·운송비</div>
+          </div>
+        </div>
+        <div class="map-footer">
+          <div class="event-chip"><span></span><strong id="event-title">중동 해상 운송 차질</strong></div>
+          <div class="map-asof">분석 기준일 <strong id="as-of">2026-11-07</strong><br><span id="dataset-caption">공개 snapshot · 3개월 horizon</span></div>
+        </div>
+      </article>
+
+      <article class="card agent-card">
+        <div class="agent-head"><div><div class="section-kicker">Agent workspace</div><h2>Impact path planner</h2></div><div class="agent-badge">RippleGate v0.1</div></div>
+        <div class="goal-box"><div class="label">사용자 목적 · Planner 입력</div><textarea id="goal" maxlength="800">이 글로벌 이슈가 어떤 경로로 산업·자산에 전이되는지 확인하고, 검토 가능한 영향 범위를 만들어줘.</textarea><div class="goal-hint">목적에 따라 필요한 Typed Tool을 선택합니다. 계산·가정·판정은 사람 확인과 결정론적 모듈을 거칩니다.</div></div>
+        <div class="control-row">
+          <div class="control"><label for="dataset">데이터 packet</label><select id="dataset"><option value="public_snapshot" selected>공식 공개 snapshot</option><option value="synthetic">합성 오류 시연 packet</option></select></div>
+          <div class="control"><label for="horizon">분석 기간</label><select id="horizon"><option value="3" selected>3개월 기본</option><option value="1">1개월 단기</option><option value="6">6개월 확장</option></select></div>
+          <button class="primary" id="start">Agent 분석 시작</button>
+        </div>
+        <div class="phase-rail"><div class="phase active" id="phase-plan"><strong>01 PLAN</strong>목적 분해</div><div class="phase" id="phase-verify"><strong>02 VERIFY</strong>가정·근거</div><div class="phase" id="phase-decide"><strong>03 REVIEW</strong>사람 판단</div></div>
+        <div id="placeholder" class="panel-placeholder"><div><strong>분석을 시작하면 Agent의 계획이 나타납니다.</strong>어떤 Tool을 선택했는지, 어떤 가정을 추천했는지, 왜 계산을 멈추는지 한 화면에서 확인할 수 있습니다.</div></div>
+        <div id="plan-panel" class="plan-panel" hidden></div>
+        <div id="error" class="error" hidden></div>
+      </article>
+    </section>
+
+    <section id="results" class="results">
+      <div class="results-head"><div><div class="section-kicker">Decision surface</div><h2>경로별 영향과 FactGate 판정</h2><p id="result-headline">—</p></div><div class="result-actions"><button class="secondary" id="download-json">감사 로그 저장</button><button class="secondary" id="download-pack">검토팩 저장</button></div></div>
+      <div class="count-grid"><div class="count verified"><div class="number" id="count-verified">0</div><div class="name">verified path</div></div><div class="count scenario"><div class="number" id="count-scenario">0</div><div class="name">scenario path</div></div><div class="count hold"><div class="number" id="count-hold">0</div><div class="name">hold / replan</div></div></div>
+      <div id="comparison" class="comparison" hidden></div>
+      <div class="result-grid">
+        <article class="result-card"><div class="result-card-head"><strong>Impact path ledger</strong><span>계산식·가정·다음 행동</span></div><div id="path-list" class="path-list"></div><div id="replan" class="replan"></div></article>
+        <div class="result-stack">
+          <article class="result-card"><div class="result-card-head"><strong>Evidence Ledger</strong><span>출처 연결 상태</span></div><div id="ledger-list" class="ledger-list"></div></article>
+          <article class="result-card" style="margin-top:12px"><div class="result-card-head"><strong>Agent trace</strong><span>재계획·검증 루프</span></div><div id="trace-list" class="trace-list"></div></article>
+        </div>
+      </div>
+      <p class="disclosure" id="disclosure">—</p>
+    </section>
+  </main>
+
+  <footer class="shell"><span>RippleGate · Public snapshot + synthetic workflow demo</span><span>자동 매매·투자승인·리스크 한도 변경을 실행하지 않습니다.</span></footer>
+
+  <script>
+    const state = { graph: null, plan: null, result: null, dataset: "public_snapshot", portfolioContext: null };
+    const DEFAULT_GOAL = "이 글로벌 이슈가 어떤 경로로 산업·자산에 전이되는지 확인하고, 검토 가능한 영향 범위를 만들어줘.";
+    const $ = (id) => document.getElementById(id);
+    const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"}[char]));
+
+    async function request(path, body) {
+      const response = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || data.error || "요청을 처리하지 못했습니다.");
+      return data;
+    }
+
+    function setError(message = "") { $("error").hidden = !message; $("error").textContent = message; }
+    function getGoal() { return String($("goal")?.value || DEFAULT_GOAL).trim().slice(0, 800) || DEFAULT_GOAL; }
+
+    function phase(name) {
+      ["plan", "verify", "decide"].forEach((item) => $("phase-" + item).classList.remove("active", "done"));
+      const order = ["plan", "verify", "decide"];
+      const idx = order.indexOf(name);
+      order.forEach((item, i) => $("phase-" + item).classList.toggle("done", i < idx));
+      $("phase-" + name).classList.add("active");
+    }
+
+    function assumptionCard(edge, assumption) {
+      const hold = edge.status === "HOLD";
+      if (hold) return `<div class="assumption-card hold"><div class="assumption-card-head"><strong>${esc(edge.impact_summary)}</strong><span class="mini-status hold">HOLD</span></div><p>${esc(assumption.basis)} · ${esc((edge.unresolved || []).join(", "))}</p><div style="color:#ffc1ca;font-size:10px">동일 기준일 자료가 확보되기 전에는 가정을 만들지 않습니다.</div></div>`;
+      if (edge.observed_only) {
+        const observed = edge.observed || {};
+        return `<div class="assumption-card" data-edge="${esc(edge.id)}"><div class="assumption-card-head"><strong>${esc(edge.impact_summary)}</strong><span class="mini-status">관찰값</span></div><p>${esc(assumption.basis)} · 사람은 관찰 범위와 적용 대상을 확인합니다.</p><div style="color:#aaf4cf;font-size:11px;font-weight:760">${esc(observed.before)}일 → ${esc(observed.after)}일 · +${esc(observed.delta)}일</div></div>`;
+      }
+      const status = edge.status === "INFERRED" ? "SCENARIO 추천" : "기본값 추천";
+      return `<div class="assumption-card" data-edge="${esc(edge.id)}"><div class="assumption-card-head"><strong>${esc(edge.impact_summary)}</strong><span class="mini-status">${status}</span></div><p>${esc(assumption.basis)} · 추천 범위는 민감도에 사용됩니다.</p><div class="assumption-fields"><label>충격 %<input data-field="shock_pct" type="number" min="0" max="100" step="0.1" value="${esc(assumption.shock_pct)}"></label><label>전가율<input data-field="pass_through" type="number" min="0" max="1" step="0.01" value="${esc(assumption.pass_through)}"></label><label>노출도<input data-field="exposure" type="number" min="0" max="1" step="0.01" value="${esc(assumption.exposure)}"></label></div></div>`;
+    }
+
+    function renderPlan(data) {
+      state.plan = data;
+      phase("verify");
+      $("placeholder").hidden = true;
+      const edges = state.graph.edges;
+      const calculatorSelected = data.plan.selected_tools.includes("path_calculate");
+      const cards = calculatorSelected ? edges.map((edge) => assumptionCard(edge, data.plan.assumptions[edge.id])).join("") : "";
+      const tools = data.plan.tools.map((tool) => `<span class="tool ${tool.selected ? "ready" : ""}" title="${esc(tool.label)}">${tool.selected ? "✓ " : ""}${esc(tool.name)}</span>`).join("");
+      const holdEdge = edges.find((edge) => edge.status === "HOLD");
+      const calculationBlock = calculatorSelected
+        ? `<div class="assumption-title"><strong>추천 가정</strong><span>기본값은 Agent가 제안 · 예외만 수정</span></div>${cards}<div class="gate-note">FactGate는 출처·기간 충돌이 남아 있는 경로를 단일 숫자로 만들지 않습니다. 이번 packet에서 HOLD인 경로는 <strong>${esc(holdEdge ? holdEdge.channel : "없음")}</strong>입니다.</div>`
+        : `<div class="gate-note">이번 목적에는 계산 Tool을 선택하지 않았습니다. 원문·기준일 확인만 수행하고, 수치·가정·투자 영향은 확정하지 않습니다.</div>`;
+      const portfolioRequired = Boolean(data.plan.investment_context?.required);
+      const quality = data.data_quality || {};
+      const qualityLine = quality.status_label ? `<br><span style="color:#f0cf8b">자료 품질: ${esc(quality.status_label)} · source ${esc(quality.source_count)}건 · ${esc(quality.calculation_boundary || "")}</span>` : "";
+      const portfolioDemo = portfolioRequired ? `<button class="secondary" id="demo-portfolio">합성 Portfolio context로 시연</button>` : "";
+      const actionBlock = calculatorSelected
+        ? `<div class="action-row"><button class="secondary" id="reset">다시 선택</button>${portfolioDemo}<button class="primary" id="confirm">추천 가정 확인 → 계산 실행</button></div>`
+        : `<div class="action-row"><button class="secondary" id="reset">다른 목적 입력</button></div>`;
+      $("plan-panel").hidden = false;
+      $("plan-panel").innerHTML = `<div class="plan-summary"><strong>Agent 계획:</strong> ${esc(data.plan.planner.reason)}<br><span style="color:#8ea6bf">입력 목적: ${esc(data.plan.user_goal || getGoal())}<br>${calculatorSelected ? "계산은 사람 확인 이후에만 실행됩니다." : "이번 단계는 근거 확인으로 종료됩니다."}</span>${qualityLine}</div><div class="tool-strip">${tools}</div>${calculationBlock}${actionBlock}`;
+      $("start").disabled = true;
+      $("reset").addEventListener("click", reset);
+      if (calculatorSelected) $("confirm").addEventListener("click", runCalculation);
+      if (portfolioRequired) $("demo-portfolio").addEventListener("click", async () => {
+        state.portfolioContext = {
+          schema_version: "ripplegate-portfolio-context.v1",
+          disclosure: "Synthetic context for workflow rehearsal. Not a KIC portfolio or investment recommendation.",
+          as_of_date: state.graph.as_of_date,
+          target_node_id: "asia_exporters",
+          target_label: "아시아 수출기업 관련 자산",
+          proposed_weight_pct: 3.0,
+          current_exposure_pct: 10.0,
+          limit_pct: 15.0,
+        };
+        await runCalculation();
+      });
+    }
+
+    async function startPlan() {
+      setError("");
+      $("start").disabled = true;
+      $("start").textContent = "계획 생성 중…";
+      try {
+        const data = await request("/api/analyze", { phase: "plan", dataset: state.dataset, event_id: state.graph.origin.id, horizon_months: Number($("horizon").value), user_goal: getGoal() });
+        renderPlan(data);
+      } catch (error) {
+        setError(error.message);
+        $("start").disabled = false;
+      } finally { $("start").textContent = "Agent 분석 시작"; }
+    }
+
+    function collectAssumptions() {
+      const result = {};
+      document.querySelectorAll("[data-edge]").forEach((card) => {
+        const item = {};
+        card.querySelectorAll("[data-field]").forEach((input) => { item[input.dataset.field] = Number(input.value); });
+        result[card.dataset.edge] = item;
+      });
+      return result;
+    }
+
+    async function runCalculation() {
+      setError("");
+      $("confirm").disabled = true;
+      $("confirm").textContent = "검증·계산 중…";
+      try {
+        const data = await request("/api/analyze", { phase: "run", dataset: state.dataset, event_id: state.graph.origin.id, horizon_months: Number($("horizon").value), human_confirmed: true, user_goal: getGoal(), assumptions: collectAssumptions(), portfolio_context: state.portfolioContext });
+        state.result = data;
+        renderResult(data);
+      } catch (error) {
+        setError(error.message);
+        $("confirm").disabled = false;
+      } finally { $("confirm").textContent = "추천 가정 확인 → 계산 실행"; }
+    }
+
+    function statusClass(status) { return String(status || "").toLowerCase(); }
+    function sourceLink(item) {
+      const url = String(item.url || "");
+      if (!/^https:\/\//i.test(url)) return `<span class="source-state">원문 링크 없음 · 합성 또는 로컬 packet</span>`;
+      const label = String(item.verification_status || "") === "not_loaded" ? "원문 확인 · 수치 미로드 ↗" : "원문 열기 ↗";
+      return `<a class="source-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+    }
+    function formatImpact(impact, portfolioImpact = null) {
+      if (!impact) return `<div class="path-value" style="color:var(--red)">계산 중단</div><div class="path-range">미해결 조건</div>`;
+      const unit = impact.unit || "영향지수 pp";
+      const portfolioLine = portfolioImpact ? `<div class="path-range" style="color:#aaf4cf">포트폴리오 민감도 ${Number(portfolioImpact.base).toFixed(2)} ${esc(portfolioImpact.unit || "지수 pp")}</div>` : "";
+      if (impact.kind === "observed" || impact.observed) {
+        return `<div class="path-kind observed">관찰값</div><div class="path-value negative">${impact.base.toFixed(2)} ${esc(unit)}</div><div class="path-range">원문 ${esc(impact.observed.before)} → ${esc(impact.observed.after)}</div>${portfolioLine}`;
+      }
+      return `<div class="path-kind scenario">시나리오 계산</div><div class="path-value negative">${impact.base.toFixed(2)} ${esc(unit)}</div><div class="path-range">범위 ${impact.low.toFixed(2)}–${impact.high.toFixed(2)} ${esc(unit)}</div>${portfolioLine}`;
+    }
+    function renderResult(data) {
+      phase("decide");
+      $("count-verified").textContent = data.status_counts.VERIFIED;
+      $("count-scenario").textContent = data.status_counts.SCENARIO;
+      $("count-hold").textContent = data.status_counts.HOLD;
+      $("result-headline").textContent = data.review_pack.headline + " · 최종 투자 판단은 사람에게 남아 있습니다.";
+      $("path-list").innerHTML = data.paths.map((path) => {
+        const value = formatImpact(path.impact, path.portfolio_impact);
+        return `<div class="path-row"><div><span class="status ${statusClass(path.status)}">${esc(path.status_label)}</span><div class="path-name">${esc(path.from_label)} → ${esc(path.to_label)}</div><div class="path-meta">${esc(path.channel)} · ${esc(path.lag)} · ${esc(path.formula)}</div></div><div>${value}</div><div class="path-next">${esc(path.next_action)}</div></div>`;
+      }).join("");
+      const nextTools = (data.replan.next_tools || []).join(" → ");
+      const replanDetail = data.replan.triggered && nextTools ? `<br><span style="color:#9eb4c8">다음 후보 Tool: ${esc(nextTools)} · 추가자료 입력 전에는 실행하지 않음</span>` : "";
+      const portfolioDetail = data.portfolio_gate?.required ? `<br><span style="color:#9eb4c8">Portfolio Gate: ${esc(data.portfolio_gate.status_label)} · ${esc(data.portfolio_gate.disclosure || data.portfolio_gate.next_action || "")}</span>` : "";
+      const critic = data.critic || { status: "UNKNOWN", findings: [], next_action: "" };
+      const criticDetail = `<br><span style="color:${critic.status === "PASS" ? "#aaf4cf" : "#ffb3b3"}">Critic: ${esc(critic.status)} · ${esc(critic.findings?.length ? critic.findings.map((finding) => finding.code).join(", ") : (critic.next_action || "독립 불변식 확인"))}</span>`;
+      const quality = data.data_quality || {};
+      const qualityDetail = quality.status_label ? `<br><span style="color:#9eb4c8">자료 품질: ${esc(quality.status_label)} · ${esc(quality.calculation_boundary || "")}</span>` : "";
+      $("replan").innerHTML = data.replan.triggered ? `<strong>REPLAN / HOLD</strong><br>${esc(data.replan.next_step)}${replanDetail}${portfolioDetail}${criticDetail}${qualityDetail}` : `<strong>FACTGATE PASS</strong><br>${esc(data.replan.next_step)}${portfolioDetail}${criticDetail}${qualityDetail}`;
+      $("ledger-list").innerHTML = data.evidence_ledger.map((item) => `<div class="ledger-item"><div class="ledger-id">${esc(item.id)} · ${esc(item.verification_status)}</div><div class="ledger-title">${esc(item.title)}</div><div class="ledger-meta">${esc(item.issuer)} · 자료유형 ${esc(item.source_type || "미분류")} · 기준기간 ${esc(item.period)} · 수집 ${esc(item.retrieved_at || "미기록")} · ${esc(item.note)}</div><div class="ledger-actions">${sourceLink(item)}</div></div>`).join("");
+      $("trace-list").innerHTML = data.trace.map((item) => `<div class="trace-item"><div class="trace-stage">${esc(item.stage)}</div><div class="trace-state ${String(item.state).toLowerCase()}">${esc(item.state)}</div><div class="trace-message">${esc(item.message)}</div></div>`).join("");
+      $("disclosure").textContent = data.disclosure;
+      $("results").classList.add("visible");
+      loadComparison(data);
+      $("results").scrollIntoView({ behavior: "smooth", block: "start" });
+      $("confirm").disabled = true;
+    }
+
+    async function loadComparison(data) {
+      try {
+        const comparison = await request("/api/compare", { dataset: state.dataset, event_id: state.graph.origin.id, horizon_months: Number($("horizon").value), user_goal: getGoal(), assumptions: collectAssumptions(), portfolio_context: state.portfolioContext });
+        const baseline = comparison.baseline;
+        const ripple = comparison.ripplegate;
+        $("comparison").hidden = false;
+        $("comparison").innerHTML = `<div class="comparison-head"><strong>같은 입력 · 두 경로 비교</strong><span>통제군 비교 · 정확도 benchmark 아님</span></div><div class="comparison-grid"><div class="comparison-box baseline"><h3>요약형 통제군</h3><p>한 문장 요약 · 경로 ${baseline.path_count}개 · 숫자 확정 없음<br>근거 상태·사람 가정 Gate·HOLD/REPLAN 없음</p></div><div class="comparison-box ripple"><h3>RippleGate</h3><p>${ripple.path_count}개 경로 · VERIFIED ${ripple.status_counts.VERIFIED} / SCENARIO ${ripple.status_counts.SCENARIO} / HOLD ${ripple.status_counts.HOLD}<br>Evidence ${ripple.evidence_count}건 · ${ripple.replan.triggered ? "REPLAN 실행" : "FactGate 통과"}</p></div></div><div class="comparison-foot">동일 packet에서 “요약”과 “검토 가능한 업무 결과”의 구조 차이를 보여줍니다. 요약형 통제군의 정확도나 환각률을 주장하지 않습니다.</div>`;
+      } catch (error) { setError(`비교 경로를 불러오지 못했습니다: ${error.message}`); }
+    }
+
+    function download(filename, content, type) {
+      const blob = new Blob([content], { type });
+      const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = filename; link.click(); URL.revokeObjectURL(link.href);
+    }
+
+    function packMarkdown(data) {
+      const lines = [`# ${data.review_pack.title}`, "", `- 실행 ID: ${data.run_id}`, `- 기준일: ${data.scenario.as_of_date}`, `- 분석기간: ${data.scenario.analysis_horizon}`, `- 판정: ${data.decision}`, "", `## 요약`, data.review_pack.headline, "", "## 경로 결과"];
+      data.paths.forEach((path) => { const kind = path.impact?.kind === "observed" ? "관찰값" : path.impact ? "시나리오 계산" : "HOLD"; lines.push(`- **${path.status} / ${kind}** ${path.from_label} → ${path.to_label}: ${path.impact ? `${path.impact.base.toFixed(2)} ${path.impact.unit || "영향지수 pp"} (범위 ${path.impact.low.toFixed(2)}–${path.impact.high.toFixed(2)})` : "계산 중단"}`); if (path.portfolio_impact) lines.push(`  - 포트폴리오 민감도: ${path.portfolio_impact.base.toFixed(2)} ${path.portfolio_impact.unit}`); lines.push(`  - 다음 행동: ${path.next_action}`); });
+      lines.push("", "## 사람 확인 사항", `- ${data.review_pack.human_action}`, "- 자동 승인·매매·한도 변경 없음");
+      if (data.critic) lines.push("", "## 독립 Critic", `- 상태: ${data.critic.status}`, `- 다음 행동: ${data.critic.next_action || "-"}`, ...(data.critic.findings || []).map((finding) => `- ${finding.code}: ${finding.detail || ""}`));
+      if (data.portfolio_gate?.required) lines.push("", "## Portfolio Gate", `- 상태: ${data.portfolio_gate.status_label}`, `- 다음 행동: ${data.portfolio_gate.next_action}`, `- ${data.portfolio_gate.disclosure || "실제 포트폴리오 영향은 사람 확인 전 확정하지 않음"}`);
+      lines.push("", "## Disclosure", data.disclosure);
+      return lines.join("\n");
+    }
+
+    function reset() {
+      state.plan = null; state.result = null; state.portfolioContext = null; $("plan-panel").hidden = true; $("placeholder").hidden = false; $("results").classList.remove("visible"); $("comparison").hidden = true; $("start").disabled = false; phase("plan"); setError("");
+    }
+
+    async function loadDataset(dataset) {
+      state.dataset = dataset;
+      const graph = await fetch(`/api/graph?dataset=${encodeURIComponent(dataset)}`).then((response) => response.json());
+      state.graph = graph;
+      const nodes = Object.fromEntries(graph.nodes.map((node) => [node.type === "event" ? "event" : node.id, node]));
+      $("event-title").textContent = graph.origin.label;
+      $("map-label-event").textContent = graph.origin.short_label || graph.origin.label;
+      const europe = graph.nodes.find((node) => node.id.includes("europe"));
+      const asia = graph.nodes.find((node) => node.id.includes("asia"));
+      const energy = graph.nodes.find((node) => node.type === "asset");
+      if (europe) $("map-label-europe").textContent = europe.short_label || europe.label;
+      if (asia) $("map-label-asia").textContent = asia.short_label || asia.label;
+      if (energy) $("map-label-energy").textContent = energy.short_label || energy.label;
+      $("as-of").textContent = graph.as_of_date;
+      const publicData = graph.dataset === "public_snapshot";
+      $("dataset-status").textContent = publicData ? "PUBLIC SNAPSHOT ONLINE" : "SYNTHETIC DEMO ONLINE";
+      $("dataset-caption").textContent = publicData ? "공식 공개 snapshot · 3개월 horizon" : "합성 오류 시연 packet · 3개월 horizon";
+    }
+
+    $("dataset").addEventListener("change", async (event) => { reset(); try { await loadDataset(event.target.value); } catch (error) { setError(error.message); } });
+    $("start").addEventListener("click", startPlan);
+    $("download-json").addEventListener("click", () => { if (state.result) download(`${state.result.run_id}.json`, JSON.stringify(state.result, null, 2), "application/json"); });
+    $("download-pack").addEventListener("click", () => { if (state.result) download(`${state.result.run_id}-review-pack.md`, packMarkdown(state.result), "text/markdown"); });
+
+    loadDataset("public_snapshot").catch((error) => setError(error.message));
+  </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+{
+  "schema_version": "impact-graph.v1",
+  "scenario_id": "middle-east-shipping-disruption-3m",
+  "title": "중동 해상 운송 차질의 3개월 파급경로",
+  "subtitle": "MVP 합성 packet · 실제 운영 전 승인된 source adapter 필요",
+  "as_of_date": "2026-11-07",
+  "analysis_horizon": "3개월",
+  "origin": {
+    "id": "event_middle_east",
+    "label": "중동 해상 운송 차질",
+    "type": "event",
+    "x": 61,
+    "y": 52
+  },
+  "nodes": [
+    {
+      "id": "event_middle_east",
+      "label": "중동 해상 운송 차질",
+      "short_label": "중동 이슈",
+      "type": "event",
+      "x": 61,
+      "y": 52
+    },
+    {
+      "id": "europe_manufacturing",
+      "label": "유럽 제조업",
+      "short_label": "유럽 제조업",
+      "type": "industry",
+      "x": 46,
+      "y": 35
+    },
+    {
+      "id": "asia_exporters",
+      "label": "아시아 수출기업",
+      "short_label": "아시아 수출",
+      "type": "industry",
+      "x": 84,
+      "y": 38
+    },
+    {
+      "id": "energy_market",
+      "label": "원유·운송비 시장",
+      "short_label": "에너지·운송비",
+      "type": "asset",
+      "x": 70,
+      "y": 38
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_shipping_europe",
+      "from": "event_middle_east",
+      "to": "europe_manufacturing",
+      "channel": "해상 운송",
+      "direction": "negative",
+      "lag": "1–4주",
+      "confidence": 0.82,
+      "status": "VERIFIED",
+      "impact_summary": "운송 차질이 유럽 제조업의 조달비용과 납기를 압박할 가능성",
+      "evidence_ids": ["SYN-001"],
+      "assumptions": ["운송 차질이 분석기간 내 지속된다는 가정"],
+      "next_action": "운송량·보험료·주요 수입품목의 최신 snapshot 확인"
+    },
+    {
+      "id": "edge_energy_asia",
+      "from": "event_middle_east",
+      "to": "asia_exporters",
+      "channel": "원유·운송비",
+      "direction": "negative",
+      "lag": "2–8주",
+      "confidence": 0.54,
+      "status": "INFERRED",
+      "impact_summary": "에너지·운송비 상승이 아시아 수출기업의 원가와 마진에 전이될 수 있음",
+      "evidence_ids": ["SYN-002"],
+      "assumptions": ["원가 전가율과 환율이 일정하다는 가정", "대체 운송경로가 제한적이라는 가정"],
+      "next_action": "기업별 에너지 원가 비중과 환율 민감도 확인"
+    },
+    {
+      "id": "edge_supply_chain_hold",
+      "from": "event_middle_east",
+      "to": "energy_market",
+      "channel": "공급망 전이",
+      "direction": "uncertain",
+      "lag": "미정",
+      "confidence": null,
+      "status": "HOLD",
+      "impact_summary": "시장가격 자료와 무역자료의 기준기간이 달라 방향과 규모를 확정할 수 없음",
+      "evidence_ids": ["SYN-003"],
+      "assumptions": [],
+      "unresolved": ["period_alignment_unresolved", "source_period_conflict"],
+      "next_action": "동일 기준일의 시장가격과 무역 snapshot을 추가한 뒤 재실행"
+    }
+  ],
+  "sources": [
+    {
+      "id": "SYN-001",
+      "title": "MVP 합성 근거 · 해상 운송 차질 snapshot",
+      "issuer": "RippleGate demo packet",
+      "published_at": "2026-11-07",
+      "period": "2026-10",
+      "source_type": "synthetic_demo",
+      "url": null,
+      "verification_status": "linked",
+      "note": "예선·본선 시연용 합성 자료. 실제 시장자료가 아님."
+    },
+    {
+      "id": "SYN-002",
+      "title": "MVP 합성 근거 · 에너지 비용 전이 민감도",
+      "issuer": "RippleGate demo packet",
+      "published_at": "2026-11-07",
+      "period": "2026-10",
+      "source_type": "synthetic_demo",
+      "url": null,
+      "verification_status": "linked",
+      "note": "가정이 포함된 분석 경로. 확정 사실이 아니라 INFERRED로 표시."
+    },
+    {
+      "id": "SYN-003",
+      "title": "MVP 합성 근거 · 시장가격·무역기간 충돌 packet",
+      "issuer": "RippleGate demo packet",
+      "published_at": "2026-11-07",
+      "period": "혼합 기간",
+      "source_type": "synthetic_error_case",
+      "url": null,
+      "verification_status": "conflict",
+      "note": "FactGate가 기간 충돌을 발견해 HOLD하는 테스트 자료."
+    }
+  ],
+  "disclosure": "이 그래프의 선은 투자 권고가 아니며, MVP 합성 packet을 사용한 UI·Agent workflow 시연이다."
+}

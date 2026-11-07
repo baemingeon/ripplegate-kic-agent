@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RippleGate P01~P05 paired 측정 콘솔</title>
+  <style>
+    :root { color-scheme: dark; font-family: "Segoe UI", Pretendard, sans-serif; background:#07111f; color:#eaf4ff; }
+    body { margin:0; padding:28px; max-width:1180px; margin-inline:auto; }
+    h1 { margin:0 0 8px; font-size:26px; } p { color:#9eb4c8; line-height:1.55; }
+    .note { border:1px solid #274662; border-radius:10px; padding:12px 14px; background:#0d1d31; margin:18px 0; }
+    .note strong { color:#ffbe5c; } .toolbar { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; }
+    button { cursor:pointer; border:1px solid #3b6384; border-radius:7px; padding:8px 12px; color:#eaf4ff; background:#102640; font-weight:700; }
+    button.primary { border-color:#36c4dc; background:#123e52; } button:disabled { opacity:.45; cursor:not-allowed; }
+    .status { color:#8fe9ba; margin-left:8px; font-size:13px; }
+    .packet { border:1px solid #25445f; border-radius:12px; margin:14px 0; padding:14px; background:#0b1b2d; }
+    .packet-head { display:flex; justify-content:space-between; gap:12px; align-items:start; }
+    .packet h2 { margin:0 0 5px; font-size:16px; } .meta { color:#8da8bf; font-size:12px; }
+    .grid { display:grid; grid-template-columns:repeat(6,minmax(100px,1fr)); gap:8px; margin-top:12px; }
+    label { display:block; color:#9eb4c8; font-size:11px; } input, select { width:100%; box-sizing:border-box; margin-top:4px; border:1px solid #315675; border-radius:6px; padding:7px; background:#081827; color:#eaf4ff; }
+    .wide { grid-column:span 2; } .timer { color:#5fe8ff; font-variant-numeric:tabular-nums; font-size:15px; }
+    .harness { color:#8da8bf; font-size:11px; margin-top:8px; } .harness strong { color:#aaf4cf; }
+    @media (max-width:760px) { body{padding:16px}.grid{grid-template-columns:repeat(2,1fr)}.wide{grid-column:span 2} }
+  </style>
+</head>
+<body>
+  <h1>RippleGate P01~P05 paired 측정 콘솔</h1>
+  <p>같은 packet을 수작업과 RippleGate로 각각 수행한 실제 관찰값을 기록합니다. 이 화면은 수치를 자동 생성하지 않으며, 빈칸이 남아 있으면 paired 결과를 내보내지 않습니다.</p>
+  <div class="note"><strong>현재 상태:</strong> Agent harness 실행값은 참고값으로만 표시됩니다. 실제 수작업 stopwatch·review log를 확인하기 전에는 시간 절감률을 계산하거나 발표하지 않습니다. 실명·이메일 대신 익명 operator ID를 사용하세요.</div>
+  <div class="toolbar"><label style="min-width:180px">익명 operator ID<input id="operator" value="op-anon-01" pattern="[A-Za-z0-9_-]{2,64}"></label><button class="primary" id="export">검증 후 JSON 내보내기</button><span class="status" id="status">AWAITING_HUMAN_PAIRING</span></div>
+  <div id="packets"></div>
+  <script>
+    const packets = [
+      ["P01","public_snapshot","공개 경로 분리","HOLD",2355],
+      ["P02","public_snapshot","Portfolio Gate·한도 검토","HOLD",985],
+      ["P03","public_snapshot","근거만 확인·계산 미선택","REVIEW",942],
+      ["P04","synthetic","기간 충돌·REPLAN","HOLD",1529],
+      ["P05","public_snapshot","유가·무역 자료 경계","HOLD",1066],
+    ];
+    const decisions = ["REVIEW","HOLD","REQUEST_INFO"];
+    const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));
+    const root = document.querySelector("#packets");
+    const value = (id) => document.getElementById(id)?.value?.trim() || "";
+    function input(id, label, type="text", attrs="") { return `<label>${label}<input id="${id}" type="${type}" ${attrs}></label>`; }
+    root.innerHTML = packets.map(([id,dataset,goal,expected,ms]) => `<section class="packet" data-packet="${id}"><div class="packet-head"><div><h2>${id} · ${esc(goal)}</h2><div class="meta">dataset=${dataset} · 예상 판정=${expected}</div></div><div class="timer" id="timer-${id}">00:00.0</div></div><div class="grid"><div class="wide">${input(id+"-review","review log 참조","text","placeholder="+id+"-review.log")}</div>${input(id+"-manual","수작업 분","number","min=0 step=0.01")}${input(id+"-manual-rework","수작업 재작업","number","min=0 step=1")}${input(id+"-manual-gap","수작업 source gap","number","min=0 step=1")}${input(id+"-manual-calc","수작업 계산 오류","number","min=0 step=1")}<label>수작업 판정<select id="${id}-manual-decision"><option value="">선택</option>${decisions.map((d)=>`<option>${d}</option>`).join("")}</select></label><div class="wide">${input(id+"-trace","Agent trace 참조","text","value="+id+"-agent-runtime-20261108")}</div><div class="wide">${input(id+"-ledger","Evidence Ledger 참조","text","value="+id+"-agent-runtime-20261108")}</div>${input(id+"-agent","Agent 분","number",`min=0 step=0.001 value=${(ms/60000).toFixed(4)}`)}${input(id+"-agent-rework","Agent 재작업","number","min=0 step=1")}${input(id+"-agent-gap","Agent source gap","number","min=0 step=1")}${input(id+"-agent-calc","Agent 계산 오류","number","min=0 step=1")}<label>Agent 판정<select id="${id}-agent-decision"><option value="">선택</option>${decisions.map((d)=>`<option${d===expected?" selected":""}>${d}</option>`).join("")}</select></label></div><div class="harness">Agent harness 참고: <strong>${ms}ms</strong> · 수작업 값과 품질 필드는 실제 관찰 후 입력</div></section>`).join("");
+    function readPacket([id,dataset,,expected]) { const fields = ["review","trace","ledger","manual","manual-rework","manual-gap","manual-calc","manual-decision","agent","agent-rework","agent-gap","agent-calc","agent-decision"]; const row = { packet_id:id, dataset, expected_decision:expected }; for (const field of fields) row[field.replaceAll("-","_")] = value(`${id}-${field}`); return row; }
+    function missing(row) { return ["review","trace","ledger","manual","manual_rework","manual_gap","manual_calc","manual_decision","agent","agent_rework","agent_gap","agent_calc","agent_decision"].filter((field)=>!row[field]); }
+    document.querySelectorAll(".packet").forEach((card)=>{ const id=card.dataset.packet; let started=0, timer; card.insertAdjacentHTML("beforeend", `<div class="toolbar"><button data-start="${id}">스톱워치 시작</button><button data-stop="${id}" disabled>정지</button></div>`); card.querySelector(`[data-start="${id}"]`).onclick=()=>{started=performance.now(); card.querySelector(`[data-start="${id}"]`).disabled=true; card.querySelector(`[data-stop="${id}"]`).disabled=false; timer=setInterval(()=>{card.querySelector(".timer").textContent=((performance.now()-started)/1000).toFixed(1).padStart(4,"0")+"s";},100);}; card.querySelector(`[data-stop="${id}"]`).onclick=()=>{clearInterval(timer); card.querySelector(`[data-start="${id}"]`).disabled=false; card.querySelector(`[data-stop="${id}"]`).disabled=true;}; });
+    document.getElementById("export").onclick=()=>{ const rows=packets.map(readPacket); const incomplete=rows.flatMap((row)=>missing(row).map((field)=>`${row.packet_id}:${field}`)); if(incomplete.length){document.getElementById("status").textContent=`INCOMPLETE · ${incomplete.length}개 필드`; alert("실제 stopwatch·review log·trace·Evidence Ledger를 확인해 모든 필드를 입력하세요.\n"+incomplete.slice(0,12).join(", ")); return;} const output={schema_version:"ripplegate-paired-console.v1",created_at:new Date().toISOString(),operator_id_anonymous:value("operator"),status:"READY_TO_RECORD",disclosure:"실제 관찰 입력만 포함. 기관 전체 효과나 수상 가능성을 의미하지 않음.",rows}; const blob=new Blob([JSON.stringify(output,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="ripplegate-paired-console-export.json"; a.click(); URL.revokeObjectURL(a.href); document.getElementById("status").textContent="READY_TO_RECORD"; };
+  </script>
+</body>
+</html>

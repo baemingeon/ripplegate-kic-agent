@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ripplegate-demo
+    env: docker
+    dockerfilePath: ./mvp/Dockerfile
+    dockerContext: ./mvp
+    healthCheckPath: /health
+    autoDeploy: false
+    envVars:
+      - key: KIC_LLM_POLICY
+        value: disabled
+      - key: PYTHONDONTWRITEBYTECODE
+        value: "1"

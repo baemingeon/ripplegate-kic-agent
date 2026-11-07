@@ -1,0 +1,62 @@
+{
+  "as_of": "2026-11-08",
+  "policy_version": "ripplegate-source-policy-v1",
+  "scope": "RippleGate public snapshot and pre-production review",
+  "data_quality_policy": {
+    "critical_field_link_required": true,
+    "lookahead_rule": "source_as_of_date must not be after analysis_as_of_date",
+    "empty_or_placeholder_rule": "reject before calculation",
+    "unresolved_mapping_rule": "HOLD until country, partner, code, period, and unit are linked",
+    "secondary_or_alternative_rule": "exploratory only until provider, license, and institution approval"
+  },
+  "source_registry": [
+    {
+      "id": "unctad_public_statement",
+      "tier": "official_public",
+      "url_prefixes": ["https://unctad.org/"],
+      "status": "demo_only_production_blocked"
+    },
+    {
+      "id": "eia_public_series",
+      "tier": "official_public",
+      "url_prefixes": ["https://www.eia.gov/"],
+      "status": "demo_only_production_blocked"
+    },
+    {
+      "id": "un_comtrade_public_api",
+      "tier": "official_public",
+      "url_prefixes": ["https://comtradeapi.un.org/", "https://comtradeplus.un.org/"],
+      "status": "demo_only_production_blocked"
+    }
+  ],
+  "resources": [
+    {
+      "id": "PUB-UNCTAD-001",
+      "purpose": "공개 statement의 항해기간 관찰값",
+      "url": "https://unctad.org/osgstatement/arria-formula-meeting-security-council-safe-seas-shared-security-protecting-freedom",
+      "status": "demo_only_production_blocked",
+      "controls": ["retrieval date and URL retained", "not generalized to all markets", "replace or reapprove before institutional use"]
+    },
+    {
+      "id": "PUB-EIA-001",
+      "purpose": "Brent 가격 맥락 관찰값",
+      "url": "https://www.eia.gov/dnav/pet/hist/RBRTEw.htm",
+      "status": "demo_only_production_blocked",
+      "controls": ["retrieval date and period retained", "not treated as causal proof", "replace or reapprove before institutional use"]
+    },
+    {
+      "id": "PUB-COMTRADE-001/002",
+      "purpose": "UN Comtrade 공개 무역 query와 mapping 확인",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS",
+      "status": "demo_only_production_blocked",
+      "controls": ["reporter, partner, HS code, period, and unit retained", "unresolved mapping remains HOLD", "license and institution approval required before production"]
+    },
+    {
+      "id": "approved_private_model_gateway",
+      "purpose": "선택적 Planner 제안 계층",
+      "url": null,
+      "status": "not_configured",
+      "controls": ["private approved endpoint", "explicit model allowlist", "secret store", "no internal material outside approved boundary"]
+    }
+  ]
+}
