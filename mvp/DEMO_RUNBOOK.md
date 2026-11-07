@@ -42,10 +42,13 @@ cd ".\mvp"
 ```powershell
 cd ".\mvp"
 python .\ripplegate_judge_repro.py --dataset public_snapshot
+python .\ripplegate_judge_repro.py --holdout
 python -m unittest discover -s . -p "test_ripplegate.py" -q
 ```
 
 기대 결과:
+
+- `--holdout`: 9/9 controlled contract checks `PASS`. 이는 정확도·환각률·실제 업무효과 측정이 아니다.
 
 - `reproduction: PASS`
 - `VERIFIED 1 / SCENARIO 1 / HOLD 1`
