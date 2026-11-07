@@ -77,5 +77,5 @@ health·보안 헤더·data policy·plan·run·compare, 사람 확인 없는 계
 - 공개 snapshot은 최신 실시간 vendor feed가 아니며, `REVIEW_REQUIRED` 상태로 표시한다.
 - Comtrade reference-only 자료는 승인 adapter 전까지 무역 노출 계산에 사용하지 않는다.
 - 자동 투자승인·거래·리스크 한도 변경은 실행하지 않는다.
-- 실제 사용자 시간 절감률·정확도·환각률은 P01~P05 paired 측정과 holdout 검증 전에는 발표하지 않는다.
+- 실제 사용자 시간 절감률·정확도·환각률은 P01~P05 paired 측정과 실제 데이터 adapter 기반 holdout 전에는 발표하지 않는다. 현재 `--holdout`은 계약 안전성 검사일 뿐이다.
 - 내부자료 연결은 private gateway, 문서 권한, DLP, 보존·삭제정책, 로그 접근통제와 보안검토 후에만 허용한다.
