@@ -23,10 +23,12 @@ r13은 실행과 재현에 필요한 현재 RippleGate 파일만 포함한 정�
 python .\ripplegate_server.py --host 127.0.0.1 --port 8766
 python .\ripplegate_http_smoke.py --base-url http://127.0.0.1:8766
 python .\ripplegate_judge_repro.py --dataset public_snapshot
+python .\ripplegate_judge_repro.py --holdout
 python -m unittest discover -s . -p 'test_ripplegate.py'
 ```
 
 기대 판정은 `VERIFIED 1 / SCENARIO 1 / HOLD 1`이며, 독립 Critic 결과와 HTTPS Evidence Ledger가 함께 출력된다.
+`--holdout`은 9개 통제된 계약 mutation을 실행하며, 모두 `HOLD` 또는 `REJECT`여야 한다. 이 결과는 정확도나 실제 업무효과의 벤치마크가 아니다.
 
 ## 정직한 범위
 

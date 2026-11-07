@@ -39,9 +39,12 @@ API와 화면은 자료 품질 경계도 함께 반환합니다. 공개 snapshot
 
 ```powershell
 python .\ripplegate_judge_repro.py --dataset public_snapshot
+python .\ripplegate_judge_repro.py --holdout
 ```
 
 기대 판정은 `VERIFIED 1 / SCENARIO 1 / HOLD 1`이며, Planner·Tool·Human Gate·Calculator·FactGate·독립 Critic·REPLAN·Review Pack trace와 HTTPS Evidence Ledger, 동일 입력 통제군 결과가 출력됩니다.
+
+`--holdout`은 누락 근거·기간 충돌·관찰값 누락·HOLD 숫자 누출·영향 범위 역전·미허용 Tool·위험 URL·미검증 source 승격·LLM 제어 필드를 의도적으로 넣는 9개 계약 검사입니다. 모두 `HOLD` 또는 `REJECT`여야 하며, 정확도·환각률·실제 업무효과·운영 오류 탐지율을 의미하지 않습니다.
 
 ## 데이터 packet
 
@@ -109,5 +112,5 @@ docker run --rm -p 8766:8766 ripplegate-mvp
 
 - 합성 source를 승인된 뉴스·시장·무역·포트폴리오 adapter로 교체
 - source별 라이선스·기준일·갱신주기·장애 fallback 등록
-- 실제 사용자 paired 측정과 오류 holdout 평가 추가
+- 실제 사용자 paired 측정과 실제 승인 adapter 기반 오류 holdout 평가 추가
 - 기관 배포에서는 SSO/OIDC, private model gateway, DLP, WAF, 로그 접근통제와 보안검토 추가
