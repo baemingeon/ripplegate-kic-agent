@@ -487,7 +487,7 @@
         const baseline = comparison.baseline;
         const ripple = comparison.ripplegate;
         $("comparison").hidden = false;
-        $("comparison").innerHTML = `<div class="comparison-head"><strong>같은 입력 · 두 경로 비교</strong><span>통제군 비교 · 정확도 benchmark 아님</span></div><div class="comparison-grid"><div class="comparison-box baseline"><h3>요약형 통제군</h3><p>한 문장 요약 · 경로 ${baseline.path_count}개 · 숫자 확정 없음<br>근거 상태·사람 가정 Gate·HOLD/REPLAN 없음</p></div><div class="comparison-box ripple"><h3>RippleGate</h3><p>${ripple.path_count}개 경로 · VERIFIED ${ripple.status_counts.VERIFIED} / SCENARIO ${ripple.status_counts.SCENARIO} / HOLD ${ripple.status_counts.HOLD}<br>Evidence ${ripple.evidence_count}건 · ${ripple.replan.triggered ? "REPLAN 실행" : "FactGate 통과"}</p></div></div><div class="comparison-foot">동일 packet에서 “요약”과 “검토 가능한 업무 결과”의 구조 차이를 보여줍니다. 요약형 통제군의 정확도나 환각률을 주장하지 않습니다.</div>`;
+      $("comparison").innerHTML = `<div class="comparison-head"><strong>같은 입력 · 두 경로 비교</strong><span>통제군 비교 · 정확도 benchmark 아님</span></div><div class="comparison-grid"><div class="comparison-box baseline"><h3>검색·요약 대조 경로</h3><p>출처 ID ${baseline.retrieved_source_count || 0}건 보존 · 경로 ${baseline.path_count}개 · 숫자 확정 없음<br>경로별 상태·사람 가정 Gate·HOLD/REPLAN 없음</p></div><div class="comparison-box ripple"><h3>RippleGate</h3><p>${ripple.path_count}개 경로 · VERIFIED ${ripple.status_counts.VERIFIED} / SCENARIO ${ripple.status_counts.SCENARIO} / HOLD ${ripple.status_counts.HOLD}<br>Evidence ${ripple.evidence_count}건 · ${ripple.replan.triggered ? "REPLAN 실행" : "FactGate 통과"}</p></div></div><div class="comparison-foot">동일 packet에서 검색·요약 결과와 검토 가능한 업무 결과의 구조 차이를 보여줍니다. 통제군의 정확도나 환각률 우위를 주장하지 않습니다.</div>`;
       } catch (error) { setError(`비교 경로를 불러오지 못했습니다: ${error.message}`); }
     }
 
