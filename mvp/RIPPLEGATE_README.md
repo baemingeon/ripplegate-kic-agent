@@ -62,7 +62,7 @@ python .\ripplegate_judge_repro.py --dataset public_snapshot
 
 보안 위협·통제·운영 전환 조건은 `RIPPLEGATE_SECURITY.md`에 정리했습니다. MVP의 회귀 테스트는 prompt injection 출력 경계, 출처 URL allowlist, 미검증 자료 HOLD, 사람 확인 전 계산 차단, Evidence Ledger 원문 링크 계약, 독립 Critic의 수치·HOLD·근거·Tool 불변식 검사를 포함합니다.
 
-실제 사용자 효과는 임의 수치로 채우지 않습니다. `RIPPLEGATE_PAIRED_EVAL.md`와 `ripplegate_paired_eval.py`는 P01~P05의 stopwatch·review log·trace·Evidence Ledger가 모두 확인된 경우에만 paired 기록을 남기도록 설계했습니다.
+실제 사용자 효과는 임의 수치로 채우지 않습니다. `RIPPLEGATE_PAIRED_EVAL.md`와 `ripplegate_paired_eval.py`는 P01~P05에서 수작업 stopwatch와 Agent end-to-end stopwatch를 각각 실제로 확인하고, review log·trace·Evidence Ledger가 모두 갖춰진 경우에만 paired 기록을 남기도록 설계했습니다.
 
 선택적 Planner 연결 예시:
 
