@@ -9,6 +9,7 @@
 - 수작업에는 stopwatch와 review log 참조가 필요하다.
 - Agent에는 run trace와 Evidence Ledger 참조가 필요하다.
 - 실제 로그를 확인하지 않은 숫자는 기록하지 않는다. 기록기는 `--observed-by-human` 없이는 실행되지 않는다.
+- canonical 기록 파일은 `paired_eval_log.jsonl`이며, 각 packet은 `condition=manual`과 `condition=agent` 두 줄을 모두 가져야 한다. 두 조건 모두 `timing_scope=end_to_end_workflow`, 실제 관찰시간, 익명 operator ID와 해당 검토 증거를 가져야 제출 검수가 열린 게이트를 닫는다.
 - P01~P05가 모두 manual·agent 한 쌍을 갖기 전에는 시간 절감률을 발표자료에 넣지 않는다.
 - 자동 브라우저 harness 결과(`ripplegate_agent_runtime_p01_p05_20261108.json`)는 Agent 측 실행 증거일 뿐, 사람 수작업 시간·paired 효과 측정으로 집계하지 않는다.
 
