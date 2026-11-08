@@ -141,6 +141,15 @@ class RippleGateFlowTests(unittest.TestCase):
         result = critic_check(bad_paths, plan, {"status": "NOT_REQUESTED"})
         self.assertEqual(result["status"], "HOLD")
         self.assertTrue(any(finding["code"] == "hold_has_number" for finding in result["findings"]))
+        non_finite = critic_check([{
+            "id": "nan_path",
+            "status": "SCENARIO",
+            "impact": {"low": float("nan"), "base": 1.0, "high": 2.0},
+            "evidence_ids": ["source-1"],
+            "evidence_quality": "linked",
+        }], plan, {"status": "NOT_REQUESTED"})
+        self.assertEqual(non_finite["status"], "HOLD")
+        self.assertEqual(non_finite["findings"][0]["code"], "critic_input_not_serializable")
 
     def test_override_is_visible_as_scenario(self) -> None:
         result = run_ripplegate({

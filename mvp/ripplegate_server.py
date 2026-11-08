@@ -440,11 +440,23 @@ def critic_check(paths: list[dict[str, Any]], plan: dict[str, Any], portfolio_ga
     path has evidence. A future LLM critic may add observations, but this
     fail-closed rule check remains the final guard.
     """
-    serialized = json.loads(json.dumps({
-        "paths": paths,
-        "plan": plan,
-        "portfolio_gate": portfolio_gate,
-    }, ensure_ascii=False, allow_nan=False))
+    try:
+        serialized = json.loads(json.dumps({
+            "paths": paths,
+            "plan": plan,
+            "portfolio_gate": portfolio_gate,
+        }, ensure_ascii=False, allow_nan=False))
+    except (TypeError, ValueError) as exc:
+        return {
+            "status": "HOLD",
+            "actor": "Deterministic independent check",
+            "input_boundary": "json_roundtrip",
+            "implementation": "post_calculation_invariant_check",
+            "findings": [{"code": "critic_input_not_serializable", "detail": type(exc).__name__}],
+            "checked": ["Critic 입력은 JSON으로 재현 가능해야 함"],
+            "next_action": "비정상 수치·자료를 제거한 뒤 FactGate부터 재실행",
+            "portfolio_gate_status": "UNKNOWN",
+        }
     paths = serialized["paths"]
     plan = serialized["plan"]
     portfolio_gate = serialized["portfolio_gate"]
