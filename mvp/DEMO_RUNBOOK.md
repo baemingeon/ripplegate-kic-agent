@@ -48,7 +48,7 @@ python -m unittest discover -s . -p "test_ripplegate.py" -q
 
 기대 결과:
 
-- `--holdout`: 9/9 controlled contract checks `PASS`. 이는 정확도·환각률·실제 업무효과 측정이 아니다.
+- `--holdout`: 10/10 controlled contract checks `PASS`. 이는 정확도·환각률·실제 업무효과 측정이 아니다. prompt injection은 알려진 패턴 격리 계약을 포함한다.
 
 - `reproduction: PASS`
 - `VERIFIED 1 / SCENARIO 1 / HOLD 1`
