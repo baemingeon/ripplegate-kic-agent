@@ -22,4 +22,6 @@ python .\ripplegate_judge_repro.py --holdout
 
 ## 상태
 
-이 저장소는 공개 저장소 생성 전 검토가 끝난 r13 업로드 후보입니다. 실제 GitHub URL은 저장소 생성 후에만 기재합니다.
+공개 저장소: https://github.com/baemingeon/ripplegate-kic-agent
+
+현재 `main`에는 RippleGate r13 공개 source가 push되어 있으며, 최신 커밋은 `3ab342d`입니다. 팀 개인정보·API key·내부 문서는 포함하지 않습니다.
