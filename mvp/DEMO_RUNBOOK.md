@@ -40,7 +40,7 @@ python .\ripplegate_llm_trace.py
 
 2. `Agent 분석 시작`을 누른다.
 3. Planner가 목적·기간·대상·채널을 읽고 선택한 Typed Tool과 추천 가정을 먼저 보여준다.
-4. `추천 가정 확인 → 계산 실행`을 누른다. 사람 확인 전에는 계산하지 않는다는 점을 말한다.
+4. `기본 시나리오 확인 → 계산 실행`을 누른다. 예외가 있을 때만 `고급 설정 · 예외만 수정`을 열고 값을 바꾼다. 사람 확인 전에는 계산하지 않는다는 점을 말한다.
 5. 결과 화면에서 `VERIFIED 1 / SCENARIO 1 / HOLD 1`을 보여준다.
 6. `PUB-UNCTAD-001`의 HTTPS 원문 링크를 열어 관찰값과 Evidence Ledger ID가 연결된 것을 확인한다.
 7. `PUB-COMTRADE-001`은 mapping이 미완료이므로 숫자를 만들지 않고 `REPLAN / HOLD`와 다음 자료 요청을 남긴다는 점을 보여준다.
@@ -50,7 +50,7 @@ python .\ripplegate_llm_trace.py
 ## 3. 실패 경로 30초 시연
 
 1. 데이터 packet을 `synthetic`으로 바꾼다.
-2. `Agent 분석 시작 → 추천 가정 확인 → 계산 실행`을 반복한다.
+2. `Agent 분석 시작 → 기본 시나리오 확인 → 계산 실행`을 반복한다.
 3. 기간·근거 충돌 경로가 `FactGate HOLD`가 되고, Critic이 수치·HOLD·근거 ID 불변식을 확인하며, Planner가 다음 Tool 후보를 남기는 것을 보여준다.
 4. 발표 문장: “RippleGate는 오류를 숨기지 않고, 해결 가능한 재조회와 사람이 확인해야 할 보류를 분리합니다.”
 
