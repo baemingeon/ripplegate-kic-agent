@@ -118,6 +118,23 @@ def detect_prompt_injection(user_goal: str, graph: dict[str, Any] | None = None)
     return list(dict.fromkeys(findings))[:8]
 
 
+def chat_completions_endpoint(base_url: str) -> str:
+    """Resolve an allowlisted OpenAI-compatible chat-completions endpoint.
+
+    Most gateways expose `/v1/chat/completions`; Gemini's compatibility
+    endpoint exposes `/openai/chat/completions`.  The path is derived only
+    from the explicitly configured base URL and is never model-controlled.
+    """
+    base = str(base_url or "").rstrip("/")
+    if not base:
+        return ""
+    if base.endswith("/chat/completions"):
+        return base
+    if base.endswith("/v1") or base.endswith("/openai"):
+        return base + "/chat/completions"
+    return base + "/v1/chat/completions"
+
+
 class ApprovedGatewayClient:
     """Small standalone, allowlisted JSON client for an approved gateway."""
 
@@ -156,9 +173,7 @@ class ApprovedGatewayClient:
         hostname = (parsed.hostname or "").lower().rstrip(".")
         if not hostname or hostname not in self.allowed_hosts:
             return self._failure("endpoint_host_not_allowlisted", started)
-        endpoint = self.base_url.rstrip("/")
-        if not endpoint.endswith("/v1"):
-            endpoint += "/v1"
+        endpoint = chat_completions_endpoint(self.base_url)
         payload = {
             "model": self.model,
             "messages": [
@@ -169,7 +184,7 @@ class ApprovedGatewayClient:
             "max_tokens": 600,
         }
         request = urllib.request.Request(
-            endpoint + "/chat/completions",
+            endpoint,
             data=json.dumps(payload).encode("utf-8"),
             headers={"Content-Type": "application/json", "Authorization": f"Bearer {os.getenv('KIC_LLM_API_KEY', '').strip()}"},
             method="POST",

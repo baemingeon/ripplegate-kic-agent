@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, patch
 
 from ripplegate_server import critic_check, load_graph, run_ripplegate
 from ripplegate_public_adapter import _host_allowed, public_adapter_report
-from ripplegate_llm import detect_prompt_injection, optional_llm_planner, validate_planner_proposal
+from ripplegate_llm import chat_completions_endpoint, detect_prompt_injection, optional_llm_planner, validate_planner_proposal
 from ripplegate_baseline import summary_only_baseline
 
 
@@ -299,6 +299,18 @@ class RippleGateFlowTests(unittest.TestCase):
         self.assertIn("portfolio_context_lookup", result["proposal"]["tool_calls"])
 
     def test_approved_gateway_requires_explicit_endpoint_host_allowlist(self) -> None:
+        self.assertEqual(
+            chat_completions_endpoint("https://generativelanguage.googleapis.com/v1beta/openai"),
+            "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+        )
+        self.assertEqual(
+            chat_completions_endpoint("https://gateway.example/v1"),
+            "https://gateway.example/v1/chat/completions",
+        )
+        self.assertEqual(
+            chat_completions_endpoint("https://gateway.example"),
+            "https://gateway.example/v1/chat/completions",
+        )
         env = {
             "RIPPLEGATE_LLM_MODE": "approved",
             "KIC_LLM_POLICY": "approved",
