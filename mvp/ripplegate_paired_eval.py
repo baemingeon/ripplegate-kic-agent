@@ -112,7 +112,7 @@ def main() -> int:
         "evidence_ledger_reference": args.evidence_ledger_reference,
     }
     records = [
-        {**base, "condition": "manual", "observed_minutes": args.manual_minutes, "rework_count": args.manual_rework_count, "source_gaps": args.manual_source_gaps, "calculation_inconsistencies": args.manual_calculation_inconsistencies, "decision": args.manual_decision},
+        {**base, "condition": "manual", "measurement_type": "human_observed_manual", "observed_minutes": args.manual_minutes, "rework_count": args.manual_rework_count, "source_gaps": args.manual_source_gaps, "calculation_inconsistencies": args.manual_calculation_inconsistencies, "decision": args.manual_decision},
         {**base, "condition": "agent", "measurement_type": "human_observed_agent", "observed_minutes": args.agent_minutes, "rework_count": args.agent_rework_count, "source_gaps": args.agent_source_gaps, "calculation_inconsistencies": args.agent_calculation_inconsistencies, "decision": args.agent_decision},
     ]
     args.log.parent.mkdir(parents=True, exist_ok=True)
