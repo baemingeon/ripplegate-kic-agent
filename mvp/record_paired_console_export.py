@@ -16,6 +16,20 @@ from typing import Any
 from ripplegate_paired_eval import DEFAULT_LOG, PACKET_IDS, paired_status
 
 
+MANIFEST_PATH = Path(__file__).resolve().parent / "data" / "ripplegate_pilot_packet_manifest_v1.json"
+
+
+def read_manifest() -> dict[str, dict[str, Any]]:
+    payload = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    packets = payload.get("packets")
+    if not isinstance(packets, list):
+        raise SystemExit("canonical packet manifest is invalid")
+    result = {str(packet.get("packet_id")): packet for packet in packets if isinstance(packet, dict)}
+    if set(result) != PACKET_IDS:
+        raise SystemExit("canonical packet manifest must contain exactly P01~P05")
+    return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Record a human-observed RippleGate pilot console export")
     parser.add_argument("--input", type=Path, required=True)
@@ -31,15 +45,23 @@ def main() -> int:
     if not re.fullmatch(r"[A-Za-z0-9_-]{2,64}", operator):
         raise SystemExit("operator_id_anonymous must be an anonymous ASCII identifier")
     rows = data.get("rows")
-    if not isinstance(rows, list) or {str(row.get("packet_id")) for row in rows} != PACKET_IDS:
+    manifest = read_manifest()
+    if not isinstance(rows, list) or len(rows) != len(PACKET_IDS) or {str(row.get("packet_id")) for row in rows} != PACKET_IDS:
         raise SystemExit("console export must contain exactly P01~P05")
     created_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
     output: list[dict[str, Any]] = []
     for row in rows:
         packet_id = str(row["packet_id"])
+        packet = manifest[packet_id]
+        for field in ("dataset", "user_goal", "expected_decision"):
+            if row.get(field) != packet.get(field):
+                raise SystemExit(f"{packet_id}: {field} does not match the canonical packet manifest")
         base = {
             "schema_version": "ripplegate-paired-eval.v1",
             "packet_id": packet_id,
+            "dataset": packet["dataset"],
+            "user_goal": packet["user_goal"],
+            "expected_decision": packet["expected_decision"],
             "operator_id_anonymous": operator,
             "timing_scope": "end_to_end_workflow",
             "created_at": created_at,

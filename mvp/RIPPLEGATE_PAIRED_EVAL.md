@@ -27,6 +27,8 @@
 
 콘솔 export를 확인한 뒤에는 `python .\record_paired_console_export.py --input <export.json> --observed-by-human`으로 guarded paired log에 넣는다.
 
+현재 canonical 검증기는 `python .\validate_ripplegate_paired.py --strict`이다. 이 검증기는 `data/ripplegate_pilot_packet_manifest_v1.json`과 export의 dataset·목표·예상 판정을 대조하고, 자동 브라우저 runtime-only 기록을 사람 paired 측정으로 승격하지 않는다.
+
 ```powershell
 python .\ripplegate_paired_eval.py --packet-id P01 `
   --operator-id op-anon-01 `

@@ -17,6 +17,16 @@ from typing import Any
 PACKET_IDS = {f"P0{index}" for index in range(1, 6)}
 DECISIONS = {"REVIEW", "HOLD", "REQUEST_INFO"}
 DEFAULT_LOG = Path(__file__).resolve().parent / "paired_eval_log.jsonl"
+DEFAULT_MANIFEST = Path(__file__).resolve().parent / "data" / "ripplegate_pilot_packet_manifest_v1.json"
+
+
+def packet_context(packet_id: str) -> dict[str, Any]:
+    payload = json.loads(DEFAULT_MANIFEST.read_text(encoding="utf-8"))
+    packets = {str(packet.get("packet_id")): packet for packet in payload.get("packets", []) if isinstance(packet, dict)}
+    packet = packets.get(packet_id)
+    if not packet:
+        raise SystemExit(f"packet {packet_id} is missing from the canonical manifest")
+    return {field: packet[field] for field in ("dataset", "user_goal", "expected_decision")}
 
 
 def positive_number(name: str, value: float) -> float:
@@ -101,9 +111,11 @@ def main() -> int:
             raise SystemExit(f"{name} is required")
 
     created_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    context = packet_context(args.packet_id)
     base = {
         "schema_version": "ripplegate-paired-eval.v1",
         "packet_id": args.packet_id,
+        **context,
         "operator_id_anonymous": args.operator_id,
         "timing_scope": "end_to_end_workflow",
         "created_at": created_at,
