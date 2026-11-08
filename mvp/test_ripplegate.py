@@ -297,6 +297,30 @@ class RippleGateFlowTests(unittest.TestCase):
         self.assertTrue(result["accepted"])
         self.assertFalse(result["fallback"])
         self.assertIn("portfolio_context_lookup", result["proposal"]["tool_calls"])
+        integrated_proposal = {
+            "mode": "approved",
+            "accepted": True,
+            "fallback": False,
+            "network_call": True,
+            "security_flags": [],
+            "provider": "openai_compatible",
+            "model": "approved-model",
+            "proposal": {
+                "tool_calls": ["path_calculate", "evidence_check"],
+                "risk_flags": [],
+                "clarifying_question": None,
+                "needs_replan": False,
+            },
+        }
+        with patch("ripplegate_server.optional_llm_planner", return_value=integrated_proposal):
+            integrated = run_ripplegate({
+                "phase": "plan",
+                "event_id": "event_middle_east",
+                "horizon_months": 3,
+                "user_goal": "영향 수치 계산 경로를 확인해줘",
+            })
+        self.assertEqual(integrated["plan"]["planner"]["mode"], "approved_gateway_typed_proposal")
+        self.assertIn("path_calculate", integrated["plan"]["selected_tools"])
 
     def test_approved_gateway_requires_explicit_endpoint_host_allowlist(self) -> None:
         self.assertEqual(

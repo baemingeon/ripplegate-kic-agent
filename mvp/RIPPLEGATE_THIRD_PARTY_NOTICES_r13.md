@@ -19,9 +19,9 @@
 - 공개 Demo는 OpenAI Sites의 정적 호스팅으로 배포되며, 정적 UI·공개 snapshot·합성 packet만 포함한다. 호스팅 사용조건은 [OpenAI Terms & policies](https://openai.com/policies/) 및 [Terms of Use](https://openai.com/policies/terms-of-use/)를 확인하고, 서비스별 추가 조건은 운영 전에 재확인한다. 사이트 런타임에서는 외부 LLM 호출·내부자료·개인정보 전송을 하지 않는다.
 - OpenAI Codex/ChatGPT 개발 보조 환경을 기획 문장·코드 초안·검토·테스트 보조에 사용했다. 최종 설계·수정·실행 검증은 참가자가 수행했으며, 내부 KIC 자료·개인정보·비공개 포트폴리오를 입력하지 않았다.
 - Anthropic Claude의 사용자 제공 검토 의견은 초기 기획·점수·리스크 보완을 위한 개발 검토 보조로만 참고했다. 현재 runtime dependency나 Claude API 호출은 없으며, 최종 설계·코드·수치는 참가자가 검토·수정·실행 검증했다.
-- 공개 MVP의 기본 실행은 외부 LLM 없이 결정론적 fallback으로 끝까지 재현된다. 공개 패키지에는 API key, 내부 문서, 개인정보, 특정 외부 모델 실행 로그가 없다.
+- 공개 MVP의 기본 실행은 외부 LLM 없이 결정론적 fallback으로 끝까지 재현된다. 공개 패키지에는 API key, 내부 문서, 개인정보가 없다. 선택적 로컬 Planner 재현 trace는 공개·합성 packet에 한정해 `data/ripplegate_llm_trace_local_2026-11-08.json`에 기록했다.
 - 승인된 private/OpenAI-compatible gateway를 연결하는 경우에도 LLM은 계획·질의·설명만 제안한다. 숫자·근거 상태·HOLD 판정은 코드와 독립 Critic이 담당하며, 모델·호스트 allowlist와 보안 승인을 먼저 통과해야 한다.
-- Qwen/Ollama 등 과거 로컬 실험은 현재 제출물·성능 근거·공개 r13 runtime dependency에서 제외했다.
+- Qwen/Ollama(`qwen2.5:14b`)는 `127.0.0.1` loopback에서 typed Planner 계약을 재현하는 선택적 개발 자원으로 사용했다. 내부자료·개인정보·포트폴리오 context는 전송하지 않았고, 공개 Demo의 기본 runtime dependency나 기관 운영 승인 모델로 주장하지 않는다. 해당 trace는 정확도·환각률·업무효과 benchmark가 아니다.
 
 ## 독창적 결합
 

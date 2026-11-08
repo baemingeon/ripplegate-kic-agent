@@ -22,6 +22,7 @@
 - 알려진 prompt injection marker가 사용자 목표 또는 graph 필드에서 발견되면 gateway를 호출하지 않고 `prompt_injection_suspected`를 기록한다. 이 탐지기는 완전한 공격 탐지기가 아니며, typed contract와 fallback이 최종 방어선이다.
 - 숫자·가정·계산식·출처 ID·상태·의사결정·승인·거래·주문은 모델 출력에서 받지 않는다.
 - API key는 환경변수로만 주입하며 응답·trace·검토팩에 기록하지 않는다.
+- 로컬 Qwen/Ollama trace는 `127.0.0.1` loopback과 공개·합성 packet에만 한정한 개발 재현 경로다. 기관 운영에서는 특정 국가·특정 모델을 기본값으로 두지 않고, 승인된 private gateway와 model allowlist를 사용한다.
 
 ## 운영 전환 조건
 

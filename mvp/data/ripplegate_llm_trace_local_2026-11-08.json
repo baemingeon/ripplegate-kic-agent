@@ -1,0 +1,79 @@
+{
+  "schema_version": "ripplegate-llm-trace.v1",
+  "recorded_on": "2026-11-08",
+  "execution": "local_loopback_public_synthetic",
+  "provider": "openai_compatible",
+  "model": "qwen2.5:14b",
+  "endpoint_scope": "127.0.0.1 loopback only",
+  "model_role": "optional typed Planner proposal; not a calculator, verifier, approver, or trader",
+  "input_boundary": {
+    "dataset": "synthetic",
+    "private_data_sent": false,
+    "portfolio_context_sent": false,
+    "human_confirmed_before_run": true
+  },
+  "plan": {
+    "planner_mode": "approved_gateway_typed_proposal",
+    "accepted": true,
+    "fallback": false,
+    "network_call": true,
+    "proposal": {
+      "tool_calls": ["path_calculate", "evidence_check"],
+      "risk_flags": ["unverified_edges"],
+      "clarifying_question": null,
+      "needs_replan": false
+    },
+    "selected_tools": [
+      "path_calculate",
+      "evidence_check",
+      "event_lookup",
+      "request_human_review",
+      "review_pack"
+    ]
+  },
+  "run": {
+    "planner_mode": "approved_gateway_typed_proposal",
+    "accepted": true,
+    "decision": "PARTIAL_REVIEW_HOLD",
+    "status_counts": {
+      "VERIFIED": 1,
+      "SCENARIO": 1,
+      "HOLD": 1
+    },
+    "trace": [
+      "PLANNER:PASS",
+      "TOOL:PASS",
+      "HUMAN_GATE:PASS",
+      "FACTGATE:HOLD",
+      "REPLAN:PASS",
+      "CALCULATOR:PASS",
+      "CRITIC:PASS",
+      "REVIEW_PACK:PASS"
+    ],
+    "replan": {
+      "triggered": true,
+      "state": "AWAITING_SOURCE",
+      "reason": "period_alignment_unresolved / source_period_conflict",
+      "next_tools": [
+        "event_lookup",
+        "market_snapshot",
+        "evidence_check",
+        "request_human_review",
+        "review_pack"
+      ]
+    }
+  },
+  "security": {
+    "prompt_injection_gate": "enabled",
+    "numeric_inputs_from_model": false,
+    "assumptions_from_model": false,
+    "decision_from_model": false,
+    "api_key_recorded": false
+  },
+  "limitations": [
+    "This is a local development/reproducibility trace, not a public Demo default runtime.",
+    "The synthetic packet is not a live market feed or institutional portfolio data.",
+    "This trace is not an accuracy, hallucination, or business-impact benchmark.",
+    "Production use requires an institution-approved model, gateway, data license, and security review."
+  ]
+}

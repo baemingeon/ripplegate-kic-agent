@@ -80,6 +80,23 @@ $env:KIC_LLM_ALLOWED_MODELS = "approved-model-name"
 $env:KIC_LLM_API_KEY = "주입된 secret"
 ```
 
+개발 PC에서 공개·합성 packet만으로 선택적 Planner의 실제 typed trace를 재현할 수도 있습니다. 이 경로는 loopback에만 연결되고, 공개 Demo의 기본 실행이나 기관 운영 모델을 의미하지 않습니다.
+
+```powershell
+$env:RIPPLEGATE_LLM_MODE = "approved"
+$env:KIC_LLM_POLICY = "approved"
+$env:KIC_LLM_PROVIDER = "openai_compatible"
+$env:KIC_LLM_URL = "http://127.0.0.1:11434/v1"
+$env:KIC_LLM_ALLOWED_HOSTS = "127.0.0.1"
+$env:KIC_LLM_MODEL = "qwen2.5:14b"
+$env:KIC_LLM_ALLOWED_MODELS = "qwen2.5:14b"
+$env:KIC_LLM_API_KEY = "local-only"
+$env:KIC_LLM_TIMEOUT = "60"
+python .\ripplegate_llm_trace.py
+```
+
+관찰된 trace는 `data/ripplegate_llm_trace_local_2026-11-08.json`에 기록했다. Qwen/Ollama는 로컬 개발·재현용 선택지일 뿐이며, 공개 Demo는 여전히 모델 disabled 기본 경로로 동작한다. 이 trace는 정확도·환각률·업무효과 benchmark가 아니다.
+
 ## API smoke test
 
 ```powershell

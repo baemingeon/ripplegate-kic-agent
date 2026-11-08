@@ -6,7 +6,7 @@
 
 ## 이 패키지의 범위
 
-r13은 실행과 재현에 필요한 현재 RippleGate 파일만 포함한 정리된 공개 snapshot이다. 과거 FactGate·로컬 모델·benchmark 실험·오래된 감사 결과는 포함하지 않는다.
+r13은 실행과 재현에 필요한 현재 RippleGate 파일만 포함한 정리된 공개 snapshot이다. 과거 FactGate·benchmark 실험·오래된 감사 결과는 포함하지 않으며, 공개·합성 packet에 한정한 선택적 local Planner trace만 외부자원 고지와 함께 포함한다.
 
 - `ripplegate_server.py`: Planner fallback, Tool allowlist, Human Gate, FactGate, Calculator, 독립 Critic, REPLAN, Review Pack
 - `ripplegate_static/index.html`: 세계지도·경로·Evidence Ledger·HOLD/REPLAN UI
@@ -16,6 +16,8 @@ r13은 실행과 재현에 필요한 현재 RippleGate 파일만 포함한 정�
 - `data/ripplegate_demo_graph_v1.json`: 오류·보류 경로 재현용 합성 packet
 - `data/ripplegate_pilot_packet_manifest_v1.json`: P01~P05 관찰 packet 정의
 - `ripplegate_pilot_console.html` 및 paired 평가 도구: 실제 관찰 기록용 도구
+- `ripplegate_llm_trace.py`: loopback·공개 합성 packet에서 선택적 typed Planner trace를 재현하는 도구
+- `data/ripplegate_llm_trace_local_2026-11-08.json`: Qwen/Ollama local trace의 경계·결과·한계 기록
 
 ## 재현
 

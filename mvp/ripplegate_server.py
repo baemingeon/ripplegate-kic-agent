@@ -223,7 +223,7 @@ def recommend_plan(graph: dict[str, Any], horizon_months: int, user_goal: str = 
         proposed_order = [str(tool) for tool in proposal.get("tool_calls", []) if str(tool) in selected_tools]
         selected_tools = proposed_order + [tool for tool in selected_tools if tool not in proposed_order]
         rank = {name: index for index, name in enumerate(selected_tools)}
-        tool_specs.sort(key=lambda tool: rank[str(tool["name"])])
+        tool_specs.sort(key=lambda tool: rank.get(str(tool["name"]), len(rank)))
         planner_mode = "approved_gateway_typed_proposal"
         planner_reason = "승인 gateway의 Tool 후보를 allowlist로 정규화한 뒤 영향 경로·가정·근거 검증 순서를 구성"
     return {
