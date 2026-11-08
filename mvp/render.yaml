@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: ic-preflight-demo
+    env: docker
+    dockerfilePath: ./mvp/Dockerfile
+    dockerContext: ./mvp
+    healthCheckPath: /health
+    autoDeploy: false

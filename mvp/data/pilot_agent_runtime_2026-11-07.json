@@ -1,0 +1,81 @@
+{
+  "schema_version": "pilot-agent-runtime.v1",
+  "generated_at": "2026-11-06T19:31:12.983419+00:00",
+  "status": "agent_only_no_human_claim",
+  "timing_scope": "server_runtime_only",
+  "packet_count": 5,
+  "decision_match_count": 5,
+  "records": [
+    {
+      "packet_id": "P01",
+      "scenario": "clean",
+      "expected_decision": "REVIEW",
+      "observed_decision": "REVIEW",
+      "status": "ready_for_review",
+      "elapsed_ms": 0.439,
+      "trace_count": 14,
+      "tool_count": 7,
+      "evidence_count": 2,
+      "timing_scope": "server_runtime_only",
+      "measurement_type": "automated_runtime"
+    },
+    {
+      "packet_id": "P02",
+      "scenario": "period_mismatch",
+      "expected_decision": "HOLD",
+      "observed_decision": "HOLD",
+      "status": "hold",
+      "elapsed_ms": 0.307,
+      "trace_count": 11,
+      "tool_count": 5,
+      "evidence_count": 3,
+      "timing_scope": "server_runtime_only",
+      "measurement_type": "automated_runtime"
+    },
+    {
+      "packet_id": "P03",
+      "scenario": "missing_evidence",
+      "expected_decision": "REQUEST_INFO",
+      "observed_decision": "REQUEST_INFO",
+      "status": "needs_more_info",
+      "elapsed_ms": 0.321,
+      "trace_count": 12,
+      "tool_count": 6,
+      "evidence_count": 1,
+      "timing_scope": "server_runtime_only",
+      "measurement_type": "automated_runtime"
+    },
+    {
+      "packet_id": "P04",
+      "scenario": "conflict",
+      "expected_decision": "REVIEW",
+      "observed_decision": "REVIEW",
+      "status": "ready_for_review",
+      "elapsed_ms": 0.446,
+      "trace_count": 20,
+      "tool_count": 10,
+      "evidence_count": 2,
+      "timing_scope": "server_runtime_only",
+      "measurement_type": "automated_runtime"
+    },
+    {
+      "packet_id": "P05",
+      "scenario": "real",
+      "expected_decision": "REVIEW",
+      "observed_decision": "REVIEW",
+      "status": "ready_for_review",
+      "elapsed_ms": 0.38,
+      "trace_count": 14,
+      "tool_count": 7,
+      "evidence_count": 5,
+      "timing_scope": "server_runtime_only",
+      "measurement_type": "automated_runtime"
+    }
+  ],
+  "summary": {
+    "median_elapsed_ms": 0.4,
+    "min_elapsed_ms": 0.307,
+    "max_elapsed_ms": 0.446
+  },
+  "disclosure": "Agent 내부 실행시간만 기록했다. 사람의 수작업 시간·재작업·출처 누락을 측정하거나 추정하지 않는다."
+}

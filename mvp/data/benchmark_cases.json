@@ -1,0 +1,82 @@
+[
+  {
+    "id": "C01",
+    "title": "clean aligned evidence",
+    "fault_type": "clean",
+    "severity": "normal",
+    "gold_decision": "REVIEW",
+    "evidence": ["same metric", "same period", "same currency", "primary source linked"]
+  },
+  {
+    "id": "C02",
+    "title": "period mismatch",
+    "fault_type": "period_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": ["target FY2025", "candidate FY2026", "same label but different period"]
+  },
+  {
+    "id": "C03",
+    "title": "currency mismatch without FX",
+    "fault_type": "currency_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": ["target USD", "candidate KRW", "no FX source in state"]
+  },
+  {
+    "id": "C04",
+    "title": "unit mismatch",
+    "fault_type": "unit_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": ["one value in USD millions", "one value in USD thousands"]
+  },
+  {
+    "id": "C05",
+    "title": "conflicting primary and secondary source",
+    "fault_type": "source_conflict",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": ["IR revenue 1,000", "secondary summary revenue 920"]
+  },
+  {
+    "id": "C06",
+    "title": "stale price",
+    "fault_type": "stale_price",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": ["valuation date 2026-11-05", "price date 2026-08-31"]
+  },
+  {
+    "id": "C07",
+    "title": "peer contamination",
+    "fault_type": "peer_contamination",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": ["industry keyword matches", "business model and margin profile diverge"]
+  },
+  {
+    "id": "C08",
+    "title": "missing source for quantitative claim",
+    "fault_type": "missing_source",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": ["market cap value appears in answer", "no source URL or page"]
+  },
+  {
+    "id": "C09",
+    "title": "rounding tolerance within policy",
+    "fault_type": "rounding_tolerance",
+    "severity": "normal",
+    "gold_decision": "REVIEW",
+    "evidence": ["difference 0.2%", "policy tolerance 1.0%", "source linked"]
+  },
+  {
+    "id": "C10",
+    "title": "conflict resolved by primary re-query",
+    "fault_type": "resolved_replan",
+    "severity": "normal",
+    "gold_decision": "REVIEW",
+    "evidence": ["initial conflict", "primary source re-queried", "state updated", "unresolved empty"]
+  }
+]

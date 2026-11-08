@@ -1,0 +1,81 @@
+{
+  "disclosure": "DEMO DATA ONLY. Values are synthetic and are not investment advice.",
+  "company": {
+    "name": "Company A",
+    "ticker": "DEMO-A",
+    "currency": "USD",
+    "period": "FY2025",
+    "as_of_date": "2026-03-31",
+    "market_cap": 1200,
+    "net_debt": 100,
+    "revenue": 1000,
+    "ebitda": 200
+  },
+  "peers": [
+    {
+      "name": "Peer B",
+      "ticker": "DEMO-B",
+      "business_model": "enterprise software",
+      "currency": "USD",
+      "period": "FY2025",
+      "market_cap": 1500,
+      "net_debt": 50,
+      "revenue": 1200,
+      "ebitda": 180
+    },
+    {
+      "name": "Peer C",
+      "ticker": "DEMO-C",
+      "business_model": "enterprise software",
+      "currency": "USD",
+      "period": "FY2025",
+      "market_cap": 980,
+      "net_debt": 20,
+      "revenue": 760,
+      "ebitda": 125
+    },
+    {
+      "name": "Peer D",
+      "ticker": "DEMO-D",
+      "business_model": "enterprise software",
+      "currency": "USD",
+      "period": "FY2025",
+      "market_cap": 2100,
+      "net_debt": -40,
+      "revenue": 1700,
+      "ebitda": 260
+    }
+  ],
+  "sources": [
+    {
+      "id": "E1",
+      "source_type": "IR",
+      "document_name": "Company A FY2025 Results",
+      "page": "p.12",
+      "url": "local://demo/company-a-fy2025-ir",
+      "as_of_date": "2026-03-31",
+      "period": "FY2025",
+      "metric": "Revenue",
+      "metric_definition": "Reported revenue in USD millions",
+      "value": 1000,
+      "unit": "USD mm",
+      "confidence": "high",
+      "priority": 1
+    },
+    {
+      "id": "E3",
+      "source_type": "IR",
+      "document_name": "Company A FY2025 Results",
+      "page": "p.13",
+      "url": "local://demo/company-a-fy2025-ir",
+      "as_of_date": "2026-03-31",
+      "period": "FY2025",
+      "metric": "EBITDA",
+      "metric_definition": "Adjusted EBITDA in USD millions",
+      "value": 200,
+      "unit": "USD mm",
+      "confidence": "high",
+      "priority": 1
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": "observable_policy_v1",
+  "description": "판정 정답이 아니라 원문 packet에서 확인 가능한 정합성 신호. 이 offline control set은 case별 핵심 신호만 기록하며, 생산 경로의 미확인 신호는 별도 missing-evidence gate가 처리한다.",
+  "cases": {
+    "H01": {"evidence_state": "aligned"},
+    "H02": {"period_aligned": false},
+    "H03": {"currency_aligned": false},
+    "H04": {"unit_aligned": false},
+    "H05": {"source_reconciled": false},
+    "H06": {"price_age_days": 66, "price_age_limit_days": 31},
+    "H07": {"peer_fit": false},
+    "H08": {"quantitative_claims_sourced": false},
+    "H09": {"rounding_difference_pct": 0.4, "rounding_tolerance_pct": 1.0},
+    "H10": {"replan_resolved": true, "source_reconciled": true},
+    "H11": {"definition_aligned": false},
+    "H12": {"fx_date_aligned": false},
+    "H13": {"scale_aligned": false},
+    "H14": {"period_bridge_approved": false},
+    "H15": {"share_basis_aligned": false},
+    "H16": {"price_currency_aligned": false},
+    "H17": {"formula_sign_valid": false},
+    "H18": {"business_model_fit": false},
+    "H19": {"footnotes_complete": false},
+    "H20": {"source_reconciled": true, "rounding_difference_pct": 0.3, "rounding_tolerance_pct": 1.0}
+  }
+}

@@ -1,0 +1,528 @@
+{
+  "generated_at": "2026-11-06T23:10:54.041427+00:00",
+  "status": "READY_AFTER_USER_INPUT",
+  "version": "v0.9.2",
+  "artifact_hashes": {
+    "pptx": {
+      "path": "기획서\\KIC_AI_에이전트_공모전_기획서_작업본_v0.9.2.pptx",
+      "sha256": "0070c40200f17a8490bdecb9485f05d7e38b39f3d1aaec9ecb09ce5e9608ef4c",
+      "bytes": 140649
+    },
+    "pdf": {
+      "path": "기획서\\KIC_AI_에이전트_공모전_기획서_작업본_v0.9.2.pdf",
+      "sha256": "c7b2517bd5e2d0879abef2d29bc9509e4c5dd930dc83dbda9677fe82a381862c",
+      "bytes": 486031
+    },
+    "fallback_video": {
+      "path": "기획서\\IC_Preflight_본선_시연영상_초안.webm",
+      "sha256": "1abf195908e212a11e1a7618124e27f30075c334cc75258b6af466aebeccae1a",
+      "bytes": 1218212
+    }
+  },
+  "checks": [
+    {
+      "name": "required_files",
+      "passed": true,
+      "blocking": false,
+      "detail": "all required files present"
+    },
+    {
+      "name": "artifact_hashes",
+      "passed": true,
+      "blocking": false,
+      "detail": "PPTX/PDF/fallback video hashes recorded; MVP ZIP is checked independently"
+    },
+    {
+      "name": "goal_route_holdout",
+      "passed": true,
+      "blocking": false,
+      "detail": "12 natural-language route cases match"
+    },
+    {
+      "name": "pptx_slide_count",
+      "passed": true,
+      "blocking": false,
+      "detail": "10 slides"
+    },
+    {
+      "name": "pdf_page_count",
+      "passed": true,
+      "blocking": false,
+      "detail": "10 pages"
+    },
+    {
+      "name": "prelim_required_sections",
+      "passed": true,
+      "blocking": false,
+      "detail": "all seven official prelim sections detected"
+    },
+    {
+      "name": "brand_consistency",
+      "passed": true,
+      "blocking": false,
+      "detail": "visible deck uses IC Preflight and contains no legacy brand label"
+    },
+    {
+      "name": "public_deck_model_boundary",
+      "passed": true,
+      "blocking": false,
+      "detail": "visible deck contains no legacy brand or specific local-model reference"
+    },
+    {
+      "name": "mvp_release_zip",
+      "passed": true,
+      "blocking": false,
+      "detail": "44 entries; no cache artifacts; manifest present"
+    },
+    {
+      "name": "pptx_receipt_sha256",
+      "passed": true,
+      "blocking": false,
+      "detail": "actual=0070c40200f17a8490bdecb9485f05d7e38b39f3d1aaec9ecb09ce5e9608ef4c receipt=0070c40200f17a8490bdecb9485f05d7e38b39f3d1aaec9ecb09ce5e9608ef4c"
+    },
+    {
+      "name": "pptx_structural_validation",
+      "passed": true,
+      "blocking": false,
+      "detail": "package integrity and layout findings are 0"
+    },
+    {
+      "name": "benchmark_reproducibility",
+      "passed": true,
+      "blocking": false,
+      "detail": "two observable-policy benchmark runs match for all 20 decisions"
+    },
+    {
+      "name": "ui_execution_log",
+      "passed": true,
+      "blocking": false,
+      "detail": "real/hold/additional-material paths include the investment pack, export action, and deterministic fallback"
+    },
+    {
+      "name": "local_packet_execution",
+      "passed": true,
+      "blocking": false,
+      "detail": "local JSON packet path returns a company-specific investment pack"
+    },
+    {
+      "name": "deterministic_demo_rehearsal",
+      "passed": true,
+      "blocking": false,
+      "detail": "clean/conflict/hold/period_mismatch/currency_mismatch/missing_evidence/real paths pass expected status and trace gates"
+    },
+    {
+      "name": "llm_failure_fallback",
+      "passed": true,
+      "blocking": false,
+      "detail": "LLM failure keeps deterministic review path and records retry nodes"
+    },
+    {
+      "name": "http_boundary_smoke",
+      "passed": true,
+      "blocking": false,
+      "detail": "ephemeral local server returns UI 200 and period-mismatch REVIEW/HOLD comparison"
+    },
+    {
+      "name": "approved_gateway_contract",
+      "passed": true,
+      "blocking": false,
+      "detail": "provider-neutral approved gateway keeps typed allowlist and deterministic final decision"
+    },
+    {
+      "name": "model_allowlist_boundary",
+      "passed": true,
+      "blocking": false,
+      "detail": "unapproved model is rejected before any network call"
+    },
+    {
+      "name": "public_submission_links",
+      "passed": false,
+      "blocking": false,
+      "detail": "demo URL and GitHub link smoke check; configure links before final submission"
+    },
+    {
+      "name": "team_information",
+      "passed": false,
+      "blocking": false,
+      "detail": "cover still contains team-information placeholder"
+    },
+    {
+      "name": "local_video_fallback",
+      "passed": true,
+      "blocking": false,
+      "detail": "current IC Preflight fallback video is present"
+    }
+  ],
+  "prelim_required_sections": {
+    "passed": true,
+    "sections": {
+      "summary": {
+        "passed": true,
+        "slides": [
+          2
+        ],
+        "keyword_sets": [
+          [
+            "Summary"
+          ],
+          [
+            "서비스명"
+          ]
+        ]
+      },
+      "problem_definition": {
+        "passed": true,
+        "slides": [
+          3
+        ],
+        "keyword_sets": [
+          [
+            "문제 정의"
+          ]
+        ]
+      },
+      "service_proposal": {
+        "passed": true,
+        "slides": [
+          4
+        ],
+        "keyword_sets": [
+          [
+            "서비스 제안"
+          ]
+        ]
+      },
+      "agent_configuration": {
+        "passed": true,
+        "slides": [
+          5,
+          6
+        ],
+        "keyword_sets": [
+          [
+            "Agent 역할",
+            "Workflow"
+          ],
+          [
+            "AI 기술·Tool/API"
+          ]
+        ]
+      },
+      "data_utilization_plan": {
+        "passed": true,
+        "slides": [
+          7
+        ],
+        "keyword_sets": [
+          [
+            "데이터 활용 계획"
+          ]
+        ]
+      },
+      "mvp_development_plan": {
+        "passed": true,
+        "slides": [
+          8
+        ],
+        "keyword_sets": [
+          [
+            "MVP 개발 계획"
+          ]
+        ]
+      },
+      "expected_effects": {
+        "passed": true,
+        "slides": [
+          9
+        ],
+        "keyword_sets": [
+          [
+            "기대효과"
+          ]
+        ]
+      }
+    },
+    "detail": "all seven official prelim sections detected"
+  },
+  "rehearsal": {
+    "clean": {
+      "passed": true,
+      "status": "ready_for_review",
+      "nodes": [
+        "PLAN",
+        "RETRIEVE",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "NORMALIZE",
+        "VERIFY",
+        "TOOL",
+        "CALCULATE",
+        "CRITIC",
+        "TOOL",
+        "MEMO"
+      ],
+      "required_nodes": [
+        "CALCULATE",
+        "MEMO",
+        "TOOL",
+        "VERIFY"
+      ],
+      "human_gate_recorded": true
+    },
+    "conflict": {
+      "passed": true,
+      "status": "ready_for_review",
+      "nodes": [
+        "PLAN",
+        "RETRIEVE",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "NORMALIZE",
+        "VERIFY",
+        "REPLAN",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "RETRIEVE",
+        "VERIFY",
+        "TOOL",
+        "CALCULATE",
+        "CRITIC",
+        "TOOL",
+        "MEMO"
+      ],
+      "required_nodes": [
+        "CALCULATE",
+        "MEMO",
+        "REPLAN",
+        "TOOL",
+        "VERIFY"
+      ],
+      "human_gate_recorded": true
+    },
+    "hold": {
+      "passed": true,
+      "status": "hold",
+      "nodes": [
+        "PLAN",
+        "RETRIEVE",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "NORMALIZE",
+        "VERIFY",
+        "REPLAN",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "CRITIC"
+      ],
+      "required_nodes": [
+        "CRITIC",
+        "REPLAN",
+        "TOOL",
+        "VERIFY"
+      ],
+      "human_gate_recorded": true
+    },
+    "period_mismatch": {
+      "passed": true,
+      "status": "hold",
+      "nodes": [
+        "PLAN",
+        "RETRIEVE",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "NORMALIZE",
+        "VERIFY",
+        "REPLAN",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "CRITIC"
+      ],
+      "required_nodes": [
+        "CRITIC",
+        "REPLAN",
+        "TOOL",
+        "VERIFY"
+      ],
+      "human_gate_recorded": true
+    },
+    "currency_mismatch": {
+      "passed": true,
+      "status": "hold",
+      "nodes": [
+        "PLAN",
+        "RETRIEVE",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "NORMALIZE",
+        "VERIFY",
+        "REPLAN",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "CRITIC"
+      ],
+      "required_nodes": [
+        "CRITIC",
+        "REPLAN",
+        "TOOL",
+        "VERIFY"
+      ],
+      "human_gate_recorded": true
+    },
+    "missing_evidence": {
+      "passed": true,
+      "status": "needs_more_info",
+      "nodes": [
+        "PLAN",
+        "RETRIEVE",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "NORMALIZE",
+        "VERIFY",
+        "REPLAN",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "MEMO"
+      ],
+      "required_nodes": [
+        "MEMO",
+        "REPLAN",
+        "TOOL",
+        "VERIFY"
+      ],
+      "human_gate_recorded": true
+    },
+    "real": {
+      "passed": true,
+      "status": "ready_for_review",
+      "nodes": [
+        "PLAN",
+        "RETRIEVE",
+        "PLAN",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "TOOL",
+        "NORMALIZE",
+        "VERIFY",
+        "TOOL",
+        "CALCULATE",
+        "CRITIC",
+        "TOOL",
+        "MEMO"
+      ],
+      "required_nodes": [
+        "CALCULATE",
+        "MEMO",
+        "RETRIEVE",
+        "TOOL",
+        "VERIFY"
+      ],
+      "human_gate_recorded": true
+    }
+  },
+  "llm_failure_fallback": {
+    "passed": true,
+    "status": "ready_for_review",
+    "planner_ok": false,
+    "reflection_ok": false,
+    "retry_nodes": [
+      "PLAN",
+      "REPLAN",
+      "PLAN",
+      "REFLECTION"
+    ]
+  },
+  "http_smoke": {
+    "root_status": 200,
+    "root_contains_title": true,
+    "health_status": 200,
+    "health_ok": true,
+    "health_version": "0.9.2",
+    "api_status": 200,
+    "api_decision": "hold",
+    "comparison_baseline": "REVIEW",
+    "comparison_forensics": "HOLD",
+    "user_goal": "대상 기업의 FY2025와 비교기업의 9M FY2026 실적을 비교해줘",
+    "passed": true
+  },
+  "approved_gateway_smoke": {
+    "passed": true,
+    "status": "ready_for_review",
+    "provider": "openai_compatible",
+    "planner_ok": true,
+    "reflection_ok": true,
+    "unknown_tool_calls": [
+      "invent_private_tool"
+    ]
+  },
+  "model_allowlist_smoke": {
+    "passed": true,
+    "ok": false,
+    "error": "model_not_allowlisted",
+    "model": "unapproved-model"
+  },
+  "public_submission_smoke": {
+    "status": "READY_AFTER_LINKS",
+    "passed": false,
+    "demo": {
+      "configured": false,
+      "passed": false,
+      "detail": "IC_PREFLIGHT_DEMO_URL is not configured"
+    },
+    "github": {
+      "configured": false,
+      "required": true,
+      "passed": false,
+      "detail": "not configured"
+    },
+    "video_optional": {
+      "configured": false,
+      "required": false,
+      "passed": true,
+      "detail": "not configured"
+    },
+    "next_action": [
+      "IC_PREFLIGHT_DEMO_URL과 IC_PREFLIGHT_GITHUB_URL을 설정한 뒤 재실행",
+      "선택 시연영상은 IC_PREFLIGHT_VIDEO_URL로 추가 검증",
+      "기존 IC_PROOF_* 환경변수도 호환 alias로 사용할 수 있음"
+    ]
+  },
+  "user_actions": [
+    "표지의 팀명·팀장·팀원·연락처 입력 후 PPTX/PDF 재생성",
+    "Demo URL·GitHub 링크 설정 후 python .\\mvp\\validate_public_submission.py 실행"
+  ],
+  "limitations": [
+    "실제 KIC 내부 시간절감·재작업 수치는 측정하지 않았음",
+    "offline baseline과 observable policy 통제군은 공개 케이스셋의 재현성 증거이며 live LLM 일반화 성능이 아님",
+    "observable policy는 관측 신호와 사전에 설계한 규칙으로 구성된 결정론적 통제군임"
+  ]
+}

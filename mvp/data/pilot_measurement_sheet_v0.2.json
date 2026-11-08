@@ -1,0 +1,45 @@
+{
+  "schema_version": "pilot-paired-measurement-sheet.v2",
+  "status": "awaiting_human_entries",
+  "product": "IC Preflight",
+  "purpose": "같은 packet의 수작업과 Agent end-to-end 업무범위를 짝지어 기록하는 빈 측정표",
+  "timing_scope": "end_to_end_workflow",
+  "required_packet_count": 5,
+  "packet_ids": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05"
+  ],
+  "required_fields": {
+    "common": [
+      "packet_id",
+      "operator_id_anonymous",
+      "run_id",
+      "execution_date",
+      "timing_scope",
+      "decision"
+    ],
+    "manual": [
+      "elapsed_minutes",
+      "human_rework_count",
+      "human_source_gaps",
+      "human_calculation_inconsistencies",
+      "review_log_reference"
+    ],
+    "agent": [
+      "elapsed_minutes",
+      "measurement_type",
+      "agent_trace_reference",
+      "evidence_ledger_reference"
+    ]
+  },
+  "entry_rules": [
+    "실제 stopwatch와 review log가 없는 사람 수치는 입력하지 않는다.",
+    "server_runtime_only는 사람의 end_to_end_workflow와 비교하지 않는다.",
+    "5개 packet이 모두 같은 범위로 paired 되기 전에는 시간절감률을 기획서·발표에 넣지 않는다.",
+    "실명·비공개 문서 내용·내부 투자판단은 이 표에 기록하지 않는다."
+  ],
+  "records": []
+}

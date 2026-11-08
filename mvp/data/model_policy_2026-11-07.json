@@ -1,0 +1,19 @@
+{
+  "policy_version": "model-boundary-v1",
+  "default_mode": "model_free_deterministic_gate",
+  "default_provider": null,
+  "default_model": null,
+  "rules": [
+    "LLM이 없어도 자료 기준 확인·계산·보류·담당자 handoff가 끝까지 실행된다.",
+    "승인 LLM은 계획·질의·설명만 제안하고 최종 숫자·보류 판정은 결정론적 모듈이 담당한다.",
+    "승인 모드에서는 KIC_LLM_ALLOWED_MODELS에 등록된 모델만 호출한다.",
+    "내부자료와 비공개 투자정보는 승인된 private endpoint 경계 밖으로 보내지 않는다.",
+    "모델 timeout·JSON 오류·allowlist 실패는 결정론적 fallback으로 전환한다."
+  ],
+  "tested_host_profile": {
+    "cpu": "Intel Core i5-12400F",
+    "ram_gb": 16,
+    "gpu": "NVIDIA RTX 3050 4GB",
+    "decision": "모델 없는 기본 MVP는 CPU로 실행 가능; 승인 LLM endpoint는 별도 latency·보안 승인 후 선택"
+  }
+}

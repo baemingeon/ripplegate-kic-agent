@@ -1,0 +1,265 @@
+{
+  "disclosure": "Offline proxy smoke test. It is not evidence of a live LLM model's quality. If an optional approved-gateway mode is run, those rows are outputs under the recorded prompt/model settings, not a claim about all LLMs or RAG systems.",
+  "mode": "offline",
+  "case_count": 10,
+  "gold_distribution": {
+    "REVIEW": 3,
+    "HOLD": 7
+  },
+  "models": {
+    "direct_llm_offline_proxy": {
+      "metrics": {
+        "decision_accuracy": 0.3,
+        "critical_error_detection_rate": 0.0,
+        "false_hold_rate": 0.0,
+        "critical_case_count": 7,
+        "normal_case_count": 3,
+        "counts": {
+          "REVIEW": 10
+        }
+      },
+      "predictions": [
+        {
+          "case_id": "C01",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C02",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C03",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C04",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C05",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C06",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C07",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C08",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C09",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C10",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        }
+      ]
+    },
+    "rag_offline_proxy": {
+      "metrics": {
+        "decision_accuracy": 0.4,
+        "critical_error_detection_rate": 0.143,
+        "false_hold_rate": 0.0,
+        "critical_case_count": 7,
+        "normal_case_count": 3,
+        "counts": {
+          "REVIEW": 9,
+          "HOLD": 1
+        }
+      },
+      "predictions": [
+        {
+          "case_id": "C01",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C02",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C03",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C04",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C05",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C06",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C07",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C08",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C09",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "C10",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        }
+      ]
+    },
+    "forensics_deterministic": {
+      "metrics": {
+        "decision_accuracy": 1.0,
+        "critical_error_detection_rate": 1.0,
+        "false_hold_rate": 0.0,
+        "critical_case_count": 7,
+        "normal_case_count": 3,
+        "counts": {
+          "REVIEW": 3,
+          "HOLD": 7
+        }
+      },
+      "predictions": [
+        {
+          "case_id": "C01",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "evidence and calculation gates passed or replan completed",
+          "provider": "deterministic_forensics"
+        },
+        {
+          "case_id": "C02",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "typed verifier detected period_mismatch",
+          "provider": "deterministic_forensics"
+        },
+        {
+          "case_id": "C03",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "typed verifier detected currency_mismatch",
+          "provider": "deterministic_forensics"
+        },
+        {
+          "case_id": "C04",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "typed verifier detected unit_mismatch",
+          "provider": "deterministic_forensics"
+        },
+        {
+          "case_id": "C05",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "typed verifier detected source_conflict",
+          "provider": "deterministic_forensics"
+        },
+        {
+          "case_id": "C06",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "typed verifier detected stale_price",
+          "provider": "deterministic_forensics"
+        },
+        {
+          "case_id": "C07",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "typed verifier detected peer_contamination",
+          "provider": "deterministic_forensics"
+        },
+        {
+          "case_id": "C08",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "typed verifier detected missing_source",
+          "provider": "deterministic_forensics"
+        },
+        {
+          "case_id": "C09",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "evidence and calculation gates passed or replan completed",
+          "provider": "deterministic_forensics"
+        },
+        {
+          "case_id": "C10",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "evidence and calculation gates passed or replan completed",
+          "provider": "deterministic_forensics"
+        }
+      ]
+    }
+  }
+}

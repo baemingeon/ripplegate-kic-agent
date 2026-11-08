@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:," />
+  <title>IC Preflight | 투자심의 전 검증 Agent</title>
+  <style>
+    :root {
+      --navy: #0f2747;
+      --blue: #2f73e8;
+      --pale: #eef5ff;
+      --line: #d9e1ed;
+      --ink: #1f2b3d;
+      --muted: #697586;
+      --red: #b42318;
+      --green: #067647;
+      --bg: #f6f8fb;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Malgun Gothic", Arial, sans-serif; }
+    header { background: white; border-bottom: 1px solid var(--line); padding: 22px 36px 18px; display: flex; align-items: end; justify-content: space-between; gap: 16px; }
+    h1 { margin: 0; font-size: 30px; color: var(--navy); letter-spacing: -.02em; }
+    header p { margin: 6px 0 0; color: var(--muted); font-size: 16px; }
+    .tag { color: var(--blue); font-size: 13px; font-weight: 700; }
+    main { max-width: 1320px; margin: 0 auto; padding: 24px 24px 48px; }
+    .grid { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 18px; }
+    .panel { background: white; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 4px 18px rgba(16, 38, 70, .05); }
+    .control { padding: 20px; }
+    .control h2, .section-title { margin: 0 0 12px; font-size: 18px; color: var(--navy); }
+    label { display: block; margin: 14px 0 6px; font-size: 14px; color: var(--muted); }
+    select, button, input[type="text"], textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 11px 12px; font: inherit; background: white; font-size: 15px; }
+    textarea { min-height: 82px; resize: vertical; line-height: 1.45; }
+    input[type="file"] { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: inherit; background: white; font-size: 12px; }
+    button { margin-top: 18px; border: 0; background: var(--navy); color: white; font-weight: 700; cursor: pointer; }
+    button:hover { background: #193b68; }
+    .disclosure { margin-top: 18px; padding: 12px; border-left: 3px solid #f59e0b; background: #fff8e7; color: #7a4b00; font-size: 13px; line-height: 1.5; }
+    .content { padding: 20px; }
+    .status-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+    .status { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: #94a3b8; }
+    .dot.ready { background: var(--green); }
+    .dot.hold { background: var(--red); }
+    .dot.additional { background: #9a6700; }
+    .run-id { color: var(--muted); font-size: 12px; }
+    .result-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: -4px 0 14px; color: var(--muted); font-size: 12px; }
+    .result-actions { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; justify-content: flex-end; }
+    .result-meta button { width: auto; margin: 0; padding: 7px 10px; background: white; color: var(--navy); border: 1px solid var(--line); font-size: 12px; }
+    .result-meta button:hover { background: var(--pale); }
+    .result-meta button:disabled { color: #a0a8b5; cursor: not-allowed; background: #f8fafc; }
+    .trace { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 20px; }
+    .node { border: 1px solid var(--line); border-radius: 8px; padding: 10px 4px; text-align: center; font-size: 12px; color: var(--muted); background: #fbfcfe; }
+    .node.pass { border-color: #9bd8b9; background: #f1fbf5; color: var(--green); }
+    .node.fail, .node.hold { border-color: #f3b4ae; background: #fff5f4; color: var(--red); }
+    .node.retry { border-color: #f5cc7c; background: #fff9eb; color: #9a6700; }
+    .split { display: block; }
+    .box { border: 1px solid var(--line); border-radius: 9px; padding: 14px; min-height: 0; }
+    .box + .box { margin-top: 14px; }
+    .box h3 { margin: 0 0 10px; font-size: 14px; color: var(--navy); }
+    .trace-list { display: grid; gap: 6px; max-height: 300px; overflow: auto; }
+    .trace-item { border-left: 3px solid var(--line); padding-left: 9px; font-size: 13px; line-height: 1.4; }
+    .trace-item.fail, .trace-item.hold { border-color: var(--red); }
+    .trace-item.retry { border-color: #d89400; }
+    .trace-item.pass { border-color: var(--green); }
+    .trace-item strong { color: var(--navy); }
+    .trace-item span { display: block; color: var(--muted); max-height: 2.5em; overflow: hidden; }
+    .ledger { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 13.5px; }
+    .ledger th:nth-child(1), .ledger td:nth-child(1) { width: 13%; }
+    .ledger th:nth-child(2), .ledger td:nth-child(2) { width: 33%; }
+    .ledger th:nth-child(3), .ledger td:nth-child(3) { width: 20%; }
+    .ledger th:nth-child(4), .ledger td:nth-child(4) { width: 20%; }
+    .ledger th:last-child, .ledger td:last-child { width: 14%; white-space: nowrap; }
+    .ledger th, .ledger td { border-bottom: 1px solid var(--line); padding: 8px; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+    .ledger th { color: var(--muted); font-weight: 700; }
+    .hash { display: inline-block; margin-top: 3px; color: var(--muted); font-size: 10.5px; letter-spacing: -.02em; }
+    .verified { color: var(--green); font-weight: 700; }
+    .pending { color: #9a6700; font-weight: 700; }
+    .memo { margin-top: 14px; padding: 15px; border-radius: 9px; background: var(--pale); border: 1px solid #cfe0ff; }
+    .memo.hold { background: #fff5f4; border-color: #f3b4ae; }
+    .memo.additional { background: #fff8e7; border-color: #f5cc7c; }
+    .memo strong { display: block; margin-bottom: 6px; color: var(--navy); }
+    .range { font-size: 20px; color: var(--blue); font-weight: 800; }
+    .comparison { margin-top: 14px; padding: 14px; border: 1px solid #cfe0ff; border-radius: 9px; background: #f8fbff; }
+    .comparison h3 { margin: 0 0 10px; color: var(--navy); font-size: 14px; }
+    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .comparison-card { border: 1px solid var(--line); border-radius: 8px; padding: 10px; background: white; }
+    .comparison-card strong { display: block; margin-bottom: 5px; color: var(--navy); font-size: 13px; }
+    .comparison-card .decision { font-size: 18px; font-weight: 800; }
+    .comparison-card.baseline .decision { color: #9a6700; }
+    .comparison-card.forensics .decision { color: var(--red); }
+    .comparison-note { margin-top: 9px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .pack { margin-bottom: 14px; padding: 16px; border: 1px solid #bcd4fb; border-radius: 10px; background: #f7fbff; }
+    .pack-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .pack-title { color: var(--navy); font-size: 17px; font-weight: 800; }
+    .pack-decision { padding: 5px 10px; border-radius: 999px; background: #e8f3ff; color: var(--blue); font-size: 14px; font-weight: 800; }
+    .pack-decision.hold { background: #fff0ee; color: var(--red); }
+    .pack-decision.additional { background: #fff8e7; color: #9a6700; }
+    .pack-headline { margin-bottom: 12px; font-size: 15px; line-height: 1.5; }
+    .pack-request { margin: -4px 0 9px; color: var(--navy); font-size: 13px; line-height: 1.45; }
+    .pack-context { margin: -3px 0 10px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .pack-boundary { margin-top: 10px; padding: 8px 10px; border-left: 3px solid #8aa9d6; background: #f8fbff; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .pack-checks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .pack-check { padding: 9px; border: 1px solid var(--line); border-radius: 8px; background: white; font-size: 13px; line-height: 1.45; }
+    .pack-check strong { display: block; margin-bottom: 3px; color: var(--navy); }
+    .pack-check.pass strong { color: var(--green); }
+    .pack-check.hold strong, .pack-check.fail strong { color: var(--red); }
+    .pack-check.not_run strong { color: #9a6700; }
+    .pack-next { margin-top: 11px; color: var(--muted); font-size: 13px; }
+    .details { margin-top: 14px; border: 1px solid var(--line); border-radius: 9px; background: white; overflow: hidden; }
+    .details summary { cursor: pointer; padding: 12px 14px; color: var(--navy); font-size: 14px; font-weight: 800; }
+    .details summary:hover { background: var(--pale); }
+    .details-content { padding: 0 14px 14px; }
+    .empty { color: var(--muted); font-size: 14px; padding: 42px 0; text-align: center; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .trace { grid-template-columns: repeat(4, 1fr); } .pack-checks { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>IC Preflight</h1>
+      <p>투자심의 전에, 숫자와 근거를 먼저 점검합니다</p>
+    </div>
+    <div class="tag">공개자료 MVP</div>
+  </header>
+  <main>
+    <div class="grid">
+      <aside class="panel control">
+        <h2>1. 무엇을 확인할까요?</h2>
+        <label for="company">대상 기업</label>
+        <select id="company"><option>Mastercard · MA</option></select>
+        <label for="packet-file">분석 자료 묶음 · 선택</label>
+        <input id="packet-file" type="file" accept=".json,application/json" />
+        <div id="packet-status" style="margin-top:6px;color:var(--muted);font-size:11px;line-height:1.4;">기본 공개자료 snapshot을 사용합니다. 로컬 JSON packet을 선택하면 같은 검증 흐름으로 재실행합니다.</div>
+        <label for="scenario">확인 경로 · 시연용</label>
+        <select id="scenario">
+          <option value="auto" selected>자동 확인 · 요청 문장 기반</option>
+          <option value="real">실제 공개자료 묶음 · Mastercard</option>
+          <option value="conflict">수치 충돌 후 재계획</option>
+          <option value="hold">수치 충돌 후 보류</option>
+          <option value="period_mismatch">기간 불일치 · 동일 입력 비교</option>
+          <option value="currency_mismatch">통화 불일치 · 환율 근거 확인</option>
+          <option value="missing_evidence">필수 근거 부족 · 추가자료 요청</option>
+          <option value="clean">정상 케이스</option>
+        </select>
+        <label for="goal">확인할 일을 한 문장으로 적어주세요</label>
+        <textarea id="goal" rows="3" aria-describedby="goal-help">대상 기업의 FY2025와 비교기업의 9M FY2026 실적을 비교해줘</textarea>
+        <div id="goal-help" style="margin-top:6px;color:var(--muted);font-size:11px;line-height:1.4;">입력한 문장은 실행 기록에 남고, 요청에 맞는 확인 순서를 자동으로 고릅니다.</div>
+        <div class="disclosure" style="border-left-color:#2f73e8;background:#f3f7ff;color:#1e3a5f;">직접 입력해 볼 문장: “대상 기업의 FY2025와 비교기업의 9M FY2026 실적을 비교해줘”</div>
+        <label for="mode">실행 모드</label>
+        <select id="mode">
+          <option value="deterministic">모델 없이 안전 확인</option>
+          <option value="approved_llm">승인 LLM(선택) + 안전 확인</option>
+        </select>
+        <div style="margin-top:6px;color:var(--muted);font-size:11px;line-height:1.4;">기본 경로는 모델 없이 실행합니다. LLM을 연결할 때는 기관 승인 gateway와 모델 allowlist를 통과한 경우만 사용합니다.</div>
+        <button id="run">확인 시작</button>
+        <div id="disclosure" class="disclosure">공개자료 묶음을 사용한 MVP 실행입니다. 실제 투자판단에 사용하지 않으며, SEC·시장데이터 사용 조건을 최종 확인해야 합니다.</div>
+      </aside>
+      <section class="panel content">
+        <div class="status-row">
+          <div class="status"><span id="dot" class="dot"></span><span id="status">대기 중</span></div>
+          <div id="run-id" class="run-id"></div>
+        </div>
+        <div class="result-meta"><span id="run-metrics">실행 전 — 결과와 감사 로그가 여기에 표시됩니다.</span><span class="result-actions"><button id="download-pack" disabled>투자심의팩 저장</button><button id="download" disabled>감사 로그 저장</button></span></div>
+        <div id="trace" class="trace"></div>
+        <div id="empty" class="empty">확인할 일을 적고 ‘확인 시작’을 누르세요.</div>
+        <div id="results" hidden>
+          <div id="pack" class="pack" hidden></div>
+          <div id="memo" class="memo"></div>
+          <details id="evidence-details" class="details">
+            <summary>근거와 실행 과정 보기</summary>
+            <div class="details-content">
+              <div class="split">
+                <div class="box"><h3>실행 과정</h3><div id="trace-list" class="trace-list"></div></div>
+                <div class="box"><h3>확인한 근거</h3><div id="ledger"></div></div>
+              </div>
+              <div id="comparison" class="comparison" hidden></div>
+            </div>
+          </details>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script>
+    const nodeNames = ["PLAN", "RETRIEVE", "NORMALIZE", "VERIFY", "REPLAN", "CALCULATE", "MEMO"];
+    const nodeLabels = { PLAN: "목표·계획", RETRIEVE: "자료 찾기", NORMALIZE: "기준 맞추기", VERIFY: "검증", REPLAN: "계획 갱신", CALCULATE: "계산", MEMO: "심의팩" };
+    const traceLabels = { PLAN: "계획", RETRIEVE: "자료 조회", TOOL: "자료 실행", NORMALIZE: "기준 맞추기", CALCULATE: "계산", VERIFY: "검증", REPLAN: "계획 갱신", CRITIC: "반대 검토", REFLECTION: "반대 검토", MEMO: "심의팩" };
+    const $ = (id) => document.getElementById(id);
+    let lastResult = null;
+    let selectedCasePacket = null;
+
+    function renderDisclosure() {
+      const isReal = $("scenario").value === "real";
+      const isAuto = $("scenario").value === "auto";
+      const isPeriodMismatch = $("scenario").value === "period_mismatch";
+      const isCurrencyMismatch = $("scenario").value === "currency_mismatch";
+      const isMissingEvidence = $("scenario").value === "missing_evidence";
+      const approvedLlm = $("mode").value === "approved_llm";
+      const dataText = isPeriodMismatch
+        ? "기간이 다른 실적을 같은 기준으로 비교하는 케이스입니다. 동일 입력의 일반 답변과 IC Preflight 판정을 함께 보여줍니다."
+        : isCurrencyMismatch
+        ? "같은 지표가 서로 다른 통화로 들어온 케이스입니다. 승인된 환율 기준일과 출처가 없으면 계산하지 않습니다."
+        : isMissingEvidence
+        ? "필수 지표 원문이 빠진 케이스입니다. 계산하지 않고 추가자료 요청으로 전환합니다."
+        : isReal
+        ? "공개자료 묶음을 사용한 MVP 실행입니다. 실제 투자판단에 사용하지 않으며, SEC·시장데이터 사용 조건을 최종 확인해야 합니다."
+        : isAuto
+        ? "요청 문장의 기간·자료·충돌 신호를 읽고 확인 순서를 선택합니다. 재현 문장은 기간 불일치 경로로 이어집니다."
+        : "오류 주입 합성 케이스입니다. 실제 투자판단에 사용하지 않으며, 재계획·보류 Workflow 검증용입니다.";
+      const modeText = approvedLlm
+        ? " 승인된 LLM은 계획과 설명을 돕고, 숫자·최종 보류 판정은 안전 확인 모듈이 맡습니다."
+        : " 모델 없이도 기준 확인·계산·보류 판정이 실행됩니다.";
+      const packetText = selectedCasePacket
+        ? " 선택한 로컬 packet은 외부로 전송하지 않고 현재 브라우저 실행에만 사용합니다."
+        : "";
+      $("disclosure").textContent = dataText + modeText + packetText;
+    }
+
+    function resetPacketSelection(message = "기본 공개자료 snapshot을 사용합니다. 로컬 JSON packet을 선택하면 같은 검증 흐름으로 재실행합니다.") {
+      selectedCasePacket = null;
+      $("company").innerHTML = "<option>Mastercard · MA</option>";
+      $("packet-status").textContent = message;
+      $("packet-status").style.color = "var(--muted)";
+      renderDisclosure();
+    }
+
+    $("packet-file").addEventListener("change", async (event) => {
+      const file = event.target.files?.[0];
+      if (!file) {
+        resetPacketSelection();
+        return;
+      }
+      if (file.size > 2000000) {
+        resetPacketSelection("파일이 너무 큽니다. 2MB 이하의 JSON packet만 선택할 수 있습니다.");
+        $("packet-status").style.color = "var(--red)";
+        return;
+      }
+      try {
+        const parsed = JSON.parse(await file.text());
+        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("JSON object가 필요합니다");
+        selectedCasePacket = parsed;
+        const company = parsed.company || {};
+        const name = company.name || "이름 없는 기업";
+        const ticker = company.ticker ? ` · ${company.ticker}` : "";
+        $("company").innerHTML = `<option>${escapeHtml(name + ticker)} · 로컬 packet</option>`;
+        $("packet-status").textContent = `${file.name} · ${name}${ticker} · Peer ${(parsed.peers || []).length}개 · 서버에서 구조 검증 후 실행`;
+        $("packet-status").style.color = "var(--green)";
+        renderDisclosure();
+      } catch (error) {
+        resetPacketSelection(`JSON을 읽지 못했습니다: ${error.message}`);
+        $("packet-status").style.color = "var(--red)";
+      }
+    });
+
+    function renderTrace(trace, result = {}) {
+      $("trace").innerHTML = nodeNames.map(name => {
+        const last = [...trace].reverse().find(item => item.node === name);
+        let display = last ? { status: last.status, label: ({ pass: "완료", hold: "보류", retry: "재확인" }[last.status] || last.status.toUpperCase()) } : null;
+        if (!display && result.status === "hold" && ["CALCULATE", "MEMO"].includes(name)) {
+          display = { status: "hold", label: "보류" };
+        }
+        if (!display && result.status === "needs_more_info" && name === "CALCULATE") {
+          display = { status: "retry", label: "추가자료" };
+        }
+        if (!display && result.status === "needs_more_info" && name === "MEMO") {
+          display = { status: "pass", label: "추가자료" };
+        }
+        const cls = display ? display.status : "";
+        const statusLabel = display ? display.label : "대기";
+        return `<div class="node ${escapeHtml(cls)}"><strong>${escapeHtml(nodeLabels[name] || name)}</strong><br>${escapeHtml(statusLabel)}</div>`;
+      }).join("");
+      $("trace-list").innerHTML = trace.map(item => `
+        <div class="trace-item ${escapeHtml(item.status)}"><strong>${escapeHtml(traceLabels[item.node] || item.node)}</strong> · ${escapeHtml(item.status === "pass" ? "완료" : item.status === "hold" ? "보류" : item.status === "retry" ? "재확인" : item.status)}<br>${escapeHtml(readableDetail(item.message))}<br><span>${escapeHtml(readableDetail(item.detail || ""))}</span></div>
+      `).join("");
+    }
+
+    function readableDetail(value) {
+      return String(value || "")
+        .replace(/phase=initial/g, "초기 확인")
+        .replace(/phase=replan/g, "재계획 확인")
+        .replace(/contract=tool_contract_v1/g, "자료 조회 조건")
+        .replace(/preconditions=pass/g, "실행 조건 통과")
+        .replace(/postconditions=pass/g, "결과 조건 통과")
+        .replace(/adapter=public_snapshot_adapter/g, "공개자료 연결")
+        .replace(/controller=typed allowlist/g, "허용된 실행 경로")
+        .replace(/typed period gate/g, "기간 확인 규칙")
+        .replace(/typed controller/g, "허용된 실행 경로")
+        .replace(/Tool 계획/g, "자료 조회 계획")
+        .replace(/Tool 호출/g, "자료 조회")
+        .replace(/source=deterministic_policy/g, "규칙 기반 확인")
+        .replace(/source=deterministic/g, "규칙 기반 확인");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>\"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#039;",
+      })[character]);
+    }
+
+    function sourceCell(item) {
+      const source = item.url || item.source_url || "";
+      const label = escapeHtml(item.source_type || "출처");
+      if (/^https:\/\//.test(source)) {
+        return `<a href="${escapeHtml(source)}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+      }
+      return label;
+    }
+
+    function statusClass(item) {
+      const status = String(item.verification_status || "");
+      return status.startsWith("verified") || status === "source_linked" ? "verified" : "pending";
+    }
+
+    function statusLabel(value) {
+      return ({ source_linked: "연결", verified: "완료", pending: "대기", verified_by_rule: "확인" })[value] || value || "대기";
+    }
+
+    function renderLedger(evidence) {
+      $("ledger").innerHTML = `<table class="ledger"><thead><tr><th>ID</th><th>출처</th><th>지표</th><th>값</th><th>상태</th></tr></thead><tbody>${evidence.map(item => `
+        <tr><td>${escapeHtml(item.id)}<br><span class="hash" title="${escapeHtml(item.evidence_hash || "")}">식별값 ${escapeHtml((item.evidence_hash || "").slice(0, 10))}…</span></td><td>${sourceCell(item)}<br>${escapeHtml(item.document_name)}<br>${escapeHtml(item.page)}</td><td>${escapeHtml(item.metric)}<br>${escapeHtml(item.period)}</td><td>${escapeHtml(item.value)} ${escapeHtml(item.unit)}</td><td class="${statusClass(item)}">${escapeHtml(statusLabel(item.verification_status))}</td></tr>
+      `).join("")}</tbody></table>`;
+    }
+
+    function renderMemo(result) {
+      const hold = result.status === "hold";
+      const additional = result.status === "needs_more_info";
+      const memo = result.memo || {};
+      $("memo").className = `memo ${hold ? "hold" : additional ? "additional" : ""}`;
+      const range = memo.range ? `<div class="range">USD ${memo.range[0].toLocaleString()}–${memo.range[1].toLocaleString()} mm</div>` : "";
+      const reasons = (memo.reason || []).map(item => `<div>${escapeHtml(item.metric)}: ${escapeHtml(item.reason)}</div>`).join("");
+      $("memo").innerHTML = `<strong>상세 계산 메모 ${hold ? "보류" : additional ? "추가자료 요청" : "초안"}</strong><div>${escapeHtml(memo.headline || "")}</div>${range}<p>${escapeHtml(memo.caveat || "") || reasons}</p><div><b>다음 행동:</b> ${escapeHtml(memo.next_action || "")}</div>`;
+    }
+
+    function renderPack(pack) {
+      if (!pack) {
+        $("pack").hidden = true;
+        $("pack").innerHTML = "";
+        return;
+      }
+      const hold = pack.decision === "보류";
+      const additional = pack.decision === "추가자료";
+      const checks = (pack.checks || []).map(item => `<div class="pack-check ${escapeHtml(item.status)}"><strong>${escapeHtml(item.label)} · ${item.status === "pass" ? "확인" : item.status === "hold" || item.status === "fail" ? "확인 필요" : "미실행"}</strong>${escapeHtml(item.detail || "")}</div>`).join("");
+      $("pack").hidden = false;
+      $("pack").innerHTML = `<div class="pack-head"><div class="pack-title">투자심의팩</div><div class="pack-decision ${hold ? "hold" : additional ? "additional" : ""}">${escapeHtml(pack.decision)} · ${escapeHtml(pack.human_gate || "담당자 승인 필요")}</div></div><div class="pack-headline">${escapeHtml(pack.headline || "")}</div><div class="pack-request"><b>요청:</b> ${escapeHtml(pack.request || "")}</div><div class="pack-context"><b>어디에 쓰나:</b> ${escapeHtml(pack.workflow_position || "")}</div><div class="pack-checks">${checks}</div><div class="pack-next"><b>다음 행동:</b> ${escapeHtml(pack.next_action || "")}</div><div class="pack-boundary"><b>사람이 결정하는 부분:</b> ${escapeHtml(pack.automation_boundary || "")}</div>`;
+    }
+
+    function renderComparison(comparison) {
+      if (!comparison) {
+        $("comparison").hidden = true;
+        $("comparison").innerHTML = "";
+        return;
+      }
+      const baseline = comparison.baseline || {};
+      const forensics = comparison.forensics || {};
+      $("comparison").hidden = false;
+      $("comparison").innerHTML = `
+        <h3>동일 입력 비교 · ${escapeHtml(comparison.input_summary || "기간 불일치 케이스")}</h3>
+        <div class="comparison-grid">
+          <div class="comparison-card baseline"><strong>${escapeHtml(baseline.label || "기록된 비교군")}</strong><div class="decision">${escapeHtml(baseline.decision || "-")}</div><div>${escapeHtml(baseline.reason || "")}</div></div>
+          <div class="comparison-card forensics"><strong>${escapeHtml(forensics.label || "IC Preflight")}</strong><div class="decision">${escapeHtml(forensics.decision || "-")}</div><div>${escapeHtml(forensics.reason || "")}</div></div>
+        </div>
+        <div class="comparison-note">${escapeHtml(comparison.disclosure || "")}</div>`;
+    }
+
+    function renderRunMetrics(result, elapsedMs) {
+      const evidenceCount = Array.isArray(result.evidence) ? result.evidence.length : 0;
+      const toolCount = Array.isArray(result.tool_results) ? result.tool_results.length : 0;
+      const traceCount = Array.isArray(result.trace) ? result.trace.length : 0;
+      $("run-metrics").textContent = `실행 ${elapsedMs.toLocaleString()}ms · 근거 ${evidenceCount}건 · 조회 ${toolCount}건 · 기록 ${traceCount}개`;
+    }
+
+    function downloadAuditLog() {
+      if (!lastResult) return;
+      const blob = new Blob([JSON.stringify(lastResult, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `ic-preflight-${lastResult.run_id || "run"}.json`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function packMarkdown(result) {
+      const pack = result?.investment_pack || {};
+      const checks = (pack.checks || []).map(item => `- ${item.label}: ${item.status} — ${item.detail || ""}`).join("\n");
+      const evidence = (result?.evidence || []).map(item => `- ${item.id}: ${item.source_type || "출처"} / ${item.document_name || ""} / ${item.metric || ""} / ${item.period || ""} / ${item.url || ""}`).join("\n");
+      const trace = (result?.trace || []).map(item => `- ${item.node} · ${item.status}: ${item.message || ""}${item.detail ? ` (${item.detail})` : ""}`).join("\n");
+      return [
+        "# IC Preflight 투자심의팩",
+        "",
+        `- 실행 ID: ${result?.run_id || ""}`,
+        `- 판정: ${pack.decision || result?.memo?.decision || ""}`,
+        `- 담당자 게이트: ${pack.human_gate || "담당자 승인 필요"}`,
+        "",
+        "## 요청",
+        pack.request || result?.user_goal || "",
+        "",
+        "## 결론",
+        pack.headline || result?.memo?.headline || "",
+        "",
+        "## 확인 항목",
+        checks || "- 확인 항목 없음",
+        "",
+        "## 다음 행동",
+        pack.next_action || result?.memo?.next_action || "",
+        "",
+        "## 확인한 근거",
+        evidence || "- 연결된 근거 없음",
+        "",
+        "## 실행 과정",
+        trace || "- 실행 기록 없음",
+        "",
+        "## 자동화 경계",
+        pack.automation_boundary || "투자 승인·거래·한도 변경은 사람의 결정",
+        "",
+        "이 파일은 공개자료 MVP의 검토 초안이며, 실제 투자판단 전에 담당자가 원문·가정·라이선스를 확인해야 합니다.",
+        "",
+      ].join("\n");
+    }
+
+    function downloadPack() {
+      if (!lastResult) return;
+      const blob = new Blob([packMarkdown(lastResult)], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `ic-preflight-investment-pack-${lastResult.run_id || "run"}.md`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    $("scenario").addEventListener("change", renderDisclosure);
+    $("mode").addEventListener("change", renderDisclosure);
+    $("download").addEventListener("click", downloadAuditLog);
+    $("download-pack").addEventListener("click", downloadPack);
+    renderDisclosure();
+
+    $("run").addEventListener("click", async () => {
+      $("run").disabled = true;
+      const startedAt = performance.now();
+      $("status").textContent = "Agent 실행 중";
+      $("dot").className = "dot";
+      $("empty").hidden = true;
+      $("results").hidden = false;
+      try {
+        const requestPayload = { scenario: $("scenario").value, mode: $("mode").value, user_goal: $("goal").value };
+        if (selectedCasePacket) requestPayload.case_packet = selectedCasePacket;
+        const response = await fetch("/api/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(requestPayload) });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.detail || result.error || `HTTP ${response.status}`);
+        lastResult = result;
+        result.ui_elapsed_ms = Math.round(performance.now() - startedAt);
+        renderRunMetrics(result, result.ui_elapsed_ms);
+        $("download").disabled = false;
+        $("download-pack").disabled = false;
+        const hold = result.status === "hold";
+        const additional = result.status === "needs_more_info";
+        $("status").textContent = hold ? "보류 · 담당자 검토 필요" : additional ? "추가자료 필요 · 담당자 확인" : "검토 가능 · 담당자 승인 필요";
+        $("dot").className = `dot ${hold ? "hold" : additional ? "additional" : "ready"}`;
+        const llmAttempted = result.agent_runtime?.mode === "approved_llm_with_deterministic_gate";
+        const llmActive = result.agent_runtime?.planner?.ok || result.agent_runtime?.reflection?.ok;
+        const runtimeLabel = llmAttempted && llmActive
+          ? "승인 LLM + 안전 확인"
+          : llmAttempted
+          ? "승인 LLM 미사용 · 안전 확인"
+          : "모델 없이 안전 확인";
+        $("run-id").textContent = `실행 기록 ${result.run_id} · ${runtimeLabel}`;
+        renderTrace(result.trace, result);
+        renderPack(result.investment_pack);
+        renderLedger(result.evidence);
+        renderComparison(result.comparison);
+        renderMemo(result);
+      } catch (error) {
+        $("status").textContent = `실행 오류: ${error.message}`;
+        $("dot").className = "dot hold";
+        $("run-metrics").textContent = "실행 실패 — deterministic fallback 또는 서버 상태를 확인하세요.";
+      } finally {
+        $("run").disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

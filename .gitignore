@@ -1,0 +1,59 @@
+# Build and validation by-products
+.codex-build/
+.codex-finalizer-*/
+**/__pycache__/
+*.pyc
+*.log
+
+# Credentials and participant identity
+기획서/team_info.json
+.env
+.env.*
+!*.example
+
+# Generated submission binaries are uploaded separately
+*.pptx
+*.pdf
+*.webm
+*.zip
+
+# Historical local-model experiments are not part of the public repository
+mvp/data/*ollama*
+mvp/data/benchmark_reproducibility_summary_*.json
+mvp/data/ui_run_results_2026-11-06.json
+
+# Keep one current release notice; older documents describe superseded builds
+mvp/RELEASE_MANIFEST_v0.*.md
+!mvp/RELEASE_MANIFEST_v0.9.0.md
+!mvp/RELEASE_MANIFEST_v0.9.1.md
+!mvp/RELEASE_MANIFEST_v0.9.2.md
+mvp/THIRD_PARTY_NOTICES_v0.*.md
+!mvp/THIRD_PARTY_NOTICES_v0.9.0.md
+!mvp/THIRD_PARTY_NOTICES_v0.9.1.md
+!mvp/THIRD_PARTY_NOTICES_v0.9.2.md
+
+# The full planning archive stays outside the public code repository.
+기획서/*.md
+!기획서/
+!기획서/최신본_사용안내_v0.9.0.md
+!기획서/최신본_사용안내_v0.9.1.md
+!기획서/최신본_사용안내_v0.9.2.md
+!기획서/서비스명_포지셔닝_결정_v0.2.md
+!기획서/제품개편_의사결정_v0.2.md
+!기획서/심사대응_매트릭스_v0.9.md
+!기획서/KIC_1등_달성_운영판_v0.1.md
+!기획서/00_정본_마스터_플랜_v1.0.md
+!기획서/00_정본_마스터_플랜_v1.1.md
+!기획서/README.md
+!기획서/구현전제_모델보안_PC_가독성_v0.1.md
+!기획서/본선_효과측정_프로토콜_v0.1.md
+!기획서/본선_레드팀_QA_v0.2.md
+!기획서/본선_발표_스토리보드_v0.1.md
+!기획서/본선_상위권_실행플랜_v0.1.md
+!기획서/본선_GitHub_업로드_가이드_v0.1.md
+!기획서/100점_달성_갭분석_v0.2.md
+!기획서/경쟁작대비_레드팀_검증_v0.1.md
+!기획서/제출_체크리스트_v0.7.1.md
+!기획서/외부자원_사용대장_v0.1.md
+!기획서/예선_상호평가_운영플랜_v0.1.md
+!기획서/KIC_업무검증_인터뷰_스크립트_v0.1.md

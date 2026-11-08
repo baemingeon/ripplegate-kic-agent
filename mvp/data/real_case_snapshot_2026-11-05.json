@@ -1,0 +1,87 @@
+{
+  "disclosure": "Public-source research snapshot. Market data uses Yahoo Finance chart API and requires license review before production use.",
+  "as_of_date": "2026-11-05",
+  "target": {
+    "ticker": "MA",
+    "name": "Mastercard",
+    "period_end": "2025-12-31",
+    "market_cap_usd_m": 594263.5,
+    "revenue_usd_m": 32791.0
+  },
+  "eligible_peers": [
+    {
+      "ticker": "AXP",
+      "name": "American Express",
+      "period_end": "2025-12-31",
+      "market_cap_usd_m": 226179.12,
+      "revenue_usd_m": 41304.0,
+      "price_to_sales": 5.48
+    },
+    {
+      "ticker": "PYPL",
+      "name": "PayPal",
+      "period_end": "2025-12-31",
+      "market_cap_usd_m": 57073.28,
+      "revenue_usd_m": 33172.0,
+      "price_to_sales": 1.72
+    }
+  ],
+  "excluded_candidates": [
+    {
+      "ticker": "V",
+      "name": "Visa",
+      "reason": "required metric unavailable in SEC facts. Latest annual revenue period observed was 2026-09-30, which also differs from target period."
+    }
+  ],
+  "valuation": {
+    "method": "Price-to-sales peer median",
+    "peer_median": 3.6,
+    "implied_target_equity_usd_m": 118047.6
+  },
+  "sources": [
+    {
+      "source_type": "SEC Company Facts",
+      "company": "Mastercard",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001141391.json",
+      "filed": "2026-02-11",
+      "period_end": "2025-12-31",
+      "metrics": ["Revenue", "Diluted shares"]
+    },
+    {
+      "source_type": "SEC Company Facts",
+      "company": "American Express",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000004962.json",
+      "filed": "2026-02-06",
+      "period_end": "2025-12-31",
+      "metrics": ["Revenue", "Diluted shares"]
+    },
+    {
+      "source_type": "SEC Company Facts",
+      "company": "PayPal",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001633917.json",
+      "filed": "2026-02-03",
+      "period_end": "2025-12-31",
+      "metrics": ["Revenue", "Diluted shares"]
+    },
+    {
+      "source_type": "SEC Company Facts",
+      "company": "Visa",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001403161.json",
+      "filed": "2026-11-05",
+      "period_end": "2026-09-30",
+      "metrics": ["Revenue"]
+    },
+    {
+      "source_type": "market_data",
+      "provider": "Yahoo Finance chart API",
+      "url": "https://finance.yahoo.com/quote/MA/history/",
+      "as_of_date": "2026-11-05",
+      "tickers": ["MA", "V", "AXP", "PYPL"]
+    }
+  ],
+  "notes": [
+    "Peer selection is a validation result, not an investment recommendation.",
+    "The target valuation uses P/S because this snapshot does not normalize all companies to a common EV definition.",
+    "All final results require analyst review and source-license confirmation."
+  ]
+}

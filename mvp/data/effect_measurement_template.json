@@ -1,0 +1,24 @@
+{
+  "schema_version": "effect-measurement.v1",
+  "status": "awaiting_user_entries",
+  "required_pairing": "같은 packet_id에 condition=manual과 condition=agent 기록이 각각 필요",
+  "timing_rule": "server_runtime_only와 human_workflow는 직접 비교하지 않으며, 동일 timing_scope일 때만 절감률을 계산",
+  "human_fields": [
+    "elapsed_minutes",
+    "human_rework_count",
+    "human_source_gaps",
+    "human_calculation_inconsistencies",
+    "decision"
+  ],
+  "agent_fields": [
+    "elapsed_ms",
+    "agent_trace_count",
+    "evidence_count",
+    "decision"
+  ],
+  "rules": [
+    "실제 stopwatch와 review log가 없는 수작업 수치를 입력하지 않음",
+    "paired packet과 표본 수가 확보되기 전에는 시간 절감률을 발표하지 않음",
+    "평균·중앙값·범위와 실행일·모델·prompt 버전을 함께 보관"
+  ]
+}

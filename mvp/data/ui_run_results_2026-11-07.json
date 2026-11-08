@@ -1,0 +1,2516 @@
+{
+  "captured_at": "2026-11-06T23:01:41.249Z",
+  "real": {
+    "value": "auto",
+    "status": "검토 가능 · 담당자 승인 필요",
+    "runId": "실행 기록 20261106T230139Z · 모델 없이 안전 확인",
+    "disclosure": "요청 문장의 기간·자료·충돌 신호를 읽고 확인 순서를 선택합니다. 재현 문장은 기간 불일치 경로로 이어집니다. 모델 없이도 기준 확인·계산·보류 판정이 실행됩니다.",
+    "sourceLinks": 5,
+    "runMetrics": "실행 8ms · 근거 5건 · 조회 7건 · 기록 15개",
+    "packDownloadEnabled": true,
+    "packDownloadSmoke": true,
+    "downloadEnabled": true,
+    "firstSourceHref": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001141391.json",
+    "ledgerHtml": "<table class=\"ledger\"><thead><tr><th>ID</th><th>출처</th><th>지표</th><th>값</th><th>상태</th></tr></thead><tbody>\n        <tr><td>REAL-1<br><span class=\"hash\" title=\"5ebf7605b0eca3e07dd9a91eef719ba4435c0f9306a52b2cdfa8410a30845136\">식별값 5ebf7605b0…</span></td><td><a href=\"https://data.sec.gov/api/xbrl/companyfacts/CIK0001141391.json\" target=\"_blank\" rel=\"noopener noreferrer\">SEC Company Facts</a><br>Mastercard<br>API response</td><td>Revenue, Diluted shares<br>2025-12-31</td><td>2026-02-11 source metadata</td><td class=\"verified\">연결</td></tr>\n      \n        <tr><td>REAL-2<br><span class=\"hash\" title=\"ea366f9f399f4bf288d5656d30d50e299087fb27ed6c54e69d4b1202f70bf2d5\">식별값 ea366f9f39…</span></td><td><a href=\"https://data.sec.gov/api/xbrl/companyfacts/CIK0000004962.json\" target=\"_blank\" rel=\"noopener noreferrer\">SEC Company Facts</a><br>American Express<br>API response</td><td>Revenue, Diluted shares<br>2025-12-31</td><td>2026-02-06 source metadata</td><td class=\"verified\">연결</td></tr>\n      \n    ",
+    "reflectionVisible": false,
+    "api": {
+      "status": "ready_for_review",
+      "trace": [
+        {
+          "time": "23:01:39",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "Mastercard와 후보 Peer의 공시기간·가격 기준일을 명시",
+          "detail": ""
+        },
+        {
+          "time": "23:01:39",
+          "node": "RETRIEVE",
+          "status": "pass",
+          "message": "SEC Company Facts와 지정일 시장가격 source를 연결",
+          "detail": ""
+        },
+        {
+          "time": "23:01:39",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "목적·위험 신호를 Tool 계획으로 구조화",
+          "detail": "source=deterministic_policy · objective=근거와 기준이 맞는 투자심의 packet 작성 · signals=peer_comparison,evidence_check · tools=retrieve_primary_filings,retrieve_market_price,screen_peer_candidates,normalize_metric_definitions,recalculate_valuation · steps=사용자 목적과 필요한 지표를 구조화 → 공식자료·가격·Peer 근거를 연결하고 기준을 정규화 → 검증 통과 시 Decimal valuation, 실패 시 재계획 또는 보류 · stop=unresolved_issue -> HUMAN_REVIEW"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "Primary filing / IR 원문 조회",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "기준일 시장가격 조회",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "Peer 후보 적합성 screening",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "지표 정의·단위·기간 정규화",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "결정론적 valuation 재계산",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=blocked · adapter=public_snapshot_adapter · controller=typed allowlist · 사전조건 미충족: verification_passed · postconditions=not_run"
+        },
+        {
+          "time": "23:01:39",
+          "node": "NORMALIZE",
+          "status": "pass",
+          "message": "target period 2025-12-31와 후보 Peer period를 비교",
+          "detail": ""
+        },
+        {
+          "time": "23:01:39",
+          "node": "VERIFY",
+          "status": "pass",
+          "message": "period·필수지표 게이트 통과. 제외 후보: V",
+          "detail": ""
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "결정론적 valuation 재계산",
+          "detail": "phase=verified · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "CALCULATE",
+          "status": "pass",
+          "message": "eligible Peer 2개로 P/S median 3.60 계산",
+          "detail": ""
+        },
+        {
+          "time": "23:01:39",
+          "node": "CRITIC",
+          "status": "pass",
+          "message": "Visa를 무리하게 포함하지 않고 period·필수지표 경고를 남김",
+          "detail": ""
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "담당자 승인 요청 · 공개자료·라이선스·Peer 적합도 승인",
+          "detail": "phase=handoff · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "MEMO",
+          "status": "pass",
+          "message": "실제 공개자료의 source link와 Peer 제외 사유를 IC 초안에 연결",
+          "detail": ""
+        }
+      ],
+      "agent_runtime": {
+        "mode": "deterministic_gate"
+      },
+      "plan": {
+        "requested_tool_calls": [
+          "retrieve_primary_filings",
+          "retrieve_market_price",
+          "screen_peer_candidates",
+          "normalize_metric_definitions",
+          "recalculate_valuation"
+        ],
+        "unknown_tool_calls": [],
+        "needs_replan": false,
+        "controller": "typed_policy_v1",
+        "source": "deterministic_policy",
+        "plan_steps": [
+          "사용자 목적과 필요한 지표를 구조화",
+          "공식자료·가격·Peer 근거를 연결하고 기준을 정규화",
+          "검증 통과 시 Decimal valuation, 실패 시 재계획 또는 보류"
+        ],
+        "goal_decomposition": {
+          "objective": "근거와 기준이 맞는 투자심의 packet 작성",
+          "signals": [
+            "peer_comparison",
+            "evidence_check"
+          ],
+          "constraints": [
+            "allowlisted_tools_only",
+            "deterministic_calculation",
+            "human_final_decision"
+          ],
+          "stop_condition": "unresolved_issue -> HUMAN_REVIEW"
+        },
+        "replan_policy": "VERIFY 실패 시 원문 재조회·정규화 후 unresolved이면 계산을 중단",
+        "planning_reason": "자료·기준·계산·반대검토를 순서대로 확인"
+      },
+      "routing": {
+        "mode": "auto",
+        "requested": "auto",
+        "resolved": "real",
+        "reason": "공개자료·실제 기업 검토 신호를 감지해 snapshot 경로 선택"
+      },
+      "case_origin": "public_snapshot",
+      "company_name": "Mastercard",
+      "tool_results": [
+        {
+          "tool": "retrieve_primary_filings",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "primary_evidence_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "evidence_count": 5
+        },
+        {
+          "tool": "retrieve_market_price",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "market_price_reference_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "as_of_date": "2026-11-05"
+        },
+        {
+          "tool": "screen_peer_candidates",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "evidence_available"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "peer_candidates_screened"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "candidate_count": 5
+        },
+        {
+          "tool": "normalize_metric_definitions",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "evidence_available",
+            "required_metrics_declared"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "definitions_normalized"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "required_metrics": [
+            "Revenue",
+            "Diluted shares",
+            "Close price",
+            "Price-to-sales"
+          ]
+        },
+        {
+          "tool": "recalculate_valuation",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "verification_passed",
+            "no_unresolved_issue"
+          ],
+          "preconditions_met": false,
+          "postconditions": [
+            "valuation_recalculated"
+          ],
+          "postconditions_met": false,
+          "postcondition_status": "not_run",
+          "status": "blocked_precondition",
+          "blocked_reason": "사전조건 미충족: verification_passed",
+          "postcondition_missing": [
+            "valuation_recalculated"
+          ],
+          "calculator": "Decimal"
+        },
+        {
+          "tool": "recalculate_valuation",
+          "phase": "verified",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "verification_passed",
+            "no_unresolved_issue"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "valuation_recalculated"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "calculator": "Decimal"
+        },
+        {
+          "tool": "request_human_review",
+          "phase": "handoff",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "packet_ready"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "human_gate_recorded"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "approval_gate": "human"
+        }
+      ],
+      "valuation": {
+        "method": "Price-to-sales peer median",
+        "peer_rows": [
+          {
+            "ticker": "AXP",
+            "name": "American Express",
+            "period_end": "2025-12-31",
+            "market_cap_usd_m": 226179.12,
+            "revenue_usd_m": 41304,
+            "price_to_sales": 5.48
+          },
+          {
+            "ticker": "PYPL",
+            "name": "PayPal",
+            "period_end": "2025-12-31",
+            "market_cap_usd_m": 57073.28,
+            "revenue_usd_m": 33172,
+            "price_to_sales": 1.72
+          }
+        ],
+        "peer_median": 3.6,
+        "implied_equity_value": 118047.6,
+        "formula": "implied equity = target revenue × eligible peer median P/S"
+      },
+      "memo": {
+        "decision": "REVIEW",
+        "headline": "Mastercard 공개자료 Peer screen 완료",
+        "range": [
+          118047.6,
+          118047.6
+        ],
+        "caveat": "공개자료 snapshot으로 계산한 초안입니다. 공통 기준과 원문·라이선스를 담당자가 확인해야 합니다.",
+        "next_action": "SEC 원문·시장데이터 라이선스와 Peer 적합도를 담당자가 승인"
+      },
+      "investment_pack": {
+        "product": "IC Preflight",
+        "title": "투자심의팩",
+        "request": "Mastercard 공개자료로 Peer screening과 시장가격을 확인해줘",
+        "company": "Mastercard",
+        "data_origin": "public_snapshot",
+        "workflow_position": "투자심의 전 자료·수치·리스크를 확인하는 공개자료 MVP",
+        "automation_boundary": "자동화하지 않음: 투자 승인·거래·한도 변경",
+        "decision": "진행",
+        "decision_code": "REVIEW",
+        "headline": "Mastercard 공개자료 Peer screen 완료",
+        "checks": [
+          {
+            "label": "자료 연결",
+            "status": "pass",
+            "detail": "근거 5건이 실행 기록에 연결됨"
+          },
+          {
+            "label": "기간·통화·정의 확인",
+            "status": "pass",
+            "detail": "비교 기준과 필수 정의를 확인함"
+          },
+          {
+            "label": "계산 및 민감도",
+            "status": "pass",
+            "detail": "결정론적 계산 모듈 실행"
+          },
+          {
+            "label": "스트레스 미리보기",
+            "status": "pass",
+            "detail": "매출 -10%: USD 106,242.8m · 멀티플 -0.5x: USD 101,652.1m"
+          }
+        ],
+        "next_action": "SEC 원문·시장데이터 라이선스와 Peer 적합도를 담당자가 승인",
+        "evidence_ids": [
+          "REAL-1",
+          "REAL-2",
+          "REAL-3",
+          "REAL-4",
+          "REAL-5"
+        ],
+        "stress_preview": {
+          "method": "one-way pre-screen sensitivity",
+          "base_equity_by_revenue": 118047.6,
+          "revenue_minus_10pct": 106242.84,
+          "multiple_minus_0_5x": 101652.1,
+          "disclosure": "Illustrative sensitivity only; not an official KIC risk metric or investment recommendation."
+        },
+        "human_gate": "담당자 승인 필요",
+        "audit_contract": {
+          "policy_version": "typed_policy_v1",
+          "controller": "typed_policy_v1",
+          "tool_contract_version": "tool_contract_v1",
+          "tool_state": {
+            "primary_evidence_linked": true,
+            "market_price_reference_linked": true,
+            "peer_candidates_screened": true,
+            "definitions_normalized": true,
+            "valuation_recalculated": true,
+            "human_gate_recorded": true
+          },
+          "calculator": "Decimal",
+          "evidence_fingerprints": [
+            {
+              "id": "REAL-1",
+              "sha256": "5ebf7605b0eca3e07dd9a91eef719ba4435c0f9306a52b2cdfa8410a30845136"
+            },
+            {
+              "id": "REAL-2",
+              "sha256": "ea366f9f399f4bf288d5656d30d50e299087fb27ed6c54e69d4b1202f70bf2d5"
+            },
+            {
+              "id": "REAL-3",
+              "sha256": "76c439202c60f30646acdd6f014311d66fd50f512f34daa4627d4b33b6437880"
+            },
+            {
+              "id": "REAL-4",
+              "sha256": "c8bd061c493087f35f1510bc3b429fd9942ab693345c63bf1453ddf2d82a5829"
+            },
+            {
+              "id": "REAL-5",
+              "sha256": "f7bc586964530bd1f85e656960dba58d253ae8fa107f843822b1ed3d1e0e67dd"
+            }
+          ],
+          "planning_history": [
+            {
+              "phase": "initial",
+              "requested_tool_calls": [
+                "retrieve_primary_filings",
+                "retrieve_market_price",
+                "screen_peer_candidates",
+                "normalize_metric_definitions",
+                "recalculate_valuation"
+              ],
+              "rationale": "자료·기준·계산·반대검토를 순서대로 확인",
+              "stop_condition": "unresolved_issue -> HUMAN_REVIEW",
+              "controller": "typed_policy_v1",
+              "source": "deterministic_policy"
+            }
+          ],
+          "unresolved_count": 0,
+          "final_decision": "REVIEW",
+          "human_gate": "required"
+        }
+      }
+    },
+    "title": "IC Preflight | 투자심의 전 검증 Agent"
+  },
+  "hold": {
+    "value": "hold",
+    "status": "보류 · 담당자 검토 필요",
+    "runId": "실행 기록 20261106T230139Z · 모델 없이 안전 확인",
+    "disclosure": "오류 주입 합성 케이스입니다. 실제 투자판단에 사용하지 않으며, 재계획·보류 Workflow 검증용입니다. 모델 없이도 기준 확인·계산·보류 판정이 실행됩니다.",
+    "sourceLinks": 0,
+    "runMetrics": "실행 7ms · 근거 3건 · 조회 7건 · 기록 15개",
+    "packDownloadEnabled": true,
+    "packDownloadSmoke": true,
+    "downloadEnabled": true,
+    "firstSourceHref": null,
+    "ledgerHtml": "<table class=\"ledger\"><thead><tr><th>ID</th><th>출처</th><th>지표</th><th>값</th><th>상태</th></tr></thead><tbody>\n        <tr><td>E1<br><span class=\"hash\" title=\"3b788aa59d96e1109326b8245d65d70fd28cba24b76b5053a4b430b3130fe685\">식별값 3b788aa59d…</span></td><td>IR<br>Company A FY2025 Results<br>p.12</td><td>Revenue<br>FY2025</td><td>1000 USD mm</td><td class=\"pending\">대기</td></tr>\n      \n        <tr><td>E3<br><span class=\"hash\" title=\"3d894ec03a8fd71118ac2697a9b5f9c0dbc8a07e45bbd5c54130638cdfed0e69\">식별값 3d894ec03a…</span></td><td>IR<br>Company A FY2025 Results<br>p.13</td><td>EBITDA<br>FY2025</td><td>200 USD mm</td><td class=\"pending\">대기</td></tr>\n      \n        <tr><td>E2<br><span class=\"hash\" title=\"4390ae4a64b5cf56dabed2378c38efcc42e49e8ded6a6586b3979a4856d332a5\">식별값 4390ae4a64…</span></td><td>Secondary<br>Company A market summary<br>p.4</td><td>Revenue<br>FY2025</td><td>920 USD mm</td><td class=\"pending\">대기</td></tr>\n      </tbody></table>",
+    "reflectionVisible": false,
+    "api": {
+      "status": "hold",
+      "trace": [
+        {
+          "time": "23:01:39",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "사용자 요청을 기준일·필요 지표·Peer 범위와 위험 신호로 구조화",
+          "detail": "route=hold · mode=explicit · 사용자가 검증 경로를 직접 선택"
+        },
+        {
+          "time": "23:01:39",
+          "node": "RETRIEVE",
+          "status": "pass",
+          "message": "공시·IR·보조자료 3건 조회",
+          "detail": ""
+        },
+        {
+          "time": "23:01:39",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "목적·위험 신호를 Tool 계획으로 구조화",
+          "detail": "source=deterministic_policy · objective=근거와 기준이 맞는 투자심의 packet 작성 · signals=general_review · tools=retrieve_primary_filings,retrieve_market_price,screen_peer_candidates,normalize_metric_definitions,recalculate_valuation · steps=사용자 목적과 필요한 지표를 구조화 → 공식자료·가격·Peer 근거를 연결하고 기준을 정규화 → 검증 통과 시 Decimal valuation, 실패 시 재계획 또는 보류 · stop=unresolved_issue -> HUMAN_REVIEW"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "Primary filing / IR 원문 조회",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "기준일 시장가격 조회",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "Peer 후보 적합성 screening",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "지표 정의·단위·기간 정규화",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "결정론적 valuation 재계산",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=blocked · adapter=public_snapshot_adapter · controller=typed allowlist · 사전조건 미충족: verification_passed · postconditions=not_run"
+        },
+        {
+          "time": "23:01:39",
+          "node": "NORMALIZE",
+          "status": "pass",
+          "message": "통화·단위·보고기간을 표준화",
+          "detail": ""
+        },
+        {
+          "time": "23:01:39",
+          "node": "VERIFY",
+          "status": "fail",
+          "message": "독립 출처 대조 실패",
+          "detail": "Revenue FY2025 값이 2개로 충돌"
+        },
+        {
+          "time": "23:01:39",
+          "node": "REPLAN",
+          "status": "hold",
+          "message": "재조회 후에도 기준 출처가 없어 실행을 중단",
+          "detail": ""
+        },
+        {
+          "time": "23:01:39",
+          "node": "PLAN",
+          "status": "retry",
+          "message": "검증 결과에 따라 Tool 계획을 갱신",
+          "detail": "source=deterministic_policy · objective=근거와 기준이 맞는 투자심의 packet 작성 · signals=general_review · tools=retrieve_primary_filings,retrieve_market_price,screen_peer_candidates,normalize_metric_definitions,recalculate_valuation · steps=사용자 목적과 필요한 지표를 구조화 → 공식자료·가격·Peer 근거를 연결하고 기준을 정규화 → 검증 통과 시 Decimal valuation, 실패 시 재계획 또는 보류 · stop=unresolved_issue -> HUMAN_REVIEW"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "hold",
+          "message": "Primary filing / IR 원문 조회 · unresolved conflict remains",
+          "detail": "phase=replan · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · Controller가 phase 상태를 hold로 제한 · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "담당자 승인 요청 · 보류 사유와 다음 확인 지점 전달",
+          "detail": "phase=handoff · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:39",
+          "node": "CRITIC",
+          "status": "hold",
+          "message": "중대 모순이 남아 IC 메모 생성 중단",
+          "detail": ""
+        }
+      ],
+      "agent_runtime": {
+        "mode": "deterministic_gate"
+      },
+      "plan": {
+        "requested_tool_calls": [
+          "retrieve_primary_filings",
+          "retrieve_market_price",
+          "screen_peer_candidates",
+          "normalize_metric_definitions",
+          "recalculate_valuation"
+        ],
+        "unknown_tool_calls": [],
+        "needs_replan": false,
+        "controller": "typed_policy_v1",
+        "source": "deterministic_policy",
+        "plan_steps": [
+          "사용자 목적과 필요한 지표를 구조화",
+          "공식자료·가격·Peer 근거를 연결하고 기준을 정규화",
+          "검증 통과 시 Decimal valuation, 실패 시 재계획 또는 보류"
+        ],
+        "goal_decomposition": {
+          "objective": "근거와 기준이 맞는 투자심의 packet 작성",
+          "signals": [
+            "general_review"
+          ],
+          "constraints": [
+            "allowlisted_tools_only",
+            "deterministic_calculation",
+            "human_final_decision"
+          ],
+          "stop_condition": "unresolved_issue -> HUMAN_REVIEW"
+        },
+        "replan_policy": "VERIFY 실패 시 원문 재조회·정규화 후 unresolved이면 계산을 중단",
+        "planning_reason": "자료·기준·계산·반대검토를 순서대로 확인"
+      },
+      "routing": {
+        "mode": "explicit",
+        "requested": "hold",
+        "resolved": "hold",
+        "reason": "사용자가 검증 경로를 직접 선택"
+      },
+      "case_origin": "demo_snapshot",
+      "company_name": "Company A",
+      "tool_results": [
+        {
+          "tool": "retrieve_primary_filings",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "primary_evidence_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "evidence_count": 3
+        },
+        {
+          "tool": "retrieve_market_price",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "market_price_reference_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "as_of_date": "2026-03-31"
+        },
+        {
+          "tool": "screen_peer_candidates",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "evidence_available"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "peer_candidates_screened"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "candidate_count": 3
+        },
+        {
+          "tool": "normalize_metric_definitions",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "evidence_available",
+            "required_metrics_declared"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "definitions_normalized"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "required_metrics": [
+            "Revenue",
+            "EBITDA",
+            "Net debt",
+            "EV/Revenue",
+            "EV/EBITDA"
+          ]
+        },
+        {
+          "tool": "recalculate_valuation",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "verification_passed",
+            "no_unresolved_issue"
+          ],
+          "preconditions_met": false,
+          "postconditions": [
+            "valuation_recalculated"
+          ],
+          "postconditions_met": false,
+          "postcondition_status": "not_run",
+          "status": "blocked_precondition",
+          "blocked_reason": "사전조건 미충족: verification_passed",
+          "postcondition_missing": [
+            "valuation_recalculated"
+          ],
+          "calculator": "Decimal"
+        },
+        {
+          "tool": "retrieve_primary_filings",
+          "phase": "replan",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "primary_evidence_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "blocked_by_controller",
+          "blocked_reason": "Controller가 phase 상태를 hold로 제한",
+          "evidence_count": 3
+        },
+        {
+          "tool": "request_human_review",
+          "phase": "handoff",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "packet_ready"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "human_gate_recorded"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "approval_gate": "human"
+        }
+      ],
+      "valuation": null,
+      "memo": {
+        "decision": "HOLD",
+        "headline": "검증되지 않은 수치 충돌이 있어 가치 메모 생성을 보류",
+        "reason": [
+          {
+            "type": "source_conflict",
+            "metric": "Revenue",
+            "period": "FY2025",
+            "reason": "1순위 원문과 보조자료의 값이 달라 추가 확인 필요"
+          }
+        ],
+        "next_action": "1순위 원문 또는 담당자 확인 후 재실행"
+      },
+      "investment_pack": {
+        "product": "IC Preflight",
+        "title": "투자심의팩",
+        "request": "수치 충돌이 남으면 보류해줘",
+        "company": "Company A",
+        "data_origin": "demo_snapshot",
+        "workflow_position": "투자심의 전 자료·수치·리스크를 확인하는 공개자료 MVP",
+        "automation_boundary": "자동화하지 않음: 투자 승인·거래·한도 변경",
+        "decision": "보류",
+        "decision_code": "HOLD",
+        "headline": "검증되지 않은 수치 충돌이 있어 가치 메모 생성을 보류",
+        "checks": [
+          {
+            "label": "자료 연결",
+            "status": "pass",
+            "detail": "근거 3건이 실행 기록에 연결됨"
+          },
+          {
+            "label": "기간·통화·정의 확인",
+            "status": "hold",
+            "detail": "기간·통화·정의 충돌이 남아 담당자 확인 필요"
+          },
+          {
+            "label": "계산 및 민감도",
+            "status": "not_run",
+            "detail": "검증 미완료로 계산 보류"
+          },
+          {
+            "label": "스트레스 미리보기",
+            "status": "not_run",
+            "detail": "계산 전에는 실행하지 않음"
+          }
+        ],
+        "next_action": "1순위 원문 또는 담당자 확인 후 재실행",
+        "evidence_ids": [
+          "E1",
+          "E3",
+          "E2"
+        ],
+        "stress_preview": {},
+        "human_gate": "담당자 승인 필요",
+        "audit_contract": {
+          "policy_version": "typed_policy_v1",
+          "controller": "typed_policy_v1",
+          "tool_contract_version": "tool_contract_v1",
+          "tool_state": {
+            "primary_evidence_linked": true,
+            "market_price_reference_linked": true,
+            "peer_candidates_screened": true,
+            "definitions_normalized": true,
+            "human_gate_recorded": true
+          },
+          "calculator": "not_run",
+          "evidence_fingerprints": [
+            {
+              "id": "E1",
+              "sha256": "3b788aa59d96e1109326b8245d65d70fd28cba24b76b5053a4b430b3130fe685"
+            },
+            {
+              "id": "E3",
+              "sha256": "3d894ec03a8fd71118ac2697a9b5f9c0dbc8a07e45bbd5c54130638cdfed0e69"
+            },
+            {
+              "id": "E2",
+              "sha256": "4390ae4a64b5cf56dabed2378c38efcc42e49e8ded6a6586b3979a4856d332a5"
+            }
+          ],
+          "planning_history": [
+            {
+              "phase": "initial",
+              "requested_tool_calls": [
+                "retrieve_primary_filings",
+                "retrieve_market_price",
+                "screen_peer_candidates",
+                "normalize_metric_definitions",
+                "recalculate_valuation"
+              ],
+              "rationale": "자료·기준·계산·반대검토를 순서대로 확인",
+              "stop_condition": "unresolved_issue -> HUMAN_REVIEW",
+              "controller": "typed_policy_v1",
+              "source": "deterministic_policy"
+            },
+            {
+              "phase": "replan",
+              "requested_tool_calls": [
+                "retrieve_primary_filings"
+              ],
+              "rationale": "충돌이 남아 1순위 원문만 재확인하고 계산을 중단",
+              "stop_condition": "unresolved_source_conflict -> HOLD",
+              "controller": "typed_policy_v1",
+              "source": "deterministic_policy"
+            }
+          ],
+          "unresolved_count": 1,
+          "final_decision": "HOLD",
+          "human_gate": "required"
+        }
+      }
+    },
+    "title": "IC Preflight | 투자심의 전 검증 Agent"
+  },
+  "periodMismatch": {
+    "value": "auto",
+    "status": "보류 · 담당자 검토 필요",
+    "runId": "실행 기록 20261106T230140Z · 모델 없이 안전 확인",
+    "disclosure": "요청 문장의 기간·자료·충돌 신호를 읽고 확인 순서를 선택합니다. 재현 문장은 기간 불일치 경로로 이어집니다. 모델 없이도 기준 확인·계산·보류 판정이 실행됩니다.",
+    "sourceLinks": 0,
+    "runMetrics": "실행 7ms · 근거 3건 · 조회 5건 · 기록 13개",
+    "packDownloadEnabled": true,
+    "packDownloadSmoke": true,
+    "downloadEnabled": true,
+    "firstSourceHref": null,
+    "ledgerHtml": "<table class=\"ledger\"><thead><tr><th>ID</th><th>출처</th><th>지표</th><th>값</th><th>상태</th></tr></thead><tbody>\n        <tr><td>E1<br><span class=\"hash\" title=\"3b788aa59d96e1109326b8245d65d70fd28cba24b76b5053a4b430b3130fe685\">식별값 3b788aa59d…</span></td><td>IR<br>Company A FY2025 Results<br>p.12</td><td>Revenue<br>FY2025</td><td>1000 USD mm</td><td class=\"pending\">대기</td></tr>\n      \n        <tr><td>E3<br><span class=\"hash\" title=\"3d894ec03a8fd71118ac2697a9b5f9c0dbc8a07e45bbd5c54130638cdfed0e69\">식별값 3d894ec03a…</span></td><td>IR<br>Company A FY2025 Results<br>p.13</td><td>EBITDA<br>FY2025</td><td>200 USD mm</td><td class=\"pending\">대기</td></tr>\n      \n        <tr><td>E4<br><span class=\"hash\" title=\"1def7e6a4d60bc295d90e4c1f62af8a0d23aeffd969cb04996590d992fffc540\">식별값 1def7e6a4d…</span></td><td>Peer filing<br>Peer B 9M FY2026 Results<br>p.7</td><td>Revenue<br>9M FY2026</td><td>1180 USD mm</td><td class=\"pending\">대기</td></tr>\n      </tbody></table>",
+    "reflectionVisible": false,
+    "api": {
+      "status": "hold",
+      "trace": [
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "사용자 요청을 기준일·필요 지표·Peer 범위와 위험 신호로 구조화",
+          "detail": "route=period_mismatch · mode=auto · 기간·기준일 불일치 신호를 감지해 비교 전 검증 경로 선택"
+        },
+        {
+          "time": "23:01:40",
+          "node": "RETRIEVE",
+          "status": "pass",
+          "message": "공시·IR·보조자료 3건 조회",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "목적·위험 신호를 Tool 계획으로 구조화",
+          "detail": "source=deterministic_policy · objective=근거와 기준이 맞는 투자심의 packet 작성 · signals=peer_comparison,period_alignment · tools=retrieve_primary_filings,normalize_metric_definitions,request_human_review · steps=기간·기준일 신호를 구조화 → 1순위 원문과 지표 정의를 다시 확인 → 보정 근거가 없으면 계산을 차단하고 담당자에게 전달 · stop=period_alignment_unresolved -> HOLD"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "Primary filing / IR 원문 조회",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "지표 정의·단위·기간 정규화",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "담당자 승인 요청",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=blocked · adapter=public_snapshot_adapter · controller=typed allowlist · 사전조건 미충족: packet_ready · postconditions=not_run"
+        },
+        {
+          "time": "23:01:40",
+          "node": "NORMALIZE",
+          "status": "pass",
+          "message": "통화·단위·보고기간을 표준화",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "VERIFY",
+          "status": "fail",
+          "message": "보고기간이 달라 비교 기준을 맞출 수 없음",
+          "detail": "Revenue 기준기간이 9M FY2026 / FY2025으로 어긋남"
+        },
+        {
+          "time": "23:01:40",
+          "node": "REPLAN",
+          "status": "hold",
+          "message": "기간 보정 규칙이 없어 비교를 중단",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "retry",
+          "message": "검증 결과에 따라 Tool 계획을 갱신",
+          "detail": "source=deterministic_policy · objective=근거와 기준이 맞는 투자심의 packet 작성 · signals=peer_comparison,period_alignment · tools=retrieve_primary_filings,normalize_metric_definitions,request_human_review · steps=기간·기준일 신호를 구조화 → 1순위 원문과 지표 정의를 다시 확인 → 보정 근거가 없으면 계산을 차단하고 담당자에게 전달 · stop=period_alignment_unresolved -> HOLD"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "hold",
+          "message": "Primary filing / IR 원문 조회 · unresolved conflict remains",
+          "detail": "phase=replan · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · Controller가 phase 상태를 hold로 제한 · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "담당자 승인 요청 · 보류 사유와 다음 확인 지점 전달",
+          "detail": "phase=handoff · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "CRITIC",
+          "status": "hold",
+          "message": "중대 모순이 남아 IC 메모 생성 중단",
+          "detail": ""
+        }
+      ],
+      "agent_runtime": {
+        "mode": "deterministic_gate"
+      },
+      "plan": {
+        "requested_tool_calls": [
+          "retrieve_primary_filings",
+          "normalize_metric_definitions",
+          "request_human_review"
+        ],
+        "unknown_tool_calls": [],
+        "needs_replan": false,
+        "controller": "typed_policy_v1",
+        "source": "deterministic_policy",
+        "plan_steps": [
+          "기간·기준일 신호를 구조화",
+          "1순위 원문과 지표 정의를 다시 확인",
+          "보정 근거가 없으면 계산을 차단하고 담당자에게 전달"
+        ],
+        "goal_decomposition": {
+          "objective": "근거와 기준이 맞는 투자심의 packet 작성",
+          "signals": [
+            "peer_comparison",
+            "period_alignment"
+          ],
+          "constraints": [
+            "allowlisted_tools_only",
+            "deterministic_calculation",
+            "human_final_decision"
+          ],
+          "stop_condition": "period_alignment_unresolved -> HOLD"
+        },
+        "replan_policy": "VERIFY 실패 시 원문 재조회·정규화 후 unresolved이면 계산을 중단",
+        "planning_reason": "기간·필수근거 gate를 먼저 통과시킨 뒤 계산 여부를 결정"
+      },
+      "routing": {
+        "mode": "auto",
+        "requested": "auto",
+        "resolved": "period_mismatch",
+        "reason": "기간·기준일 불일치 신호를 감지해 비교 전 검증 경로 선택"
+      },
+      "case_origin": "demo_snapshot",
+      "company_name": "Company A",
+      "tool_results": [
+        {
+          "tool": "retrieve_primary_filings",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "primary_evidence_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "evidence_count": 3
+        },
+        {
+          "tool": "normalize_metric_definitions",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "evidence_available",
+            "required_metrics_declared"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "definitions_normalized"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "required_metrics": [
+            "Revenue",
+            "EBITDA",
+            "Net debt",
+            "EV/Revenue",
+            "EV/EBITDA"
+          ]
+        },
+        {
+          "tool": "request_human_review",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "packet_ready"
+          ],
+          "preconditions_met": false,
+          "postconditions": [
+            "human_gate_recorded"
+          ],
+          "postconditions_met": false,
+          "postcondition_status": "not_run",
+          "status": "blocked_precondition",
+          "blocked_reason": "사전조건 미충족: packet_ready",
+          "postcondition_missing": [
+            "human_gate_recorded"
+          ],
+          "approval_gate": "human"
+        },
+        {
+          "tool": "retrieve_primary_filings",
+          "phase": "replan",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "primary_evidence_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "blocked_by_controller",
+          "blocked_reason": "Controller가 phase 상태를 hold로 제한",
+          "evidence_count": 3
+        },
+        {
+          "tool": "request_human_review",
+          "phase": "handoff",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "packet_ready"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "human_gate_recorded"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "approval_gate": "human"
+        }
+      ],
+      "valuation": null,
+      "memo": {
+        "decision": "HOLD",
+        "headline": "보고기간이 달라 멀티플 비교를 보류",
+        "reason": [
+          {
+            "type": "period_mismatch",
+            "metric": "Revenue",
+            "period": "9M FY2026 / FY2025",
+            "reason": "target와 비교기업의 보고기간이 달라 승인된 기간 보정 근거가 필요"
+          }
+        ],
+        "next_action": "1순위 원문 또는 담당자 확인 후 재실행"
+      },
+      "investment_pack": {
+        "product": "IC Preflight",
+        "title": "투자심의팩",
+        "request": "대상 기업의 FY2025와 비교기업의 9M FY2026 실적을 비교해줘",
+        "company": "Company A",
+        "data_origin": "demo_snapshot",
+        "workflow_position": "투자심의 전 자료·수치·리스크를 확인하는 공개자료 MVP",
+        "automation_boundary": "자동화하지 않음: 투자 승인·거래·한도 변경",
+        "decision": "보류",
+        "decision_code": "HOLD",
+        "headline": "보고기간이 달라 멀티플 비교를 보류",
+        "checks": [
+          {
+            "label": "자료 연결",
+            "status": "pass",
+            "detail": "근거 3건이 실행 기록에 연결됨"
+          },
+          {
+            "label": "기간·통화·정의 확인",
+            "status": "hold",
+            "detail": "기간·통화·정의 충돌이 남아 담당자 확인 필요"
+          },
+          {
+            "label": "계산 및 민감도",
+            "status": "not_run",
+            "detail": "검증 미완료로 계산 보류"
+          },
+          {
+            "label": "스트레스 미리보기",
+            "status": "not_run",
+            "detail": "계산 전에는 실행하지 않음"
+          }
+        ],
+        "next_action": "1순위 원문 또는 담당자 확인 후 재실행",
+        "evidence_ids": [
+          "E1",
+          "E3",
+          "E4"
+        ],
+        "stress_preview": {},
+        "human_gate": "담당자 승인 필요",
+        "audit_contract": {
+          "policy_version": "typed_policy_v1",
+          "controller": "typed_policy_v1",
+          "tool_contract_version": "tool_contract_v1",
+          "tool_state": {
+            "primary_evidence_linked": true,
+            "definitions_normalized": true,
+            "human_gate_recorded": true
+          },
+          "calculator": "not_run",
+          "evidence_fingerprints": [
+            {
+              "id": "E1",
+              "sha256": "3b788aa59d96e1109326b8245d65d70fd28cba24b76b5053a4b430b3130fe685"
+            },
+            {
+              "id": "E3",
+              "sha256": "3d894ec03a8fd71118ac2697a9b5f9c0dbc8a07e45bbd5c54130638cdfed0e69"
+            },
+            {
+              "id": "E4",
+              "sha256": "1def7e6a4d60bc295d90e4c1f62af8a0d23aeffd969cb04996590d992fffc540"
+            }
+          ],
+          "planning_history": [
+            {
+              "phase": "initial",
+              "requested_tool_calls": [
+                "retrieve_primary_filings",
+                "normalize_metric_definitions",
+                "request_human_review"
+              ],
+              "rationale": "기간·필수근거 gate를 먼저 통과시킨 뒤 계산 여부를 결정",
+              "stop_condition": "period_alignment_unresolved -> HOLD",
+              "controller": "typed_policy_v1",
+              "source": "deterministic_policy"
+            },
+            {
+              "phase": "replan",
+              "requested_tool_calls": [
+                "retrieve_primary_filings"
+              ],
+              "rationale": "충돌이 남아 1순위 원문만 재확인하고 계산을 중단",
+              "stop_condition": "period_alignment_unresolved -> HOLD",
+              "controller": "typed_policy_v1",
+              "source": "deterministic_policy"
+            }
+          ],
+          "unresolved_count": 1,
+          "final_decision": "HOLD",
+          "human_gate": "required"
+        }
+      }
+    },
+    "title": "IC Preflight | 투자심의 전 검증 Agent"
+  },
+  "currencyMismatch": {
+    "value": "currency_mismatch",
+    "status": "보류 · 담당자 검토 필요",
+    "runId": "실행 기록 20261106T230140Z · 모델 없이 안전 확인",
+    "disclosure": "같은 지표가 서로 다른 통화로 들어온 케이스입니다. 승인된 환율 기준일과 출처가 없으면 계산하지 않습니다. 모델 없이도 기준 확인·계산·보류 판정이 실행됩니다.",
+    "sourceLinks": 0,
+    "runMetrics": "실행 7ms · 근거 3건 · 조회 8건 · 기록 16개",
+    "packDownloadEnabled": true,
+    "packDownloadSmoke": true,
+    "downloadEnabled": true,
+    "firstSourceHref": null,
+    "ledgerHtml": "<table class=\"ledger\"><thead><tr><th>ID</th><th>출처</th><th>지표</th><th>값</th><th>상태</th></tr></thead><tbody>\n        <tr><td>E1<br><span class=\"hash\" title=\"3b788aa59d96e1109326b8245d65d70fd28cba24b76b5053a4b430b3130fe685\">식별값 3b788aa59d…</span></td><td>IR<br>Company A FY2025 Results<br>p.12</td><td>Revenue<br>FY2025</td><td>1000 USD mm</td><td class=\"pending\">대기</td></tr>\n      \n        <tr><td>E3<br><span class=\"hash\" title=\"3d894ec03a8fd71118ac2697a9b5f9c0dbc8a07e45bbd5c54130638cdfed0e69\">식별값 3d894ec03a…</span></td><td>IR<br>Company A FY2025 Results<br>p.13</td><td>EBITDA<br>FY2025</td><td>200 USD mm</td><td class=\"pending\">대기</td></tr>\n      \n        <tr><td>E5<br><span class=\"hash\" title=\"1039e471c3ddd436048c0ab0063629b3ef411489acc02b5ca338e19bbb9794e6\">식별값 1039e471c3…</span></td><td>Peer filing<br>Peer B FY2025 Results<br>p.9</td><td>Revenue<br>FY2025</td><td>1000 EUR mm</td><td class=\"pending\">대기</td></tr>\n      </tbody></table>",
+    "reflectionVisible": false,
+    "api": {
+      "status": "hold",
+      "trace": [
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "사용자 요청을 기준일·필요 지표·Peer 범위와 위험 신호로 구조화",
+          "detail": "route=currency_mismatch · mode=explicit · 사용자가 검증 경로를 직접 선택"
+        },
+        {
+          "time": "23:01:40",
+          "node": "RETRIEVE",
+          "status": "pass",
+          "message": "공시·IR·보조자료 3건 조회",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "목적·위험 신호를 Tool 계획으로 구조화",
+          "detail": "source=deterministic_policy · objective=근거와 기준이 맞는 투자심의 packet 작성 · signals=period_alignment,currency_alignment · tools=retrieve_primary_filings,retrieve_market_price,normalize_metric_definitions,request_human_review · steps=자료별 통화와 기준일을 구조화 → 승인된 환율 snapshot과 출처를 확인 → 환산 근거가 없으면 계산을 차단하고 담당자에게 전달 · stop=currency_alignment_unresolved -> HOLD"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "Primary filing / IR 원문 조회",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "기준일 시장가격 조회",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "지표 정의·단위·기간 정규화",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "담당자 승인 요청",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=blocked · adapter=public_snapshot_adapter · controller=typed allowlist · 사전조건 미충족: packet_ready · postconditions=not_run"
+        },
+        {
+          "time": "23:01:40",
+          "node": "NORMALIZE",
+          "status": "pass",
+          "message": "통화·단위·보고기간을 표준화",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "VERIFY",
+          "status": "fail",
+          "message": "통화 기준과 환율 기준일이 맞지 않음",
+          "detail": "Revenue FY2025 통화가 EUR / USD으로 섞임"
+        },
+        {
+          "time": "23:01:40",
+          "node": "REPLAN",
+          "status": "hold",
+          "message": "환율 기준일·출처가 없어 통화 정렬 전 계산을 중단",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "retry",
+          "message": "검증 결과에 따라 Tool 계획을 갱신",
+          "detail": "source=deterministic_policy · objective=근거와 기준이 맞는 투자심의 packet 작성 · signals=period_alignment,currency_alignment · tools=retrieve_primary_filings,retrieve_market_price,normalize_metric_definitions,request_human_review · steps=자료별 통화와 기준일을 구조화 → 승인된 환율 snapshot과 출처를 확인 → 환산 근거가 없으면 계산을 차단하고 담당자에게 전달 · stop=currency_alignment_unresolved -> HOLD"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "hold",
+          "message": "Primary filing / IR 원문 조회 · currency alignment evidence required",
+          "detail": "phase=replan · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · Controller가 phase 상태를 hold로 제한 · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "hold",
+          "message": "기준일 시장가격 조회 · currency alignment evidence required",
+          "detail": "phase=replan · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · Controller가 phase 상태를 hold로 제한 · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "hold",
+          "message": "지표 정의·단위·기간 정규화 · currency alignment evidence required",
+          "detail": "phase=replan · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · Controller가 phase 상태를 hold로 제한 · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "담당자 승인 요청 · 보류 사유와 다음 확인 지점 전달",
+          "detail": "phase=handoff · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "CRITIC",
+          "status": "hold",
+          "message": "중대 모순이 남아 IC 메모 생성 중단",
+          "detail": ""
+        }
+      ],
+      "agent_runtime": {
+        "mode": "deterministic_gate"
+      },
+      "plan": {
+        "requested_tool_calls": [
+          "retrieve_primary_filings",
+          "retrieve_market_price",
+          "normalize_metric_definitions",
+          "request_human_review"
+        ],
+        "unknown_tool_calls": [],
+        "needs_replan": false,
+        "controller": "typed_policy_v1",
+        "source": "deterministic_policy",
+        "plan_steps": [
+          "자료별 통화와 기준일을 구조화",
+          "승인된 환율 snapshot과 출처를 확인",
+          "환산 근거가 없으면 계산을 차단하고 담당자에게 전달"
+        ],
+        "goal_decomposition": {
+          "objective": "근거와 기준이 맞는 투자심의 packet 작성",
+          "signals": [
+            "period_alignment",
+            "currency_alignment"
+          ],
+          "constraints": [
+            "allowlisted_tools_only",
+            "deterministic_calculation",
+            "human_final_decision"
+          ],
+          "stop_condition": "currency_alignment_unresolved -> HOLD"
+        },
+        "replan_policy": "VERIFY 실패 시 원문 재조회·정규화 후 unresolved이면 계산을 중단",
+        "planning_reason": "기간·필수근거 gate를 먼저 통과시킨 뒤 계산 여부를 결정"
+      },
+      "routing": {
+        "mode": "explicit",
+        "requested": "currency_mismatch",
+        "resolved": "currency_mismatch",
+        "reason": "사용자가 검증 경로를 직접 선택"
+      },
+      "case_origin": "demo_snapshot",
+      "company_name": "Company A",
+      "tool_results": [
+        {
+          "tool": "retrieve_primary_filings",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "primary_evidence_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "evidence_count": 3
+        },
+        {
+          "tool": "retrieve_market_price",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "market_price_reference_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "as_of_date": "2026-03-31"
+        },
+        {
+          "tool": "normalize_metric_definitions",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "evidence_available",
+            "required_metrics_declared"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "definitions_normalized"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "required_metrics": [
+            "Revenue",
+            "EBITDA",
+            "Net debt",
+            "EV/Revenue",
+            "EV/EBITDA"
+          ]
+        },
+        {
+          "tool": "request_human_review",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "packet_ready"
+          ],
+          "preconditions_met": false,
+          "postconditions": [
+            "human_gate_recorded"
+          ],
+          "postconditions_met": false,
+          "postcondition_status": "not_run",
+          "status": "blocked_precondition",
+          "blocked_reason": "사전조건 미충족: packet_ready",
+          "postcondition_missing": [
+            "human_gate_recorded"
+          ],
+          "approval_gate": "human"
+        },
+        {
+          "tool": "retrieve_primary_filings",
+          "phase": "replan",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "primary_evidence_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "blocked_by_controller",
+          "blocked_reason": "Controller가 phase 상태를 hold로 제한",
+          "evidence_count": 3
+        },
+        {
+          "tool": "retrieve_market_price",
+          "phase": "replan",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "market_price_reference_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "blocked_by_controller",
+          "blocked_reason": "Controller가 phase 상태를 hold로 제한",
+          "as_of_date": "2026-03-31"
+        },
+        {
+          "tool": "normalize_metric_definitions",
+          "phase": "replan",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "evidence_available",
+            "required_metrics_declared"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "definitions_normalized"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "blocked_by_controller",
+          "blocked_reason": "Controller가 phase 상태를 hold로 제한",
+          "required_metrics": [
+            "Revenue",
+            "EBITDA",
+            "Net debt",
+            "EV/Revenue",
+            "EV/EBITDA"
+          ]
+        },
+        {
+          "tool": "request_human_review",
+          "phase": "handoff",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "packet_ready"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "human_gate_recorded"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "approval_gate": "human"
+        }
+      ],
+      "valuation": null,
+      "memo": {
+        "decision": "HOLD",
+        "headline": "통화·환율 기준이 달라 멀티플 비교를 보류",
+        "reason": [
+          {
+            "type": "currency_mismatch",
+            "metric": "Revenue",
+            "period": "FY2025",
+            "reason": "대상·Peer 통화가 달라 승인된 환율 snapshot의 기준일과 출처가 필요",
+            "currencies": [
+              "EUR",
+              "USD"
+            ]
+          }
+        ],
+        "next_action": "1순위 원문 또는 담당자 확인 후 재실행"
+      },
+      "investment_pack": {
+        "product": "IC Preflight",
+        "title": "투자심의팩",
+        "request": "통화가 다르니 승인된 환율 기준일과 출처를 확인해줘",
+        "company": "Company A",
+        "data_origin": "demo_snapshot",
+        "workflow_position": "투자심의 전 자료·수치·리스크를 확인하는 공개자료 MVP",
+        "automation_boundary": "자동화하지 않음: 투자 승인·거래·한도 변경",
+        "decision": "보류",
+        "decision_code": "HOLD",
+        "headline": "통화·환율 기준이 달라 멀티플 비교를 보류",
+        "checks": [
+          {
+            "label": "자료 연결",
+            "status": "pass",
+            "detail": "근거 3건이 실행 기록에 연결됨"
+          },
+          {
+            "label": "기간·통화·정의 확인",
+            "status": "hold",
+            "detail": "기간·통화·정의 충돌이 남아 담당자 확인 필요"
+          },
+          {
+            "label": "계산 및 민감도",
+            "status": "not_run",
+            "detail": "검증 미완료로 계산 보류"
+          },
+          {
+            "label": "스트레스 미리보기",
+            "status": "not_run",
+            "detail": "계산 전에는 실행하지 않음"
+          }
+        ],
+        "next_action": "1순위 원문 또는 담당자 확인 후 재실행",
+        "evidence_ids": [
+          "E1",
+          "E3",
+          "E5"
+        ],
+        "stress_preview": {},
+        "human_gate": "담당자 승인 필요",
+        "audit_contract": {
+          "policy_version": "typed_policy_v1",
+          "controller": "typed_policy_v1",
+          "tool_contract_version": "tool_contract_v1",
+          "tool_state": {
+            "primary_evidence_linked": true,
+            "market_price_reference_linked": true,
+            "definitions_normalized": true,
+            "human_gate_recorded": true
+          },
+          "calculator": "not_run",
+          "evidence_fingerprints": [
+            {
+              "id": "E1",
+              "sha256": "3b788aa59d96e1109326b8245d65d70fd28cba24b76b5053a4b430b3130fe685"
+            },
+            {
+              "id": "E3",
+              "sha256": "3d894ec03a8fd71118ac2697a9b5f9c0dbc8a07e45bbd5c54130638cdfed0e69"
+            },
+            {
+              "id": "E5",
+              "sha256": "1039e471c3ddd436048c0ab0063629b3ef411489acc02b5ca338e19bbb9794e6"
+            }
+          ],
+          "planning_history": [
+            {
+              "phase": "initial",
+              "requested_tool_calls": [
+                "retrieve_primary_filings",
+                "retrieve_market_price",
+                "normalize_metric_definitions",
+                "request_human_review"
+              ],
+              "rationale": "기간·필수근거 gate를 먼저 통과시킨 뒤 계산 여부를 결정",
+              "stop_condition": "currency_alignment_unresolved -> HOLD",
+              "controller": "typed_policy_v1",
+              "source": "deterministic_policy"
+            },
+            {
+              "phase": "replan",
+              "requested_tool_calls": [
+                "retrieve_primary_filings",
+                "retrieve_market_price",
+                "normalize_metric_definitions"
+              ],
+              "rationale": "통화·환율 기준이 정렬되지 않아 환율 근거를 확인하고 계산을 중단",
+              "stop_condition": "currency_alignment_unresolved -> HOLD",
+              "controller": "typed_policy_v1",
+              "source": "deterministic_policy"
+            }
+          ],
+          "unresolved_count": 1,
+          "final_decision": "HOLD",
+          "human_gate": "required"
+        }
+      }
+    },
+    "title": "IC Preflight | 투자심의 전 검증 Agent"
+  },
+  "missingEvidence": {
+    "value": "auto",
+    "status": "추가자료 필요 · 담당자 확인",
+    "runId": "실행 기록 20261106T230140Z · 모델 없이 안전 확인",
+    "disclosure": "요청 문장의 기간·자료·충돌 신호를 읽고 확인 순서를 선택합니다. 재현 문장은 기간 불일치 경로로 이어집니다. 모델 없이도 기준 확인·계산·보류 판정이 실행됩니다.",
+    "sourceLinks": 0,
+    "runMetrics": "실행 7ms · 근거 1건 · 조회 6건 · 기록 14개",
+    "packDownloadEnabled": true,
+    "packDownloadSmoke": true,
+    "downloadEnabled": true,
+    "firstSourceHref": null,
+    "ledgerHtml": "<table class=\"ledger\"><thead><tr><th>ID</th><th>출처</th><th>지표</th><th>값</th><th>상태</th></tr></thead><tbody>\n        <tr><td>E1<br><span class=\"hash\" title=\"3b788aa59d96e1109326b8245d65d70fd28cba24b76b5053a4b430b3130fe685\">식별값 3b788aa59d…</span></td><td>IR<br>Company A FY2025 Results<br>p.12</td><td>Revenue<br>FY2025</td><td>1000 USD mm</td><td class=\"pending\">대기</td></tr>\n      </tbody></table>",
+    "reflectionVisible": false,
+    "api": {
+      "status": "needs_more_info",
+      "trace": [
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "사용자 요청을 기준일·필요 지표·Peer 범위와 위험 신호로 구조화",
+          "detail": "route=missing_evidence · mode=auto · 필수 근거 부족 신호를 감지해 추가자료 경로 선택"
+        },
+        {
+          "time": "23:01:40",
+          "node": "RETRIEVE",
+          "status": "pass",
+          "message": "공시·IR·보조자료 1건 조회",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "목적·위험 신호를 Tool 계획으로 구조화",
+          "detail": "source=deterministic_policy · objective=근거와 기준이 맞는 투자심의 packet 작성 · signals=valuation,evidence_check · tools=retrieve_primary_filings,normalize_metric_definitions,request_human_review · steps=필수 지표 목록과 연결된 근거를 대조 → 누락된 원문 지표를 요청 → 근거가 보완될 때까지 valuation을 실행하지 않음 · stop=required_evidence_missing -> REQUEST_INFO"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "Primary filing / IR 원문 조회",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "지표 정의·단위·기간 정규화",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "담당자 승인 요청",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=blocked · adapter=public_snapshot_adapter · controller=typed allowlist · 사전조건 미충족: packet_ready · postconditions=not_run"
+        },
+        {
+          "time": "23:01:40",
+          "node": "NORMALIZE",
+          "status": "pass",
+          "message": "통화·단위·보고기간을 표준화",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "VERIFY",
+          "status": "fail",
+          "message": "필수 근거가 부족해 valuation을 실행하지 않음",
+          "detail": "누락 지표: EBITDA"
+        },
+        {
+          "time": "23:01:40",
+          "node": "REPLAN",
+          "status": "retry",
+          "message": "누락 지표가 포함된 1순위 원문을 다시 요청",
+          "detail": "계산보다 자료 보완을 우선하는 안전 게이트"
+        },
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "retry",
+          "message": "검증 결과에 따라 Tool 계획을 갱신",
+          "detail": "source=deterministic_policy · objective=근거와 기준이 맞는 투자심의 packet 작성 · signals=valuation,evidence_check · tools=retrieve_primary_filings,normalize_metric_definitions,request_human_review · steps=필수 지표 목록과 연결된 근거를 대조 → 누락된 원문 지표를 요청 → 근거가 보완될 때까지 valuation을 실행하지 않음 · stop=required_evidence_missing -> REQUEST_INFO"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "retry",
+          "message": "Primary filing / IR 원문 조회 · missing metrics",
+          "detail": "phase=replan · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · Controller가 phase 상태를 retry로 제한 · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "retry",
+          "message": "담당자 승인 요청 · missing metrics",
+          "detail": "phase=replan · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · Controller가 phase 상태를 retry로 제한 · postconditions=not_run"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "담당자 승인 요청 · 추가자료 확인 후 재실행",
+          "detail": "phase=handoff · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "MEMO",
+          "status": "pass",
+          "message": "추가자료 요청이 포함된 투자심의팩 생성",
+          "detail": ""
+        }
+      ],
+      "agent_runtime": {
+        "mode": "deterministic_gate"
+      },
+      "plan": {
+        "requested_tool_calls": [
+          "retrieve_primary_filings",
+          "normalize_metric_definitions",
+          "request_human_review"
+        ],
+        "unknown_tool_calls": [],
+        "needs_replan": false,
+        "controller": "typed_policy_v1",
+        "source": "deterministic_policy",
+        "plan_steps": [
+          "필수 지표 목록과 연결된 근거를 대조",
+          "누락된 원문 지표를 요청",
+          "근거가 보완될 때까지 valuation을 실행하지 않음"
+        ],
+        "goal_decomposition": {
+          "objective": "근거와 기준이 맞는 투자심의 packet 작성",
+          "signals": [
+            "valuation",
+            "evidence_check"
+          ],
+          "constraints": [
+            "allowlisted_tools_only",
+            "deterministic_calculation",
+            "human_final_decision"
+          ],
+          "stop_condition": "required_evidence_missing -> REQUEST_INFO"
+        },
+        "replan_policy": "VERIFY 실패 시 원문 재조회·정규화 후 unresolved이면 계산을 중단",
+        "planning_reason": "기간·필수근거 gate를 먼저 통과시킨 뒤 계산 여부를 결정"
+      },
+      "routing": {
+        "mode": "auto",
+        "requested": "auto",
+        "resolved": "missing_evidence",
+        "reason": "필수 근거 부족 신호를 감지해 추가자료 경로 선택"
+      },
+      "case_origin": "demo_snapshot",
+      "company_name": "Company A",
+      "tool_results": [
+        {
+          "tool": "retrieve_primary_filings",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "primary_evidence_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "evidence_count": 1
+        },
+        {
+          "tool": "normalize_metric_definitions",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "evidence_available",
+            "required_metrics_declared"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "definitions_normalized"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "required_metrics": [
+            "Revenue",
+            "EBITDA",
+            "Net debt",
+            "EV/Revenue",
+            "EV/EBITDA"
+          ]
+        },
+        {
+          "tool": "request_human_review",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "packet_ready"
+          ],
+          "preconditions_met": false,
+          "postconditions": [
+            "human_gate_recorded"
+          ],
+          "postconditions_met": false,
+          "postcondition_status": "not_run",
+          "status": "blocked_precondition",
+          "blocked_reason": "사전조건 미충족: packet_ready",
+          "postcondition_missing": [
+            "human_gate_recorded"
+          ],
+          "approval_gate": "human"
+        },
+        {
+          "tool": "retrieve_primary_filings",
+          "phase": "replan",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "primary_evidence_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "blocked_by_controller",
+          "blocked_reason": "Controller가 phase 상태를 retry로 제한",
+          "evidence_count": 1
+        },
+        {
+          "tool": "request_human_review",
+          "phase": "replan",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "packet_ready"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "human_gate_recorded"
+          ],
+          "postconditions_met": false,
+          "postcondition_status": "not_run",
+          "status": "blocked_by_controller",
+          "blocked_reason": "Controller가 phase 상태를 retry로 제한",
+          "postcondition_missing": [
+            "human_gate_recorded"
+          ],
+          "approval_gate": "human"
+        },
+        {
+          "tool": "request_human_review",
+          "phase": "handoff",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "packet_ready"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "human_gate_recorded"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "approval_gate": "human"
+        }
+      ],
+      "valuation": null,
+      "memo": {
+        "decision": "REQUEST_INFO",
+        "headline": "필수 지표가 없어 가치 계산을 보류하고 추가자료를 요청",
+        "reason": [
+          {
+            "metric": "EBITDA",
+            "reason": "연결된 원문 근거가 없음"
+          }
+        ],
+        "next_action": "누락 지표가 포함된 1순위 원문을 추가한 뒤 재실행"
+      },
+      "investment_pack": {
+        "product": "IC Preflight",
+        "title": "투자심의팩",
+        "request": "필수 근거가 없으면 계산하지 말고 추가자료를 요청해줘",
+        "company": "Company A",
+        "data_origin": "demo_snapshot",
+        "workflow_position": "투자심의 전 자료·수치·리스크를 확인하는 공개자료 MVP",
+        "automation_boundary": "자동화하지 않음: 투자 승인·거래·한도 변경",
+        "decision": "추가자료",
+        "decision_code": "REQUEST_INFO",
+        "headline": "필수 지표가 없어 가치 계산을 보류하고 추가자료를 요청",
+        "checks": [
+          {
+            "label": "자료 연결",
+            "status": "pass",
+            "detail": "근거 1건이 실행 기록에 연결됨"
+          },
+          {
+            "label": "기간·통화·정의 확인",
+            "status": "pass",
+            "detail": "비교 기준과 필수 정의를 확인함"
+          },
+          {
+            "label": "계산 및 민감도",
+            "status": "not_run",
+            "detail": "검증 미완료로 계산 보류"
+          },
+          {
+            "label": "스트레스 미리보기",
+            "status": "not_run",
+            "detail": "계산 전에는 실행하지 않음"
+          }
+        ],
+        "next_action": "누락 지표가 포함된 1순위 원문을 추가한 뒤 재실행",
+        "evidence_ids": [
+          "E1"
+        ],
+        "stress_preview": {},
+        "human_gate": "담당자 승인 필요",
+        "audit_contract": {
+          "policy_version": "typed_policy_v1",
+          "controller": "typed_policy_v1",
+          "tool_contract_version": "tool_contract_v1",
+          "tool_state": {
+            "primary_evidence_linked": true,
+            "definitions_normalized": true,
+            "human_gate_recorded": true
+          },
+          "calculator": "not_run",
+          "evidence_fingerprints": [
+            {
+              "id": "E1",
+              "sha256": "3b788aa59d96e1109326b8245d65d70fd28cba24b76b5053a4b430b3130fe685"
+            }
+          ],
+          "planning_history": [
+            {
+              "phase": "initial",
+              "requested_tool_calls": [
+                "retrieve_primary_filings",
+                "normalize_metric_definitions",
+                "request_human_review"
+              ],
+              "rationale": "기간·필수근거 gate를 먼저 통과시킨 뒤 계산 여부를 결정",
+              "stop_condition": "required_evidence_missing -> REQUEST_INFO",
+              "controller": "typed_policy_v1",
+              "source": "deterministic_policy"
+            },
+            {
+              "phase": "replan",
+              "requested_tool_calls": [
+                "retrieve_primary_filings",
+                "request_human_review"
+              ],
+              "rationale": "필수 지표가 없어 계산보다 원문 보완을 우선",
+              "stop_condition": "required_evidence_missing -> REQUEST_INFO",
+              "controller": "typed_policy_v1",
+              "source": "deterministic_policy"
+            }
+          ],
+          "unresolved_count": 0,
+          "final_decision": "REQUEST_INFO",
+          "human_gate": "required"
+        }
+      }
+    },
+    "title": "IC Preflight | 투자심의 전 검증 Agent"
+  },
+  "localPacket": {
+    "value": "clean",
+    "status": "검토 가능 · 담당자 승인 필요",
+    "runId": "실행 기록 20261106T230140Z · 모델 없이 안전 확인",
+    "disclosure": "오류 주입 합성 케이스입니다. 실제 투자판단에 사용하지 않으며, 재계획·보류 Workflow 검증용입니다. 모델 없이도 기준 확인·계산·보류 판정이 실행됩니다. 선택한 로컬 packet은 외부로 전송하지 않고 현재 브라우저 실행에만 사용합니다.",
+    "sourceLinks": 0,
+    "runMetrics": "실행 7ms · 근거 2건 · 조회 7건 · 기록 15개",
+    "packDownloadEnabled": true,
+    "packDownloadSmoke": true,
+    "downloadEnabled": true,
+    "firstSourceHref": null,
+    "ledgerHtml": "<table class=\"ledger\"><thead><tr><th>ID</th><th>출처</th><th>지표</th><th>값</th><th>상태</th></tr></thead><tbody>\n        <tr><td>E1<br><span class=\"hash\" title=\"cb17c5d9ea0a66bef91478ab9e14d6559d3dfaea19afb28f5a16aeeec3588c25\">식별값 cb17c5d9ea…</span></td><td>IR<br>Company A FY2025 Results<br>p.12</td><td>Revenue<br>FY2025</td><td>1000 USD mm</td><td class=\"verified\">완료</td></tr>\n      \n        <tr><td>E3<br><span class=\"hash\" title=\"9ec673958f3a3c3ddbc58c8220e3524930ee99d1bfc7e66a060d3bf53bc5a682\">식별값 9ec673958f…</span></td><td>IR<br>Company A FY2025 Results<br>p.13</td><td>EBITDA<br>FY2025</td><td>200 USD mm</td><td class=\"verified\">완료</td></tr>\n      </tbody></table>",
+    "reflectionVisible": false,
+    "api": {
+      "status": "ready_for_review",
+      "trace": [
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "사용자 요청을 기준일·필요 지표·Peer 범위와 위험 신호로 구조화",
+          "detail": "route=clean · mode=explicit · 사용자가 검증 경로를 직접 선택"
+        },
+        {
+          "time": "23:01:40",
+          "node": "RETRIEVE",
+          "status": "pass",
+          "message": "공시·IR·보조자료 2건 조회",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "PLAN",
+          "status": "pass",
+          "message": "목적·위험 신호를 Tool 계획으로 구조화",
+          "detail": "source=deterministic_policy · objective=근거와 기준이 맞는 투자심의 packet 작성 · signals=peer_comparison,period_alignment · tools=retrieve_primary_filings,retrieve_market_price,screen_peer_candidates,normalize_metric_definitions,recalculate_valuation · steps=사용자 목적과 필요한 지표를 구조화 → 공식자료·가격·Peer 근거를 연결하고 기준을 정규화 → 검증 통과 시 Decimal valuation, 실패 시 재계획 또는 보류 · stop=unresolved_issue -> HUMAN_REVIEW"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "Primary filing / IR 원문 조회",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "기준일 시장가격 조회",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "Peer 후보 적합성 screening",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "지표 정의·단위·기간 정규화",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "결정론적 valuation 재계산",
+          "detail": "phase=initial · contract=tool_contract_v1 · preconditions=blocked · adapter=public_snapshot_adapter · controller=typed allowlist · 사전조건 미충족: verification_passed · postconditions=not_run"
+        },
+        {
+          "time": "23:01:40",
+          "node": "NORMALIZE",
+          "status": "pass",
+          "message": "통화·단위·보고기간을 표준화",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "VERIFY",
+          "status": "pass",
+          "message": "독립 출처 대조 통과",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "결정론적 valuation 재계산",
+          "detail": "phase=verified · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "CALCULATE",
+          "status": "pass",
+          "message": "Peer trading multiples를 결정론적으로 계산",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "CRITIC",
+          "status": "pass",
+          "message": "Peer 수·기간·정의·보류 조건을 점검",
+          "detail": ""
+        },
+        {
+          "time": "23:01:40",
+          "node": "TOOL",
+          "status": "pass",
+          "message": "담당자 승인 요청 · 심의팩 승인 또는 수정 요청",
+          "detail": "phase=handoff · contract=tool_contract_v1 · preconditions=pass · adapter=public_snapshot_adapter · controller=typed allowlist · postconditions=pass"
+        },
+        {
+          "time": "23:01:40",
+          "node": "MEMO",
+          "status": "pass",
+          "message": "근거와 계산식을 연결한 IC 초안 생성",
+          "detail": ""
+        }
+      ],
+      "agent_runtime": {
+        "mode": "deterministic_gate"
+      },
+      "plan": {
+        "requested_tool_calls": [
+          "retrieve_primary_filings",
+          "retrieve_market_price",
+          "screen_peer_candidates",
+          "normalize_metric_definitions",
+          "recalculate_valuation"
+        ],
+        "unknown_tool_calls": [],
+        "needs_replan": false,
+        "controller": "typed_policy_v1",
+        "source": "deterministic_policy",
+        "plan_steps": [
+          "사용자 목적과 필요한 지표를 구조화",
+          "공식자료·가격·Peer 근거를 연결하고 기준을 정규화",
+          "검증 통과 시 Decimal valuation, 실패 시 재계획 또는 보류"
+        ],
+        "goal_decomposition": {
+          "objective": "근거와 기준이 맞는 투자심의 packet 작성",
+          "signals": [
+            "peer_comparison",
+            "period_alignment"
+          ],
+          "constraints": [
+            "allowlisted_tools_only",
+            "deterministic_calculation",
+            "human_final_decision"
+          ],
+          "stop_condition": "unresolved_issue -> HUMAN_REVIEW"
+        },
+        "replan_policy": "VERIFY 실패 시 원문 재조회·정규화 후 unresolved이면 계산을 중단",
+        "planning_reason": "자료·기준·계산·반대검토를 순서대로 확인"
+      },
+      "routing": {
+        "mode": "explicit",
+        "requested": "clean",
+        "resolved": "clean",
+        "reason": "사용자가 검증 경로를 직접 선택"
+      },
+      "case_origin": "local_case_packet",
+      "company_name": "Company A",
+      "tool_results": [
+        {
+          "tool": "retrieve_primary_filings",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "primary_evidence_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "evidence_count": 2
+        },
+        {
+          "tool": "retrieve_market_price",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "as_of_date"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "market_price_reference_linked"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "as_of_date": "2026-03-31"
+        },
+        {
+          "tool": "screen_peer_candidates",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "evidence_available"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "peer_candidates_screened"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "candidate_count": 2
+        },
+        {
+          "tool": "normalize_metric_definitions",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "evidence_available",
+            "required_metrics_declared"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "definitions_normalized"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "required_metrics": [
+            "Revenue",
+            "EBITDA",
+            "Net debt",
+            "EV/Revenue",
+            "EV/EBITDA"
+          ]
+        },
+        {
+          "tool": "recalculate_valuation",
+          "phase": "initial",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "verification_passed",
+            "no_unresolved_issue"
+          ],
+          "preconditions_met": false,
+          "postconditions": [
+            "valuation_recalculated"
+          ],
+          "postconditions_met": false,
+          "postcondition_status": "not_run",
+          "status": "blocked_precondition",
+          "blocked_reason": "사전조건 미충족: verification_passed",
+          "postcondition_missing": [
+            "valuation_recalculated"
+          ],
+          "calculator": "Decimal"
+        },
+        {
+          "tool": "recalculate_valuation",
+          "phase": "verified",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "verification_passed",
+            "no_unresolved_issue"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "valuation_recalculated"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "calculator": "Decimal"
+        },
+        {
+          "tool": "request_human_review",
+          "phase": "handoff",
+          "adapter": "public_snapshot_adapter",
+          "contract_version": "tool_contract_v1",
+          "preconditions": [
+            "user_goal",
+            "packet_ready"
+          ],
+          "preconditions_met": true,
+          "postconditions": [
+            "human_gate_recorded"
+          ],
+          "postconditions_met": true,
+          "postcondition_status": "pass",
+          "status": "executed",
+          "approval_gate": "human"
+        }
+      ],
+      "valuation": {
+        "method": "Peer trading multiples",
+        "peer_rows": [
+          {
+            "name": "Peer B",
+            "ticker": "DEMO-B",
+            "business_model": "enterprise software",
+            "ev": 1550,
+            "ev_revenue": 1.29,
+            "ev_ebitda": 8.61,
+            "period": "FY2025"
+          },
+          {
+            "name": "Peer C",
+            "ticker": "DEMO-C",
+            "business_model": "enterprise software",
+            "ev": 1000,
+            "ev_revenue": 1.32,
+            "ev_ebitda": 8,
+            "period": "FY2025"
+          },
+          {
+            "name": "Peer D",
+            "ticker": "DEMO-D",
+            "business_model": "enterprise software",
+            "ev": 2060,
+            "ev_revenue": 1.21,
+            "ev_ebitda": 7.92,
+            "period": "FY2025"
+          }
+        ],
+        "median_ev_revenue": 1.29,
+        "median_ev_ebitda": 8,
+        "implied_equity_by_revenue": 1190,
+        "implied_equity_by_ebitda": 1500,
+        "equity_value_range": [
+          1190,
+          1500
+        ],
+        "formula": "EV = metric × peer median multiple, equity value = EV − net debt",
+        "sensitivity": {
+          "method": "one-way pre-screen sensitivity",
+          "base_equity_by_revenue": 1190,
+          "revenue_minus_10pct": 1061,
+          "multiple_minus_0_5x": 690,
+          "disclosure": "Illustrative sensitivity only; not an official KIC risk metric or investment recommendation."
+        }
+      },
+      "memo": {
+        "decision": "REVIEW",
+        "headline": "Peer 배수 기반 가치 초안은 검토 가능 상태",
+        "range": [
+          1190,
+          1500
+        ],
+        "caveat": "공개 데모 데이터이며 실제 투자판단 전 원문과 가정을 담당자가 승인해야 함",
+        "next_action": "Evidence Ledger를 확인한 뒤 IC 초안을 승인 또는 수정"
+      },
+      "investment_pack": {
+        "product": "IC Preflight",
+        "title": "투자심의팩",
+        "request": "로컬 packet의 FY2025 매출과 EBITDA를 Peer와 비교해줘",
+        "company": "Company A",
+        "data_origin": "local_case_packet",
+        "workflow_position": "투자심의 전 자료·수치·리스크를 확인하는 로컬 입력 packet MVP",
+        "automation_boundary": "자동화하지 않음: 투자 승인·거래·한도 변경",
+        "decision": "진행",
+        "decision_code": "REVIEW",
+        "headline": "Peer 배수 기반 가치 초안은 검토 가능 상태",
+        "checks": [
+          {
+            "label": "자료 연결",
+            "status": "pass",
+            "detail": "근거 2건이 실행 기록에 연결됨"
+          },
+          {
+            "label": "기간·통화·정의 확인",
+            "status": "pass",
+            "detail": "비교 기준과 필수 정의를 확인함"
+          },
+          {
+            "label": "계산 및 민감도",
+            "status": "pass",
+            "detail": "결정론적 계산 모듈 실행"
+          },
+          {
+            "label": "스트레스 미리보기",
+            "status": "pass",
+            "detail": "매출 -10%: USD 1,061.0m · 멀티플 -0.5x: USD 690.0m"
+          }
+        ],
+        "next_action": "Evidence Ledger를 확인한 뒤 IC 초안을 승인 또는 수정",
+        "evidence_ids": [
+          "E1",
+          "E3"
+        ],
+        "stress_preview": {
+          "method": "one-way pre-screen sensitivity",
+          "base_equity_by_revenue": 1190,
+          "revenue_minus_10pct": 1061,
+          "multiple_minus_0_5x": 690,
+          "disclosure": "Illustrative sensitivity only; not an official KIC risk metric or investment recommendation."
+        },
+        "human_gate": "담당자 승인 필요",
+        "audit_contract": {
+          "policy_version": "typed_policy_v1",
+          "controller": "typed_policy_v1",
+          "tool_contract_version": "tool_contract_v1",
+          "tool_state": {
+            "primary_evidence_linked": true,
+            "market_price_reference_linked": true,
+            "peer_candidates_screened": true,
+            "definitions_normalized": true,
+            "valuation_recalculated": true,
+            "human_gate_recorded": true
+          },
+          "calculator": "Decimal",
+          "evidence_fingerprints": [
+            {
+              "id": "E1",
+              "sha256": "cb17c5d9ea0a66bef91478ab9e14d6559d3dfaea19afb28f5a16aeeec3588c25"
+            },
+            {
+              "id": "E3",
+              "sha256": "9ec673958f3a3c3ddbc58c8220e3524930ee99d1bfc7e66a060d3bf53bc5a682"
+            }
+          ],
+          "planning_history": [
+            {
+              "phase": "initial",
+              "requested_tool_calls": [
+                "retrieve_primary_filings",
+                "retrieve_market_price",
+                "screen_peer_candidates",
+                "normalize_metric_definitions",
+                "recalculate_valuation"
+              ],
+              "rationale": "자료·기준·계산·반대검토를 순서대로 확인",
+              "stop_condition": "unresolved_issue -> HUMAN_REVIEW",
+              "controller": "typed_policy_v1",
+              "source": "deterministic_policy"
+            }
+          ],
+          "unresolved_count": 0,
+          "final_decision": "REVIEW",
+          "human_gate": "required"
+        }
+      }
+    },
+    "title": "IC Preflight | 투자심의 전 검증 Agent"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "as_of": "2026-11-07",
+  "policy_version": "source-policy-v1",
+  "resources": [
+    {
+      "id": "sec_companyfacts",
+      "purpose": "public filings, revenue, diluted shares, period metadata",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001141391.json",
+      "terms_url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+      "status": "allowed_with_controls",
+      "controls": [
+        "identify the client with a User-Agent",
+        "configure KIC_SEC_CONTACT with a real team contact before fetching",
+        "respect SEC fair-access and rate limits",
+        "follow SEC Privacy and Security Policy",
+        "store retrieval timestamp and source URL"
+      ]
+    },
+    {
+      "id": "yahoo_chart_snapshot",
+      "purpose": "demo-only historical close snapshot for the public rehearsal",
+      "url": "https://finance.yahoo.com/quote/MA/history/",
+      "terms_url": "https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html",
+      "status": "demo_only_production_blocked",
+      "controls": [
+        "do not describe as a production market-data license",
+        "do not automate for KIC operations without permission or an approved license",
+        "replace with an approved vendor or exchange feed before deployment"
+      ]
+    },
+    {
+      "id": "approved_private_model_gateway",
+      "purpose": "optional planner and explanation layer after security approval",
+      "url": null,
+      "status": "not_configured",
+      "controls": ["set KIC_LLM_POLICY=approved", "set KIC_LLM_ALLOWED_MODELS explicitly", "allowlist provider and model", "use an approved private gateway", "do not send internal KIC material outside the approved boundary"]
+    },
+    {
+      "id": "approved_model_gateway",
+      "purpose": "optional enterprise or private LLM endpoint after security approval",
+      "status": "not_configured",
+      "controls": ["set KIC_LLM_POLICY=approved", "set KIC_LLM_ALLOWED_MODELS", "allowlist provider and model", "use KIC_LLM_PROVIDER for an approved private gateway", "inject API key through secret store only", "keep internal material inside approved boundary", "retain access and deletion policy"]
+    }
+  ]
+}

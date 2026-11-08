@@ -1,0 +1,262 @@
+[
+  {
+    "id": "H01",
+    "title": "aligned fiscal year and units",
+    "fault_type": "clean",
+    "severity": "normal",
+    "gold_decision": "REVIEW",
+    "evidence": [
+      "annual sales and diluted shares use the same FY2025 end date",
+      "all amounts are reported in USD millions",
+      "issuer filing and close-price source are linked"
+    ],
+    "typed_state": {"unresolved_critical_issue": null}
+  },
+  {
+    "id": "H02",
+    "title": "fiscal year labels look similar but end dates differ",
+    "fault_type": "period_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "target filing covers the year ended 2025-12-31",
+      "peer value comes from the nine months ended 2026-09-30",
+      "headline metric label is the same"
+    ],
+    "typed_state": {"unresolved_critical_issue": "period_mismatch"}
+  },
+  {
+    "id": "H03",
+    "title": "local-currency peer without a conversion rate",
+    "fault_type": "currency_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "target amount is expressed in USD",
+      "peer amount is expressed in JPY",
+      "no dated FX observation appears in the evidence packet"
+    ],
+    "typed_state": {"unresolved_critical_issue": "currency_mismatch"}
+  },
+  {
+    "id": "H04",
+    "title": "same currency, different scale",
+    "fault_type": "unit_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "target revenue is shown as USD 2,400 million",
+      "peer revenue is shown as USD 1,850 thousand",
+      "no scale conversion is included in the calculation trace"
+    ],
+    "typed_state": {"unresolved_critical_issue": "unit_mismatch"}
+  },
+  {
+    "id": "H05",
+    "title": "annual report and earnings release disagree",
+    "fault_type": "source_conflict",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "audited annual report reports revenue of 4,210",
+      "earnings release summary reports revenue of 4,012",
+      "the conflict is unresolved in the source ledger"
+    ],
+    "typed_state": {"unresolved_critical_issue": "source_conflict"}
+  },
+  {
+    "id": "H06",
+    "title": "market price is outside the valuation date window",
+    "fault_type": "stale_price",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "valuation date is 2026-11-05",
+      "last available close in the packet is 2026-08-31",
+      "no stale-price tolerance is approved"
+    ],
+    "typed_state": {"unresolved_critical_issue": "stale_price"}
+  },
+  {
+    "id": "H07",
+    "title": "same sector code but incompatible economics",
+    "fault_type": "peer_contamination",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "both companies share a broad industry code",
+      "candidate earns interchange fees while target sells hardware",
+      "gross-margin and recurring-revenue profiles diverge materially"
+    ],
+    "typed_state": {"unresolved_critical_issue": "peer_contamination"}
+  },
+  {
+    "id": "H08",
+    "title": "quantitative claim has no traceable origin",
+    "fault_type": "missing_source",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "market capitalization appears in the draft memo",
+      "the evidence ledger has no filing, URL, or page reference",
+      "the number cannot be reproduced from the packet"
+    ],
+    "typed_state": {"unresolved_critical_issue": "missing_source"}
+  },
+  {
+    "id": "H09",
+    "title": "small rounding difference inside policy",
+    "fault_type": "rounding_tolerance",
+    "severity": "normal",
+    "gold_decision": "REVIEW",
+    "evidence": [
+      "recomputed multiple differs by 0.4 percent",
+      "approved tolerance is 1.0 percent",
+      "both source links remain available"
+    ],
+    "typed_state": {"unresolved_critical_issue": null}
+  },
+  {
+    "id": "H10",
+    "title": "initial discrepancy resolved by filing re-query",
+    "fault_type": "resolved_replan",
+    "severity": "normal",
+    "gold_decision": "REVIEW",
+    "evidence": [
+      "initial press-release figure conflicted with a data vendor",
+      "the issuer filing was queried again using the target period",
+      "state was updated and the unresolved list is empty"
+    ],
+    "typed_state": {"unresolved_critical_issue": null}
+  },
+  {
+    "id": "H11",
+    "title": "reported and adjusted earnings are mixed",
+    "fault_type": "definition_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "target uses management-adjusted EBITDA after restructuring add-backs",
+      "peer uses reported EBITDA before the same adjustment",
+      "the metric-definition dictionary has no mapping between them"
+    ],
+    "typed_state": {"unresolved_critical_issue": "definition_mismatch"}
+  },
+  {
+    "id": "H12",
+    "title": "FX observation does not match the measurement date",
+    "fault_type": "fx_stale",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "the conversion uses an FX rate from 2026-06-30",
+      "the valuation snapshot is dated 2026-11-05",
+      "the policy requires a same-day or approved month-end rate"
+    ],
+    "typed_state": {"unresolved_critical_issue": "fx_stale"}
+  },
+  {
+    "id": "H13",
+    "title": "market capitalization and debt use different scales",
+    "fault_type": "scale_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "market capitalization is reported in USD billions",
+      "net debt is reported in USD millions",
+      "the calculation formula does not show a billion-to-million conversion"
+    ],
+    "typed_state": {"unresolved_critical_issue": "scale_mismatch"}
+  },
+  {
+    "id": "H14",
+    "title": "full-year target is paired with a trailing-period peer",
+    "fault_type": "ttm_fy_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "target revenue covers the fiscal year ended 2025-12-31",
+      "peer revenue is trailing twelve months through 2026-09-30",
+      "the valuation packet has no approved period bridge"
+    ],
+    "typed_state": {"unresolved_critical_issue": "ttm_fy_mismatch"}
+  },
+  {
+    "id": "H15",
+    "title": "basic shares and diluted shares are mixed",
+    "fault_type": "share_basis_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "target market value uses basic shares outstanding",
+      "peer market value uses diluted weighted-average shares",
+      "the share-count definition dictionary does not mark the basis difference"
+    ],
+    "typed_state": {"unresolved_critical_issue": "share_basis_mismatch"}
+  },
+  {
+    "id": "H16",
+    "title": "price currencies differ without a dated FX rate",
+    "fault_type": "price_currency_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "target close price is quoted in USD",
+      "peer close price is quoted in EUR",
+      "no same-date EUR/USD observation or conversion rule is attached"
+    ],
+    "typed_state": {"unresolved_critical_issue": "price_currency_mismatch"}
+  },
+  {
+    "id": "H17",
+    "title": "net cash is treated as positive net debt",
+    "fault_type": "formula_sign_error",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "the filing reports net cash of USD 180 million",
+      "the draft formula adds 180 million as if it were net debt",
+      "the sign convention is not recorded in the calculation trace"
+    ],
+    "typed_state": {"unresolved_critical_issue": "formula_sign_error"}
+  },
+  {
+    "id": "H18",
+    "title": "same industry code hides different revenue economics",
+    "fault_type": "business_model_mismatch",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "target earns recurring subscription revenue with high renewal rates",
+      "candidate earns one-time hardware sales with project-based margins",
+      "the peer screen relies only on a broad industry code"
+    ],
+    "typed_state": {"unresolved_critical_issue": "business_model_mismatch"}
+  },
+  {
+    "id": "H19",
+    "title": "growth claim survives after its footnote is removed",
+    "fault_type": "missing_footnote",
+    "severity": "critical",
+    "gold_decision": "HOLD",
+    "evidence": [
+      "the IC draft states a 24 percent revenue growth rate",
+      "the source ledger contains no page, URL, filing, or table reference for the rate",
+      "the number cannot be reproduced from the supplied packet"
+    ],
+    "typed_state": {"unresolved_critical_issue": "missing_footnote"}
+  },
+  {
+    "id": "H20",
+    "title": "two independent sources reconcile within approved tolerance",
+    "fault_type": "reconciled_sources",
+    "severity": "normal",
+    "gold_decision": "REVIEW",
+    "evidence": [
+      "audited filing and issuer earnings release cover the same FY2025 end date",
+      "the revenue difference is 0.3 percent and the policy tolerance is 1.0 percent",
+      "both URLs and calculation formula are retained in the ledger"
+    ],
+    "typed_state": {"unresolved_critical_issue": null}
+  }
+]

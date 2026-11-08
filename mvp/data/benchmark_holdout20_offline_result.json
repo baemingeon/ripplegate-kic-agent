@@ -1,0 +1,2617 @@
+{
+  "disclosure": "Offline proxy smoke test. It is not evidence of a live LLM model's quality.",
+  "mode": "offline",
+  "case_set": "benchmark_holdout_cases.json",
+  "case_count": 20,
+  "gold_distribution": {
+    "REVIEW": 4,
+    "HOLD": 16
+  },
+  "observation_policy": "observable_policy_v1",
+  "models": {
+    "direct_llm_offline_proxy": {
+      "metrics": {
+        "decision_accuracy": 0.2,
+        "critical_error_detection_rate": 0.0,
+        "false_hold_rate": 0.0,
+        "critical_case_count": 16,
+        "normal_case_count": 4,
+        "counts": {
+          "REVIEW": 20
+        }
+      },
+      "predictions": [
+        {
+          "case_id": "H01",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H02",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H03",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H04",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H05",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H06",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H07",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H08",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H09",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H10",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H11",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H12",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H13",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H14",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H15",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H16",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H17",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H18",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H19",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H20",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy returns a plausible answer from the prompt without a typed hold rule.",
+          "provider": "offline_proxy"
+        }
+      ]
+    },
+    "rag_offline_proxy": {
+      "metrics": {
+        "decision_accuracy": 0.25,
+        "critical_error_detection_rate": 0.062,
+        "false_hold_rate": 0.0,
+        "critical_case_count": 16,
+        "normal_case_count": 4,
+        "counts": {
+          "REVIEW": 19,
+          "HOLD": 1
+        }
+      },
+      "predictions": [
+        {
+          "case_id": "H01",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H02",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H03",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H04",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H05",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H06",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H07",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H08",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H09",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H10",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H11",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H12",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H13",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H14",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H15",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H16",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H17",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H18",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H19",
+          "gold": "HOLD",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        },
+        {
+          "case_id": "H20",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "Proxy checks whether a source string exists but does not reconcile definitions, periods, or units.",
+          "provider": "offline_proxy"
+        }
+      ]
+    },
+    "forensics_deterministic": {
+      "metrics": {
+        "decision_accuracy": 1.0,
+        "critical_error_detection_rate": 1.0,
+        "false_hold_rate": 0.0,
+        "critical_case_count": 16,
+        "normal_case_count": 4,
+        "counts": {
+          "REVIEW": 4,
+          "HOLD": 16
+        }
+      },
+      "predictions": [
+        {
+          "case_id": "H01",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "observable checks aligned or replan resolved the issue",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H02",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected period_mismatch",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H03",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected currency_mismatch",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H04",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected unit_mismatch",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H05",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected source_conflict",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H06",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected stale_price",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": false,
+              "value": 66,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H07",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected peer_contamination",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H08",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected missing_source",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H09",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "observable checks aligned or replan resolved the issue",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": 0.4,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H10",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "observable checks aligned or replan resolved the issue",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H11",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected definition_mismatch",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H12",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected fx_stale",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H13",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected scale_mismatch",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H14",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected ttm_fy_mismatch",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H15",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected share_basis_mismatch",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H16",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected price_currency_mismatch",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H17",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected formula_sign_error",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H18",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected business_model_mismatch",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H19",
+          "gold": "HOLD",
+          "decision": "HOLD",
+          "reason": "observable policy detected missing_footnote",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": false,
+              "value": false
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": null,
+              "limit": 1.0
+            }
+          ]
+        },
+        {
+          "case_id": "H20",
+          "gold": "REVIEW",
+          "decision": "REVIEW",
+          "reason": "observable checks aligned or replan resolved the issue",
+          "provider": "deterministic_forensics",
+          "policy": "observable_policy_v1",
+          "check_trace": [
+            {
+              "check": "period_aligned",
+              "label": "보고기간 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "currency_aligned",
+              "label": "보고통화 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "unit_aligned",
+              "label": "단위 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "source_reconciled",
+              "label": "출처 대조",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_age_days",
+              "label": "가격 기준일",
+              "passed": true,
+              "value": null,
+              "limit": 31
+            },
+            {
+              "check": "peer_fit",
+              "label": "Peer 경제적 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "quantitative_claims_sourced",
+              "label": "정량 주장 출처",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "definition_aligned",
+              "label": "지표 정의 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "fx_date_aligned",
+              "label": "환율 기준일",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "scale_aligned",
+              "label": "금액 scale 정합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "period_bridge_approved",
+              "label": "TTM·FY 기간 보정",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "share_basis_aligned",
+              "label": "주식수 기준",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "price_currency_aligned",
+              "label": "가격 통화",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "formula_sign_valid",
+              "label": "수식 부호",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "business_model_fit",
+              "label": "사업모델 적합성",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "footnotes_complete",
+              "label": "각주·원문 위치",
+              "passed": true,
+              "value": true
+            },
+            {
+              "check": "rounding_difference_pct",
+              "label": "반올림 허용오차",
+              "passed": true,
+              "value": 0.3,
+              "limit": 1.0
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

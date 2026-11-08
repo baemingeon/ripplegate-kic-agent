@@ -1,0 +1,18 @@
+{
+  "schema_version": "goal-route-holdout.v1",
+  "disclosure": "사전 작성한 자연어 라우팅 통제군이다. live LLM 일반화 성능이나 실제 KIC 사용자 검증을 의미하지 않는다.",
+  "cases": [
+    {"case_id": "G01", "user_goal": "연간 실적과 9개월 실적을 같은 멀티플로 비교해도 될까?", "expected_scenario": "period_mismatch"},
+    {"case_id": "G02", "user_goal": "대상 기업 FY2025와 후보의 2026년 3분기 수치를 맞춰서 비교해줘", "expected_scenario": "period_mismatch"},
+    {"case_id": "G03", "user_goal": "EBITDA를 뒷받침하는 필수 지표가 없으니 자료를 더 요청해줘", "expected_scenario": "missing_evidence"},
+    {"case_id": "G04", "user_goal": "IR과 공시에 서로 다른 매출 수치가 있으니 원문을 다시 확인해줘", "expected_scenario": "conflict"},
+    {"case_id": "G05", "user_goal": "Mastercard 공개자료와 시장가격으로 Peer screening을 해줘", "expected_scenario": "real"},
+    {"case_id": "G06", "user_goal": "Peer 3개를 골라 valuation 초안을 만들고 취약한 가정을 확인해줘", "expected_scenario": "clean"},
+    {"case_id": "G07", "user_goal": "FY2025 숫자와 YTD 숫자의 기준일이 다른지 먼저 점검해줘", "expected_scenario": "period_mismatch"},
+    {"case_id": "G08", "user_goal": "근거가 누락된 시장가치 계산은 하지 말고 추가자료로 보내줘", "expected_scenario": "missing_evidence"},
+    {"case_id": "G09", "user_goal": "보조자료와 원문 값이 다르면 보류하고 재조회해줘", "expected_scenario": "hold"},
+    {"case_id": "G10", "user_goal": "공시와 시장자료를 연결해 적정 Peer 배수를 검토해줘", "expected_scenario": "real"},
+    {"case_id": "G11", "user_goal": "정상적인 동일 기간 자료로 P/S 비교표를 작성해줘", "expected_scenario": "clean"},
+    {"case_id": "G12", "user_goal": "서로 다른 보고기간의 숫자는 계산을 멈추고 검토 중단해줘", "expected_scenario": "hold"}
+  ]
+}
