@@ -132,6 +132,16 @@
     .assumption-title { display: flex; justify-content: space-between; align-items: center; margin: 12px 0 7px; }
     .assumption-title strong { font-size: 12px; }
     .assumption-title span { color: var(--muted); font-size: 10px; }
+    .default-scenario { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 10px 11px; border: 1px solid rgba(104,223,172,.25); border-radius: 9px; background: rgba(104,223,172,.045); color: #cfeee0; font-size: 10px; }
+    .default-scenario strong { color: #aaf4cf; font-size: 11px; }
+    .default-scenario span { color: var(--muted); text-align: right; }
+    .advanced-settings { margin: 8px 0 11px; border: 1px solid var(--line); border-radius: 9px; background: rgba(255,255,255,.018); }
+    .advanced-settings summary { cursor: pointer; list-style: none; padding: 9px 11px; color: #c9deef; font-size: 10px; font-weight: 760; }
+    .advanced-settings summary::-webkit-details-marker { display: none; }
+    .advanced-settings summary::before { content: "＋"; color: var(--cyan); margin-right: 6px; }
+    .advanced-settings[open] summary::before { content: "－"; }
+    .advanced-settings summary span { float: right; color: var(--muted); font-weight: 400; }
+    .advanced-body { padding: 0 10px 4px; border-top: 1px solid var(--line); }
     .assumption-card { border: 1px solid var(--line); background: rgba(255,255,255,.024); border-radius: 9px; padding: 10px; margin-bottom: 7px; }
     .assumption-card.hold { border-color: rgba(255,129,146,.28); background: rgba(255,129,146,.035); }
     .assumption-card-head { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
@@ -372,14 +382,14 @@
       const tools = data.plan.tools.map((tool) => `<span class="tool ${tool.selected ? "ready" : ""}" title="${esc(tool.label)}">${tool.selected ? "✓ " : ""}${esc(tool.name)}</span>`).join("");
       const holdEdge = edges.find((edge) => edge.status === "HOLD");
       const calculationBlock = calculatorSelected
-        ? `<div class="assumption-title"><strong>추천 가정</strong><span>기본값은 Agent가 제안 · 예외만 수정</span></div>${cards}<div class="gate-note">FactGate는 출처·기간 충돌이 남아 있는 경로를 단일 숫자로 만들지 않습니다. 이번 packet에서 HOLD인 경로는 <strong>${esc(holdEdge ? holdEdge.channel : "없음")}</strong>입니다.</div>`
+        ? `<div class="assumption-title"><strong>추천 가정</strong><span>기본 시나리오는 1-click 확인</span></div><div class="default-scenario"><strong>기본 시나리오 적용</strong><span>Agent 추천값을 그대로 확인하고 계산합니다.<br>예외가 있을 때만 아래 고급 설정을 엽니다.</span></div><details class="advanced-settings"><summary>고급 설정 · 예외만 수정 <span>기간 · 충격 · 전가율 · 노출도</span></summary><div class="advanced-body">${cards}</div></details><div class="gate-note">FactGate는 출처·기간 충돌이 남아 있는 경로를 단일 숫자로 만들지 않습니다. 이번 packet에서 HOLD인 경로는 <strong>${esc(holdEdge ? holdEdge.channel : "없음")}</strong>입니다.</div>`
         : `<div class="gate-note">이번 목적에는 계산 Tool을 선택하지 않았습니다. 원문·기준일 확인만 수행하고, 수치·가정·투자 영향은 확정하지 않습니다.</div>`;
       const portfolioRequired = Boolean(data.plan.investment_context?.required);
       const quality = data.data_quality || {};
       const qualityLine = quality.status_label ? `<br><span style="color:#f0cf8b">자료 품질: ${esc(quality.status_label)} · source ${esc(quality.source_count)}건 · ${esc(quality.calculation_boundary || "")}</span>` : "";
       const portfolioDemo = portfolioRequired ? `<button class="secondary" id="demo-portfolio">합성 Portfolio context로 시연</button>` : "";
       const actionBlock = calculatorSelected
-        ? `<div class="action-row"><button class="secondary" id="reset">다시 선택</button>${portfolioDemo}<button class="primary" id="confirm">추천 가정 확인 → 계산 실행</button></div>`
+        ? `<div class="action-row"><button class="secondary" id="reset">다시 선택</button>${portfolioDemo}<button class="primary" id="confirm">기본 시나리오 확인 → 계산 실행</button></div>`
         : `<div class="action-row"><button class="secondary" id="reset">다른 목적 입력</button></div>`;
       $("plan-panel").hidden = false;
       $("plan-panel").innerHTML = `<div class="plan-summary"><strong>Agent 계획:</strong> ${esc(data.plan.planner.reason)}<br><span style="color:#8ea6bf">입력 목적: ${esc(data.plan.user_goal || getGoal())}<br>${calculatorSelected ? "계산은 사람 확인 이후에만 실행됩니다." : "이번 단계는 근거 확인으로 종료됩니다."}</span>${qualityLine}</div><div class="tool-strip">${tools}</div>${calculationBlock}${actionBlock}`;
@@ -435,7 +445,7 @@
       } catch (error) {
         setError(error.message);
         $("confirm").disabled = false;
-      } finally { $("confirm").textContent = "추천 가정 확인 → 계산 실행"; }
+      } finally { $("confirm").textContent = "기본 시나리오 확인 → 계산 실행"; }
     }
 
     function statusClass(status) { return String(status || "").toLowerCase(); }
