@@ -28,7 +28,7 @@ python -m unittest discover -s . -p 'test_ripplegate.py'
 ```
 
 기대 판정은 `VERIFIED 1 / SCENARIO 1 / HOLD 1`이며, 독립 Critic 결과와 HTTPS Evidence Ledger가 함께 출력된다.
-`--holdout`은 9개 통제된 계약 mutation을 실행하며, 모두 `HOLD` 또는 `REJECT`여야 한다. 이 결과는 정확도나 실제 업무효과의 벤치마크가 아니다.
+`--holdout`은 10개 통제된 계약 mutation을 실행하며, 모두 `HOLD` 또는 `REJECT`여야 한다. 이 결과는 정확도나 실제 업무효과의 벤치마크가 아니다.
 
 ## 정직한 범위
 

@@ -44,7 +44,7 @@ python .\ripplegate_judge_repro.py --holdout
 
 기대 판정은 `VERIFIED 1 / SCENARIO 1 / HOLD 1`이며, Planner·Tool·Human Gate·Calculator·FactGate·독립 Critic·REPLAN·Review Pack trace와 HTTPS Evidence Ledger, 동일 입력 통제군 결과가 출력됩니다.
 
-`--holdout`은 누락 근거·기간 충돌·관찰값 누락·HOLD 숫자 누출·영향 범위 역전·미허용 Tool·위험 URL·미검증 source 승격·LLM 제어 필드를 의도적으로 넣는 9개 계약 검사입니다. 모두 `HOLD` 또는 `REJECT`여야 하며, 정확도·환각률·실제 업무효과·운영 오류 탐지율을 의미하지 않습니다.
+`--holdout`은 누락 근거·기간 충돌·관찰값 누락·HOLD 숫자 누출·영향 범위 역전·미허용 Tool·위험 URL·미검증 source 승격·LLM 제어 필드·prompt injection 격리를 의도적으로 검사하는 10개 계약 검사입니다. 모두 `HOLD` 또는 `REJECT`여야 하며, 정확도·환각률·실제 업무효과·운영 오류 탐지율을 의미하지 않습니다.
 
 ## 데이터 packet
 
