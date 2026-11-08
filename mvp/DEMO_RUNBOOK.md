@@ -13,6 +13,25 @@ cd ".\mvp"
 
 브라우저에서 `http://127.0.0.1:8766`을 연다. 기본 데이터는 `public_snapshot`이며, 모델과 외부 실시간 API 없이 재현된다.
 
+## 1-보충. 선택적 typed LLM trace
+
+본선에서 Agent의 실제 모델 연동을 질문받으면 공개·합성 packet에 한정한 loopback trace를 별도로 실행한다. 이 경로는 공개 Demo의 기본 runtime이 아니며, 내부자료·개인정보·포트폴리오 context를 전송하지 않는다.
+
+```powershell
+$env:RIPPLEGATE_LLM_MODE = "approved"
+$env:KIC_LLM_POLICY = "approved"
+$env:KIC_LLM_PROVIDER = "openai_compatible"
+$env:KIC_LLM_URL = "http://127.0.0.1:11434/v1"
+$env:KIC_LLM_ALLOWED_HOSTS = "127.0.0.1"
+$env:KIC_LLM_MODEL = "qwen2.5:14b"
+$env:KIC_LLM_ALLOWED_MODELS = "qwen2.5:14b"
+$env:KIC_LLM_API_KEY = "local-only"
+$env:KIC_LLM_TIMEOUT = "60"
+python .\ripplegate_llm_trace.py
+```
+
+기대 trace는 `approved_gateway_typed_proposal → Tool → HUMAN_GATE → FactGate HOLD → REPLAN → Calculator → Critic → Review Pack`이다. LLM은 Tool 후보·위험 flag·질문만 반환하고, 숫자·가정·판정·승인은 결정론적 모듈과 사람에게 남긴다. 모델과 실행 경계는 `data/ripplegate_llm_trace_local_2026-11-08.json`에 기록한다.
+
 ## 2. 90초 정상·보류 시연
 
 1. 대표 질문을 그대로 두거나 다음 문장을 입력한다.
