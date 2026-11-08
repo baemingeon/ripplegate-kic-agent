@@ -430,12 +430,24 @@ def calculate_path(edge: dict[str, Any], assumptions: dict[str, Any], sources: d
 def critic_check(paths: list[dict[str, Any]], plan: dict[str, Any], portfolio_gate: dict[str, Any]) -> dict[str, Any]:
     """Run an independent, deterministic post-calculation invariant check.
 
+    The check crosses a JSON serialization boundary before inspecting the
+    result. This prevents the critic from relying on live object references
+    held by the calculator and keeps the contract auditable/replayable.
+
     The critic cannot change assumptions or approve an investment. It only
     checks that the calculator and FactGate kept their contract: HOLD paths
     have no number, numeric ranges are ordered and finite, and every released
     path has evidence. A future LLM critic may add observations, but this
     fail-closed rule check remains the final guard.
     """
+    serialized = json.loads(json.dumps({
+        "paths": paths,
+        "plan": plan,
+        "portfolio_gate": portfolio_gate,
+    }, ensure_ascii=False, allow_nan=False))
+    paths = serialized["paths"]
+    plan = serialized["plan"]
+    portfolio_gate = serialized["portfolio_gate"]
     findings: list[dict[str, Any]] = []
     allowed_tools = {str(tool.get("name")) for tool in plan.get("tools", []) if isinstance(tool, dict)}
     unknown_tools = [str(tool) for tool in plan.get("selected_tools", []) if str(tool) not in allowed_tools]
@@ -468,6 +480,8 @@ def critic_check(paths: list[dict[str, Any]], plan: dict[str, Any], portfolio_ga
     return {
         "status": "PASS" if passed else "HOLD",
         "actor": "Deterministic independent check",
+        "input_boundary": "json_roundtrip",
+        "implementation": "post_calculation_invariant_check",
         "findings": findings,
         "checked": [
             "HOLD 경로는 숫자를 갖지 않음",

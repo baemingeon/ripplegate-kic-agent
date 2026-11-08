@@ -126,6 +126,8 @@ class RippleGateFlowTests(unittest.TestCase):
         self.assertEqual(critic_trace["state"], "PASS")
         self.assertEqual(critic_trace["actor"], "Deterministic independent check")
         self.assertEqual(result["review_pack"]["critic"]["status"], "PASS")
+        self.assertEqual(result["critic"]["input_boundary"], "json_roundtrip")
+        self.assertEqual(result["critic"]["implementation"], "post_calculation_invariant_check")
 
     def test_independent_critic_holds_inconsistent_path_instead_of_passing(self) -> None:
         plan = {"tools": [{"name": "evidence_check"}], "selected_tools": ["evidence_check"]}
