@@ -58,6 +58,23 @@ class RippleGateFlowTests(unittest.TestCase):
         self.assertTrue(signals["calculation_forbidden"])
         self.assertNotIn("계산기로", " ".join(result["plan"]["steps"]))
 
+    def test_run_skips_calculator_for_explicit_evidence_only_goal(self) -> None:
+        result = run_ripplegate({
+            "phase": "run",
+            "event_id": "event_middle_east",
+            "horizon_months": 3,
+            "human_confirmed": True,
+            "user_goal": "공개 원문의 발행일과 근거 상태만 확인하고 계산은 선택하지 마",
+        })
+        self.assertEqual(result["decision"], "EVIDENCE_ONLY_REVIEW")
+        self.assertEqual(result["status_counts"], {"VERIFIED": 0, "SCENARIO": 0, "HOLD": 0})
+        self.assertEqual(result["assumptions"], {})
+        self.assertEqual(result["paths"], [])
+        calculator = next(item for item in result["trace"] if item["stage"] == "CALCULATOR")
+        self.assertEqual(calculator["state"], "SKIP")
+        self.assertIn("계산 금지", calculator["message"])
+        self.assertIn("숫자 계산 없이", result["review_pack"]["headline"])
+
     def test_portfolio_intent_requires_context_before_investment_impact(self) -> None:
         goal = "기존 포트폴리오에 3% 편입해도 되는지 집중도와 투자 영향을 확인해줘"
         plan = run_ripplegate({"phase": "plan", "event_id": "event_middle_east", "horizon_months": 3, "user_goal": goal})

@@ -562,23 +562,30 @@ def build_trace(graph: dict[str, Any], plan: dict[str, Any], paths: list[dict[st
             {"stage": "HUMAN_GATE", "state": "WAIT", "actor": "Human", "message": "확인 전에는 계산·검토팩 생성 금지", "at": now},
         ])
         return trace
-    trace.append({"stage": "HUMAN_GATE", "state": "PASS", "actor": "Human", "message": "추천 가정 확인 완료; 예외 수정값 포함", "at": now})
-    if status_counts["HOLD"]:
+    calculation_forbidden = bool(plan.get("tool_selection", {}).get("goal_signals", {}).get("calculation_forbidden"))
+    human_message = "계산 제외 목표를 확인하고 근거 검토 실행을 승인" if calculation_forbidden else "추천 가정 확인 완료; 예외 수정값 포함"
+    trace.append({"stage": "HUMAN_GATE", "state": "PASS", "actor": "Human", "message": human_message, "at": now})
+    if calculation_forbidden:
+        trace.append({"stage": "FACTGATE", "state": "PASS", "actor": "Deterministic", "message": "사용자 요청에 따라 원문·기준일·근거 상태만 확인; 영향 계산은 실행하지 않음", "at": now})
+    elif status_counts["HOLD"]:
         trace.append({"stage": "FACTGATE", "state": "HOLD", "actor": "Deterministic", "message": f"{status_counts['HOLD']}개 경로의 기간·근거 충돌을 먼저 차단", "at": now})
         trace.append({"stage": "REPLAN", "state": "PASS", "actor": "Agent", "message": "충돌 경로는 원문 재조회 단계로 되돌리고 전체 승인 대신 부분 검토팩 생성", "at": now})
     else:
         trace.append({"stage": "FACTGATE", "state": "PASS", "actor": "Deterministic", "message": "출처·기간·수식·가정 상태를 먼저 확인", "at": now})
     ready_count = status_counts["VERIFIED"] + status_counts["SCENARIO"]
-    if ready_count:
+    if calculation_forbidden:
+        trace.append({"stage": "CALCULATOR", "state": "SKIP", "actor": "Deterministic", "message": "계산 금지 목표이므로 영향 범위·시나리오 숫자를 생성하지 않음", "at": now})
+    elif ready_count:
         trace.append({"stage": "CALCULATOR", "state": "PASS", "actor": "Deterministic", "message": f"FactGate 통과 {ready_count}개 경로만 영향 범위로 계산; HOLD 경로는 계산 제외", "at": now})
     else:
         trace.append({"stage": "CALCULATOR", "state": "HOLD", "actor": "Deterministic", "message": "FactGate 통과 경로가 없어 계산하지 않음", "at": now})
     critic = critic or {"status": "PASS", "findings": []}
-    critic_message = "수치 범위·HOLD 경로·근거 ID·Tool allowlist 불변식 확인"
+    critic_message = "계산 금지 목표·무수치 경로·근거 ID·Tool allowlist 불변식 확인" if calculation_forbidden else "수치 범위·HOLD 경로·근거 ID·Tool allowlist 불변식 확인"
     if critic.get("findings"):
         critic_message = f"{len(critic['findings'])}개 불변식 위반을 확인해 추가 계산을 중단"
     trace.append({"stage": "CRITIC", "state": critic.get("status", "HOLD"), "actor": "Deterministic independent check", "message": critic_message, "at": now})
-    trace.append({"stage": "REVIEW_PACK", "state": "PASS", "actor": "Agent", "message": "사람이 검토할 숫자·범위·보류 사유·다음 행동을 묶음", "at": now})
+    review_message = "사람이 확인할 원문·기준일·근거 상태와 미확인 항목을 묶음" if calculation_forbidden else "사람이 검토할 숫자·범위·보류 사유·다음 행동을 묶음"
+    trace.append({"stage": "REVIEW_PACK", "state": "PASS", "actor": "Agent", "message": review_message, "at": now})
     return trace
 
 
@@ -773,16 +780,18 @@ def run_ripplegate(payload: dict[str, Any]) -> dict[str, Any]:
             "disclosure": graph.get("disclosure"),
         }
     if payload.get("human_confirmed") is not True:
-        raise ValueError("human_confirmed must be true before calculation")
-    assumptions = parse_assumptions(payload.get("assumptions"), graph["edges"], horizon)
+        raise ValueError("human_confirmed must be true before run")
+    calculation_forbidden = bool(plan.get("tool_selection", {}).get("goal_signals", {}).get("calculation_forbidden"))
+    assumptions = {} if calculation_forbidden else parse_assumptions(payload.get("assumptions"), graph["edges"], horizon)
     sources = source_map(graph)
     nodes = node_map(graph)
     paths = []
-    for edge in graph["edges"]:
-        path = calculate_path(edge, assumptions[str(edge["id"])], sources)
-        path["from_label"] = nodes.get(str(edge.get("from")), {}).get("label", edge.get("from"))
-        path["to_label"] = nodes.get(str(edge.get("to")), {}).get("label", edge.get("to"))
-        paths.append(path)
+    if not calculation_forbidden:
+        for edge in graph["edges"]:
+            path = calculate_path(edge, assumptions[str(edge["id"])], sources)
+            path["from_label"] = nodes.get(str(edge.get("from")), {}).get("label", edge.get("from"))
+            path["to_label"] = nodes.get(str(edge.get("to")), {}).get("label", edge.get("to"))
+            paths.append(path)
     counts = {key: sum(1 for path in paths if path["status"] == key) for key in ("VERIFIED", "SCENARIO", "HOLD")}
     portfolio_gate = build_portfolio_gate(plan, payload)
     attach_portfolio_impacts(paths, portfolio_gate)
@@ -799,13 +808,21 @@ def run_ripplegate(payload: dict[str, Any]) -> dict[str, Any]:
             ledger.append(ledger_entry(source))
             seen.add(source["id"])
     trace = build_trace(graph, plan, paths, "run")
-    decision = "REQUEST_INFO" if portfolio_gate["status"] == "REQUEST_INFO" else ("PARTIAL_REVIEW_HOLD" if counts["HOLD"] or portfolio_gate["status"] == "HOLD" else "HUMAN_REVIEW")
+    decision = "EVIDENCE_ONLY_REVIEW" if calculation_forbidden else ("REQUEST_INFO" if portfolio_gate["status"] == "REQUEST_INFO" else ("PARTIAL_REVIEW_HOLD" if counts["HOLD"] or portfolio_gate["status"] == "HOLD" else "HUMAN_REVIEW"))
     run_id = f"RG-RUN-{uuid.uuid4().hex[:8].upper()}"
     critic = critic_check(paths, plan, portfolio_gate)
     trace = build_trace(graph, plan, paths, "run", critic)
     replan, planning_history = build_replan(plan, paths, counts, portfolio_gate, critic)
     if critic["status"] == "HOLD":
         decision = "CRITIC_HOLD"
+    if calculation_forbidden:
+        review_headline = "사용자 요청에 따라 숫자 계산 없이 공개 원문·기준일·근거 상태만 정리했습니다."
+        review_action = "근거 상태를 사람이 확인하고, 영향 범위가 필요하면 계산 허용 목표로 새 실행을 요청"
+        not_included = ["영향 범위·시나리오 숫자 계산", "자동 매매", "자동 투자승인", "리스크 한도 변경"]
+    else:
+        review_headline = ("거시 영향 경로는 분리했지만 포트폴리오 context가 없어 편입 영향은 계산하지 않았습니다." if portfolio_gate["status"] == "REQUEST_INFO" else ("포트폴리오 context와 경로별 민감도를 확인했지만 한도 초과는 자동 승인하지 않습니다." if portfolio_gate["status"] == "HOLD" else ("검증된 경로·시나리오와 포트폴리오 민감도를 분리해 검토팩으로 만들었습니다." if portfolio_gate["status"] == "VERIFIED" else "검증된 경로와 시나리오 범위를 분리하고, 충돌 경로는 자동 보류했습니다.")))
+        review_action = portfolio_gate["next_action"] if portfolio_gate["status"] in {"REQUEST_INFO", "HOLD"} else "VERIFIED·SCENARIO 수치와 포트폴리오 민감도를 검토하고 HOLD 경로의 추가자료를 요청"
+        not_included = ["자동 매매", "자동 투자승인", "리스크 한도 변경", "미확인 경로의 단일 숫자 확정"]
     return {
         "schema_version": "ripplegate-run.v1",
         "product": PRODUCT,
@@ -836,9 +853,9 @@ def run_ripplegate(payload: dict[str, Any]) -> dict[str, Any]:
         "review_pack": {
             "title": f"RippleGate 투자검토팩 · {graph['title']}",
             "decision": decision,
-            "headline": ("거시 영향 경로는 분리했지만 포트폴리오 context가 없어 편입 영향은 계산하지 않았습니다." if portfolio_gate["status"] == "REQUEST_INFO" else ("포트폴리오 context와 경로별 민감도를 확인했지만 한도 초과는 자동 승인하지 않습니다." if portfolio_gate["status"] == "HOLD" else ("검증된 경로·시나리오와 포트폴리오 민감도를 분리해 검토팩으로 만들었습니다." if portfolio_gate["status"] == "VERIFIED" else "검증된 경로와 시나리오 범위를 분리하고, 충돌 경로는 자동 보류했습니다."))),
-            "human_action": (portfolio_gate["next_action"] if portfolio_gate["status"] in {"REQUEST_INFO", "HOLD"} else "VERIFIED·SCENARIO 수치와 포트폴리오 민감도를 검토하고 HOLD 경로의 추가자료를 요청"),
-            "not_included": ["자동 매매", "자동 투자승인", "리스크 한도 변경", "미확인 경로의 단일 숫자 확정"],
+            "headline": review_headline,
+            "human_action": review_action,
+            "not_included": not_included,
             "critic": critic,
         },
         "disclosure": graph.get("disclosure"),
