@@ -201,7 +201,13 @@ def recommend_plan(graph: dict[str, Any], horizon_months: int, user_goal: str = 
     wants_portfolio = any(token in goal_text for token in ("포트폴리오", "편입", "비중", "집중도", "한도", "portfolio", "allocation", "concentration", "weight"))
     wants_exposure = wants_exposure or wants_portfolio
     wants_market = any(token in goal_text for token in ("시장", "유가", "가격", "무역", "운송비", "market", "trade", "energy"))
-    wants_calculation = any(token in goal_text for token in ("숫자", "수치", "영향", "계산", "범위", "시나리오", "impact", "calculate"))
+    calculation_requested = any(token in goal_text for token in ("숫자", "수치", "영향", "계산", "범위", "시나리오", "impact", "calculate"))
+    calculation_forbidden = any(token in goal_text for token in (
+        "계산하지", "계산 없이", "계산은 하지", "계산은 선택하지", "수치화하지",
+        "영향 범위 산출하지", "계산할 필요 없", "근거만", "출처만", "원문만",
+        "without calculation", "no calculation", "do not calculate", "don't calculate", "skip calculation",
+    ))
+    wants_calculation = calculation_requested and not calculation_forbidden
     has_public_observation = any(bool(edge.get("public_observation")) for edge in edges)
     selected_tools = ["event_lookup"]
     if wants_exposure:
@@ -222,10 +228,35 @@ def recommend_plan(graph: dict[str, Any], horizon_months: int, user_goal: str = 
         proposal = llm_planner.get("proposal") or {}
         proposed_order = [str(tool) for tool in proposal.get("tool_calls", []) if str(tool) in selected_tools]
         selected_tools = proposed_order + [tool for tool in selected_tools if tool not in proposed_order]
+        if calculation_forbidden:
+            selected_tools = [tool for tool in selected_tools if tool != "path_calculate"]
         rank = {name: index for index, name in enumerate(selected_tools)}
         tool_specs.sort(key=lambda tool: rank.get(str(tool["name"]), len(rank)))
         planner_mode = "approved_gateway_typed_proposal"
         planner_reason = "승인 gateway의 Tool 후보를 allowlist로 정규화한 뒤 영향 경로·가정·근거 검증 순서를 구성"
+    if calculation_forbidden:
+        selected_tools = [tool for tool in selected_tools if tool != "path_calculate"]
+        planner_reason = "사용자가 계산을 제외했으므로 path_calculate를 차단하고 공개 원문·근거 상태 검증 경로만 구성"
+    for tool in tool_specs:
+        tool["selected"] = str(tool["name"]) in selected_tools
+    if calculation_forbidden:
+        plan_goal = "글로벌 이슈의 원문·기준일·근거 상태를 확인하고 검토팩으로 전달"
+        plan_steps = [
+            "선택한 글로벌 이슈와 분석기간을 구조화",
+            f"선택 Tool 실행: {' → '.join(selected_tools)}",
+            "공개 원문·기준일·근거 상태를 확인",
+            "계산 없이 확인 결과와 미확인 항목을 사람 검토팩으로 전달",
+        ]
+    else:
+        plan_goal = "글로벌 이슈가 자산·산업에 미치는 영향 범위를 산출하고 투자검토팩으로 전달"
+        plan_steps = [
+            "선택한 글로벌 이슈와 분석기간을 구조화",
+            f"선택 Tool 실행: {' → '.join(selected_tools)}",
+            "영향 경로별 충격·전가율·노출도 기본값을 제안",
+            "사람이 기본값을 확인하거나 예외값만 수정",
+            "확인된 값만 결정론적 계산기로 전달",
+            "근거·기간 충돌을 FactGate에서 검증하고 보류 사유를 기록",
+        ]
     return {
         "planner": {
             "name": "RippleGate Planner",
@@ -241,19 +272,14 @@ def recommend_plan(graph: dict[str, Any], horizon_months: int, user_goal: str = 
                 "portfolio": wants_portfolio,
                 "market": wants_market,
                 "calculation": wants_calculation,
+                "calculation_requested": calculation_requested,
+                "calculation_forbidden": calculation_forbidden,
             },
-            "reason": "요청에 포함된 목적 신호에 따라 최소 실행 경로를 구성하고, 근거 검증·사람 게이트·검토팩은 항상 유지",
+            "reason": "요청 목적과 금지 조건에 따라 최소 실행 경로를 구성하고, 근거 검증·사람 게이트·검토팩은 항상 유지",
         },
-        "goal": "글로벌 이슈가 자산·산업에 미치는 영향 범위를 산출하고 투자검토팩으로 전달",
+        "goal": plan_goal,
         "tools": tool_specs,
-        "steps": [
-            "선택한 글로벌 이슈와 분석기간을 구조화",
-            f"선택 Tool 실행: {' → '.join(selected_tools)}",
-            "영향 경로별 충격·전가율·노출도 기본값을 제안",
-            "사람이 기본값을 확인하거나 예외값만 수정",
-            "확인된 값만 결정론적 계산기로 전달",
-            "근거·기간 충돌을 FactGate에서 검증하고 보류 사유를 기록",
-        ],
+        "steps": plan_steps,
         "horizon_months": horizon_months,
         "assumptions": {str(edge["id"]): default_assumptions(str(edge["id"])) for edge in edges},
         "human_gate": {

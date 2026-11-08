@@ -44,6 +44,20 @@ class RippleGateFlowTests(unittest.TestCase):
         self.assertFalse(result["plan"]["tool_selection"]["goal_signals"]["calculation"])
         self.assertEqual(result["plan"]["user_goal"], "원문과 기준일만 확인해줘")
 
+    def test_explicit_calculation_exclusion_overrides_keyword_signal(self) -> None:
+        result = run_ripplegate({
+            "phase": "plan",
+            "event_id": "event_middle_east",
+            "horizon_months": 3,
+            "user_goal": "공개 원문의 발행일과 근거 상태만 확인하고 계산은 선택하지 마",
+        })
+        signals = result["plan"]["tool_selection"]["goal_signals"]
+        self.assertNotIn("path_calculate", result["plan"]["selected_tools"])
+        self.assertFalse(signals["calculation"])
+        self.assertTrue(signals["calculation_requested"])
+        self.assertTrue(signals["calculation_forbidden"])
+        self.assertNotIn("계산기로", " ".join(result["plan"]["steps"]))
+
     def test_portfolio_intent_requires_context_before_investment_impact(self) -> None:
         goal = "기존 포트폴리오에 3% 편입해도 되는지 집중도와 투자 영향을 확인해줘"
         plan = run_ripplegate({"phase": "plan", "event_id": "event_middle_east", "horizon_months": 3, "user_goal": goal})
